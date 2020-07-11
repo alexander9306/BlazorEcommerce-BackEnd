@@ -22,7 +22,5 @@ namespace Sistema.Entidades.Ordenes
         public int tipo { get; set; }
         public DateTime fecha_nac { get; set; }
 
-        public ICollection<Tipo> tipos { get; set; }
-
     }
 }
