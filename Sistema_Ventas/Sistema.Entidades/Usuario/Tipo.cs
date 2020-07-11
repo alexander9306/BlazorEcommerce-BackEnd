@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Sistema.Entidades.Ordenes
 {
-    class Usuario
+    class Tipo
     {
-        public int id { get; set; }
-        
+        public string tipo_usuario { get; set; }
+
     }
 }
