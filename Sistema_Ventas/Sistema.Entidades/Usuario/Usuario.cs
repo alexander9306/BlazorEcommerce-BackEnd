@@ -12,7 +12,7 @@ namespace Sistema.Entidades.Ordenes
 
         [Required]
         [StringLength(20,ErrorMessage="Email/Username no debe tener más de 20 caracteres.")]
-        public string email_or_username { get; set; }
+        public string email_username { get; set; }
 
         [Required]
         [StringLength(15,MinimumLength=8,ErrorMessage="La clave no debe tener más de 15 caracteres, ni menos de 8 caracteres.")]
