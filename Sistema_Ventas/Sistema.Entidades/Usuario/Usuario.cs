@@ -19,8 +19,13 @@ namespace Sistema.Entidades.Ordenes
         public string password { get; set; }
 
         [Required]
-        public int tipo { get; set; }
+        public SeleccionTipo tipo { get; set; }
         public DateTime fecha_nac { get; set; }
 
+        public enum SeleccionTipo
+        {
+            Administrador,
+            Usuario
+        }
     }
 }
