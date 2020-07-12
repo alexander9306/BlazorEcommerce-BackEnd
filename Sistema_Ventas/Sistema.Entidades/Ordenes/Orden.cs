@@ -10,7 +10,7 @@ namespace Sistema.Entidades.Ordenes
     {
         public int id { get; set; }
         [Required]
-        public int user_id { get; set; }
+        public int usuario_id { get; set; }
         [Required]
         public int pedido_id { get; set; }
         [Required]
