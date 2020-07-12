@@ -11,6 +11,7 @@ namespace Sistema.Entidades.Ordenes
         public int id { get; set; }
         public DateTime created_at { get; set; }
         public DateTime update_at { get; set; }
-        public ICollection<Producto> productos { get; set; }
+
+        public ICollection<DetalleCarrito> detalles { get; set; }
     }
 }
