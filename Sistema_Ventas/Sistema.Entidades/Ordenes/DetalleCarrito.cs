@@ -14,7 +14,7 @@ namespace Sistema.Entidades.Ordenes
         [Required]
         public int producto_id { get; set; }
 
-        public Carrito carrito { get; set; }
         public Producto producto { get; set; }
+        public Carrito carrito { get; set; }
     }
 }
