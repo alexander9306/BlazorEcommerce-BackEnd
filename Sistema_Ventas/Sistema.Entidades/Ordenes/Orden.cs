@@ -10,23 +10,22 @@ namespace Sistema.Entidades.Ordenes
     {
         public int id { get; set; }
         [Required]
-        public int User_id { get; set; }
+        public int usuario_id { get; set; }
         [Required]
-        public int Pedido_id { get; set; }
+        public int pedido_id { get; set; }
         [Required]
-        public int Pago_id { get; set; }
-        public DateTime Fecha { get; set; }
+        public int pago_id { get; set; }
         public DateTime created_at { get; set; }
         public DateTime update_at { get; set; }
-        public double Latitud { get; set; }
-        public double Longitud { get; set; }
-        public string Email { get; set; }
+        public double latitud { get; set; }
+        public double longitud { get; set; }
+        public string email { get; set; }
 
         [StringLength(100, MinimumLength = 3, ErrorMessage = "La direccion no debe de tener más de 100 caracteres, ni menos de 3 caracteres.")]
-        public string Direccion { get; set; }
-        public int Telefono { get; set; }
-        public Pedido Pedido { get; set; }
-        public Pago Pago { get; set; }
+        public string direccion { get; set; }
+        public int telefono { get; set; }
+        public Pedido pedido { get; set; }
+        public Pago pago { get; set; }
 
     }
 }
