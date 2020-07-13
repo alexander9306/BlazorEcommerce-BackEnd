@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Usuarios\" />
+    <Compile Remove="Usuarios\**" />
+    <EmbeddedResource Remove="Usuarios\**" />
+    <None Remove="Usuarios\**" />
   </ItemGroup>
 
 </Project>
