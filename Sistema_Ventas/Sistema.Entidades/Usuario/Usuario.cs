@@ -13,7 +13,6 @@ namespace Sistema.Entidades.Ordenes
         public string email { get; set; }
 
         public byte[] password_hash { get; set; }
-        
 
         public byte[] password_salt  { get; set; }
 
