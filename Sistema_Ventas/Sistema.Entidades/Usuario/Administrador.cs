@@ -6,19 +6,23 @@ using System.Text;
 
 namespace Sistema.Entidades.Ordenes
 {
-    class Cliente
+    class Administrador
     {
         public int id { get; set; }
 
         public string email { get; set; }
 
-        public string password { get; set; }
+        public string username { get; set; }
 
-        public DateTime fecha_nac { get; set; }
+        public byte[] password_hash { get; set; }
+
+        public byte[] password_salt  { get; set; }
 
         public DateTime created_at { get; set; }
 
         public DateTime update_at { get; set; }
+
+        public string estado {get; set;}
 
         
     }
