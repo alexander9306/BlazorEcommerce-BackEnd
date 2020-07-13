@@ -1,17 +1,16 @@
-﻿using Sistema.Entidades.Almacen;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Sistema.Entidades.Ordenes
 {
-    class Carrito
+    class Pedido
     {
         public int id { get; set; }
+        public DateTime Fecha { get; set; }
         public DateTime created_at { get; set; }
-        public DateTime update_at { get; set; }
-
-        public ICollection<DetalleCarrito> detalles { get; set; }
+        public bool Estado { get; set; }
+        public ICollection<Orden> Orden { get; set; }
     }
 }
