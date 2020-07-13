@@ -12,7 +12,10 @@ namespace Sistema.Entidades.Ordenes
 
         public string email { get; set; }
 
-        public string password { get; set; }
+        public byte[] password_hash { get; set; }
+        
+
+        public byte[] password_salt  { get; set; }
 
         public DateTime fecha_nac { get; set; }
 
