@@ -16,6 +16,12 @@
 
         public DbSet<Carrito> Carritos { get; set; }
 
+        public DbSet<Orden> Ordenes { get; set; }
+
+        public DbSet<Pedido> Pedidos { get; set; }
+
+        public DbSet<Pago> Pagos { get; set; }
+
         // public DbContextSistema(DbContextOptions<DbContextSistema> options) : base(options)
         // {
 
