@@ -1,23 +1,11 @@
-﻿using Sistema.Entidades.Usuario;
-
-namespace Sistema.Entidades.Ordenes
+﻿namespace Sistema.Entidades.Ordenes
 {
     using System;
     using System.Collections.Generic;
+    using Sistema.Entidades.Usuario;
 
     public class Carrito
     {
-        public Carrito(int id, int clienteId, DateTime createdAt, DateTime updateAt, ICollection<DetalleCarrito> detalles, Orden orden, Cliente cliente)
-        {
-            Id = id;
-            ClienteId = clienteId;
-            CreatedAt = createdAt;
-            UpdateAt = updateAt;
-            Detalles = detalles;
-            Orden = orden;
-            Cliente = cliente;
-        }
-
         public int Id { get; set; }
 
         public int ClienteId { get; set; }

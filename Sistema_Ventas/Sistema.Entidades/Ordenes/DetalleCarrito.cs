@@ -1,6 +1,6 @@
 ﻿namespace Sistema.Entidades.Ordenes
 {
-    using Almacen;
+    using Sistema.Entidades.Almacen;
 
     public class DetalleCarrito
     {

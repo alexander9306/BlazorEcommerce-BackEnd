@@ -1,7 +1,7 @@
 namespace Sistema.Entidades.Usuario
 {
     using System;
-    using Ordenes;
+    using Sistema.Entidades.Ordenes;
 
     public class Cliente
     {

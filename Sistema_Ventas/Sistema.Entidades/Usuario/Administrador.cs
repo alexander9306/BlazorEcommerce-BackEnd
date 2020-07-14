@@ -1,7 +1,6 @@
 namespace Sistema.Entidades.Usuario
 {
     using System;
-    using Ordenes;
 
     public class Administrador
     {

@@ -5,17 +5,6 @@
 
     public class Categoria
     {
-        public Categoria(int id, string nombre, string? descripcion, bool estado, DateTime createdAt, DateTime updateAt, ICollection<Producto> productos)
-        {
-            Id = id;
-            Nombre = nombre;
-            Descripcion = descripcion;
-            Estado = estado;
-            CreatedAt = createdAt;
-            UpdateAt = updateAt;
-            Productos = productos;
-        }
-
         public int Id { get; set; }
 
         public string Nombre { get; set; }
