@@ -16,6 +16,12 @@
 
         public DbSet<Carrito> Carritos { get; set; }
 
+        public DbSet<Administrador> Administradores { get; set; }
+
+        public DbSet<Cliente> Clientes { get; set; }
+
+        public DbSet<Rol> Roles { get; set; }
+
         // public DbContextSistema(DbContextOptions<DbContextSistema> options) : base(options)
         // {
 
