@@ -1,38 +1,31 @@
 ﻿namespace Sistema.Entidades.Almacen
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
 
-    // Producto
-    internal class Producto
+    public class Producto
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        [Required]
-        public int categoria_id { get; set; }
+        public int CategoriaId { get; set; }
 
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre no debe de tener más de 50 caracteres, ni menos de 3 caracteres.")]
-        public string nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public decimal precio { get; set; }
+        public decimal Precio { get; set; }
 
-        public bool estado { get; set; }
+        public bool Estado { get; set; }
 
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "La marca no debe de tener más de 50 caracteres, ni menos de 3 caracteres.")]
-        public string marca { get; set; }
+        public string? Marca { get; set; }
 
-        [Required]
-        public int stock { get; set; }
+        public int Stock { get; set; }
 
-        [StringLength(256)]
-        public string descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
-        public DateTime created_at { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public DateTime updated_at { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
-        public Categoria categoria { get; set; }
+        public Categoria Categoria { get; set; }
 
-        public ProductoFoto foto { get; set; }
+        public ProductoFoto Foto { get; set; }
     }
 }

@@ -1,20 +1,17 @@
-﻿using Sistema.Entidades.Almacen;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Sistema.Entidades.Ordenes
+﻿namespace Sistema.Entidades.Ordenes
 {
-    class DetalleCarrito
-    {
-        public int id { get; set; }
-        [Required]
-        public int carrito_id { get; set; }
-        [Required]
-        public int producto_id { get; set; }
+    using Almacen;
 
-        public Producto producto { get; set; }
-        public Carrito carrito { get; set; }
+    public class DetalleCarrito
+    {
+        public int Id { get; set; }
+
+        public int CarritoId { get; set; }
+
+        public int ProductoId { get; set; }
+
+        public Producto Producto { get; set; }
+
+        public Carrito Carrito { get; set; }
     }
 }

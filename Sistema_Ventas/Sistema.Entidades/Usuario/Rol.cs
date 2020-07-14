@@ -1,17 +1,23 @@
-using Sistema.Entidades.Almacen;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Sistema.Entidades.Ordenes
+namespace Sistema.Entidades.Usuario
 {
-    class Rol
+    using System.Collections.Generic;
+
+    public class Rol
     {
-        public string nombre { get; set; }
+        public Rol(string nombre, string estado, string descripcion, ICollection<Administrador> administradores)
+        {
+            Nombre = nombre;
+            Estado = estado;
+            Descripcion = descripcion;
+            Administradores = administradores;
+        }
 
-        public string estado {get; set;}
+        public string Nombre { get; set; }
 
-        
+        public string Estado { get; set; }
+
+        public string Descripcion { get; set; }
+
+        public ICollection<Administrador> Administradores { get; set; }
     }
 }

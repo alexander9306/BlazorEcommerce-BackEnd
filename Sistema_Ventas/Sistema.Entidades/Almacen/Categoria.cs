@@ -1,22 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Sistema.Entidades.Almacen
+﻿namespace Sistema.Entidades.Almacen
 {
-    class Categoria
-    {
-        public int id { get; set; }
-        [Required]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre no debe de tener más de 50 caracteres, ni menos de 3 caracteres.")]
-        public string nombre { get; set; }
-        [StringLength(256)]
-        public string descripcion { get; set; }
-        public bool estado { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime update_at { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-        public ICollection<Producto> productos { get; set; }
+    public class Categoria
+    {
+        public Categoria(int id, string nombre, string? descripcion, bool estado, DateTime createdAt, DateTime updateAt, ICollection<Producto> productos)
+        {
+            Id = id;
+            Nombre = nombre;
+            Descripcion = descripcion;
+            Estado = estado;
+            CreatedAt = createdAt;
+            UpdateAt = updateAt;
+            Productos = productos;
+        }
+
+        public int Id { get; set; }
+
+        public string Nombre { get; set; }
+
+        public string? Descripcion { get; set; }
+
+        public bool Estado { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime UpdateAt { get; set; }
+
+        public ICollection<Producto> Productos { get; set; }
     }
 }

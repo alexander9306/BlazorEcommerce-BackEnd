@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Sistema.Entidades.Ordenes
+﻿namespace Sistema.Entidades.Ordenes
 {
-    class Pedido
+    using System;
+
+    public class Pedido
     {
-        public int id { get; set; }
-        public DateTime created_at { get; set; }
-        public bool estado { get; set; }
-        public ICollection<Orden> orden { get; set; }
+        public int Id { get; set; }
+
+        public int OrdenId { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public bool Estado { get; set; }
+
+        public Orden Orden { get; set; }
     }
 }

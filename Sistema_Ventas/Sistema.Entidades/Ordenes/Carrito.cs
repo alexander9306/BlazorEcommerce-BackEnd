@@ -1,17 +1,35 @@
-﻿using Sistema.Entidades.Almacen;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using Sistema.Entidades.Usuario;
 
 namespace Sistema.Entidades.Ordenes
 {
-    class Carrito
-    {
-        public int id { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime update_at { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-        public ICollection<DetalleCarrito> detalles { get; set; }
+    public class Carrito
+    {
+        public Carrito(int id, int clienteId, DateTime createdAt, DateTime updateAt, ICollection<DetalleCarrito> detalles, Orden orden, Cliente cliente)
+        {
+            Id = id;
+            ClienteId = clienteId;
+            CreatedAt = createdAt;
+            UpdateAt = updateAt;
+            Detalles = detalles;
+            Orden = orden;
+            Cliente = cliente;
+        }
+
+        public int Id { get; set; }
+
+        public int ClienteId { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public DateTime UpdateAt { get; set; }
+
+        public ICollection<DetalleCarrito> Detalles { get; set; }
+
+        public Orden Orden { get; set; }
+
+        public Cliente Cliente { get; set; }
     }
 }

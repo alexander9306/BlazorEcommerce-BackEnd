@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Sistema.Entidades.Almacen
+﻿namespace Sistema.Entidades.Almacen
 {
-    class ProductoFoto
+    public class ProductoFoto
     {
-        public int id { get; set; }
-        [Required]
-        public int producto_id { get; set; }
-        public byte[] foto { get; set; }
+        public int Id { get; set; }
+
+        public int ProductoId { get; set; }
+
+        public string Url { get; set; }
+
+        // public byte[] foto { get; set; }
     }
 }

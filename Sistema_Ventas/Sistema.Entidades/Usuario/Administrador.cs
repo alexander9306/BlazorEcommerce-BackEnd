@@ -1,29 +1,28 @@
-using Sistema.Entidades.Almacen;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-
-namespace Sistema.Entidades.Ordenes
+namespace Sistema.Entidades.Usuario
 {
-    class Administrador
+    using System;
+    using Ordenes;
+
+    public class Administrador
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public string email { get; set; }
+        public int RolId { get; set; }
 
-        public string username { get; set; }
+        public string Email { get; set; }
 
-        public byte[] password_hash { get; set; }
+        public string Username { get; set; }
 
-        public byte[] password_salt  { get; set; }
+        public byte[] PasswordHash { get; set; }
 
-        public DateTime created_at { get; set; }
+        public byte[] PasswordSalt { get; set; }
 
-        public DateTime update_at { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public string estado {get; set;}
+        public DateTime UpdateAt { get; set; }
 
-        
+        public bool Estado { get; set; }
+
+        public Rol Rol { get; set; }
     }
 }

@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sistema.Entidades.Ordenes
+﻿namespace Sistema.Entidades.Ordenes
 {
-    class Pago
+    using System;
+
+    public class Pago
     {
-        public int id { get; set; }
-        public DateTime created_at { get; set; }
-        public int monto { get; set; }
-        public bool estado { get; set; }
-        public ICollection<Orden> orden { get; set; }
+        public int Id { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        public int OrdenId { get; set; }
+
+        public decimal Monto { get; set; }
+
+        public bool Estado { get; set; }
+
+        public Orden Orden { get; set; }
     }
 }
