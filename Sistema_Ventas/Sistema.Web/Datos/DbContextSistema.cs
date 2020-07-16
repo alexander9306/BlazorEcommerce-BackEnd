@@ -1,17 +1,15 @@
-﻿namespace Sistema.Datos
+﻿namespace Sistema.Web.Datos
 {
     using Microsoft.EntityFrameworkCore;
-    using Sistema.Entidades.Almacen;
-    using Sistema.Entidades.Ordenes;
-    using Sistema.Entidades.Usuario;
+    using Sistema.Web.Entidades.Almacen;
+    using Sistema.Web.Entidades.Ordenes;
+    using Sistema.Web.Entidades.Usuario;
 
     public class DbContextSistema : DbContext
     {
         public DbSet<Categoria> Categorias { get; set; }
 
         public DbSet<Producto> Productos { get; set; }
-
-        public DbSet<ProductoFoto> ProductoFotos { get; set; }
 
         public DbSet<DetalleCarrito> DetalleCarritos { get; set; }
 
