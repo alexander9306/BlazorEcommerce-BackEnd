@@ -16,7 +16,5 @@
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdateAt { get; set; }
-
-        public ICollection<Producto> Productos { get; set; }
     }
 }
