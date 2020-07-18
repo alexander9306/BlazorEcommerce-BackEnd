@@ -27,6 +27,5 @@
         public DateTime UpdatedAt { get; set; }
 
         public Categoria Categoria { get; set; }
-
     }
 }
