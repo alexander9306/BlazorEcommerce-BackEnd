@@ -20,6 +20,8 @@
 
         public string? FotoUrl { get; set; }
 
+        public string? FotoPublicId { get; set; }
+
         public string? Descripcion { get; set; }
 
         public DateTime CreatedAt { get; set; }

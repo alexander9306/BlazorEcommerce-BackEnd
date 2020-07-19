@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Sistema.Web.Migrations
 {
-    public partial class MiInicial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace Sistema.Web.Migrations
                     Descripcion = table.Column<string>(nullable: true),
                     Estado = table.Column<bool>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false)
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,6 +70,7 @@ namespace Sistema.Web.Migrations
                     Marca = table.Column<string>(nullable: true),
                     Stock = table.Column<int>(nullable: false),
                     FotoUrl = table.Column<string>(nullable: true),
+                    FotoPublicId = table.Column<string>(nullable: true),
                     Descripcion = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false)
@@ -235,14 +236,38 @@ namespace Sistema.Web.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Administradores_Email",
+                table: "Administradores",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Administradores_RolId",
                 table: "Administradores",
                 column: "RolId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Administradores_Username",
+                table: "Administradores",
+                column: "Username",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Carritos_ClienteId",
                 table: "Carritos",
                 column: "ClienteId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categorias_Nombre",
+                table: "Categorias",
+                column: "Nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clientes_Email",
+                table: "Clientes",
+                column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -283,6 +308,12 @@ namespace Sistema.Web.Migrations
                 name: "IX_Productos_CategoriaId",
                 table: "Productos",
                 column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Productos_Nombre",
+                table: "Productos",
+                column: "Nombre",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

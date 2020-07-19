@@ -4,11 +4,11 @@
 
     public class CrearViewModel
     {
-        [Required(ErrorMessage = "El nombre es requerido.")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre no debe de tener más de 50 caracteres, ni menos de 3 caracteres.")]
+        [Required(ErrorMessage = "El campo {0} es requerido.")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "El campo {0} no debe de tener más de {1} caracteres, ni menos de {2} caracteres.")]
         public string Nombre { get; set; }
 
-        [MaxLength(255, ErrorMessage = "La descripción no debe de tener más de 255 caracteres.")]
+        [MaxLength(255, ErrorMessage = "El campo {0} no debe de tener más de {1} caracteres.")]
         public string? Descripcion { get; set; }
     }
 }
