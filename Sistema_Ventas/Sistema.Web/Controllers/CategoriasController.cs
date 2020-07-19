@@ -68,7 +68,7 @@
                 Id = model.Id,
                 Nombre = model.Nombre,
                 Descripcion = model.Descripcion,
-                UpdateAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
             };
 
             _context.Entry(categoria).State = EntityState.Modified;
@@ -107,7 +107,7 @@
                 Descripcion = model.Descripcion,
                 Estado = true,
                 CreatedAt = fecha,
-                UpdateAt = fecha,
+                UpdatedAt = fecha,
             };
 
             await _context.Categorias.AddAsync(categoria).ConfigureAwait(false);

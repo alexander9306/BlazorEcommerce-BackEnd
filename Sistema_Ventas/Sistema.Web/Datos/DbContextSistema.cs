@@ -32,6 +32,13 @@
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Producto>()
+                .HasIndex(p => p.Nombre)
+                .IsUnique();
+        }
+
     }
 
 }

@@ -9,8 +9,8 @@ using Sistema.Web.Datos;
 namespace Sistema.Web.Migrations
 {
     [DbContext(typeof(DbContextSistema))]
-    [Migration("20200718035003_MiInicial")]
-    partial class MiInicial
+    [Migration("20200719024932_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,7 +37,7 @@ namespace Sistema.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -327,7 +327,7 @@ namespace Sistema.Web.Migrations
             modelBuilder.Entity("Sistema.Web.Entidades.Almacen.Producto", b =>
                 {
                     b.HasOne("Sistema.Web.Entidades.Almacen.Categoria", "Categoria")
-                        .WithMany("Productos")
+                        .WithMany()
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
