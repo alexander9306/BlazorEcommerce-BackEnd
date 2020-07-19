@@ -40,6 +40,9 @@ namespace Sistema.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("Categorias");
                 });
 
@@ -60,6 +63,9 @@ namespace Sistema.Web.Migrations
 
                     b.Property<bool>("Estado")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("FotoPublicId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FotoUrl")
                         .HasColumnType("TEXT");
@@ -83,6 +89,9 @@ namespace Sistema.Web.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
 
                     b.ToTable("Productos");
                 });
@@ -262,7 +271,13 @@ namespace Sistema.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("RolId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Administradores");
                 });
@@ -295,6 +310,9 @@ namespace Sistema.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Clientes");
                 });

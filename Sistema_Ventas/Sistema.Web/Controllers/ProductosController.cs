@@ -113,7 +113,7 @@
 
             if (model.Foto != null)
             {
-                producto.FotoUrl = await CrearFoto(model.Foto).ConfigureAwait(false);
+               await CrearFoto(producto, model.Foto)!.ConfigureAwait(false);
             }
 
             _context.Entry(producto).State = EntityState.Modified;
@@ -162,7 +162,7 @@
 
             if (model.Foto != null)
             {
-                producto.FotoUrl = await CrearFoto(model.Foto).ConfigureAwait(false);
+                await CrearFoto(producto, model.Foto).ConfigureAwait(false);
             }
 
             await _context.Productos.AddAsync(producto).ConfigureAwait(false);
@@ -221,7 +221,7 @@
             return NoContent();
         }
 
-        private async Task<string>? CrearFoto(IFormFile Foto)
+        private async Task CrearFoto(Producto model, IFormFile Foto)
         {
             var uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
             var uniqueFileName = Guid.NewGuid() + "." + Foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
@@ -240,17 +240,19 @@
 
             var uploadParams = new ImageUploadParams()
             {
+
                 File = new FileDescription(@filePath),
             };
             await stream.DisposeAsync().ConfigureAwait(false);
             var uploadResult = cloudinary.Upload(uploadParams);
 
+            model.FotoUrl = uploadResult.SecureUrl?.ToString();
+            model.FotoPublicId = uploadResult.PublicId;
+
             if (System.IO.File.Exists(filePath))
             {
                 System.IO.File.Delete(filePath);
             }
-            #pragma warning disable CS8603 // Possible null reference return.
-            return uploadResult.SecureUrl?.ToString();
         }
 
         private bool ProductoExists(int id)

@@ -37,8 +37,18 @@
             modelBuilder.Entity<Producto>()
                 .HasIndex(p => p.Nombre)
                 .IsUnique();
+            modelBuilder.Entity<Categoria>()
+                .HasIndex(p => p.Nombre)
+                .IsUnique();
+            modelBuilder.Entity<Administrador>()
+                .HasIndex(p => p.Email)
+                .IsUnique();
+            modelBuilder.Entity<Administrador>()
+                .HasIndex(p => p.Username)
+                .IsUnique();
+            modelBuilder.Entity<Cliente>()
+                .HasIndex(p => p.Email)
+                .IsUnique();
         }
-
     }
-
 }
