@@ -12,6 +12,6 @@ namespace Sistema.Web.Entidades.Usuario
 
         public string Descripcion { get; set; }
 
-        public ICollection<Administrador> Administradores { get; set; }
+        public ICollection<Administrador> Administradores { get; }
     }
 }

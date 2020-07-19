@@ -6,7 +6,6 @@
 
     public class CrearViewModel
     {
-
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public int CategoriaId { get; set; }
 

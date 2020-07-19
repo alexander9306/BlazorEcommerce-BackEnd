@@ -18,7 +18,7 @@
 
         public int Stock { get; set; }
 
-        public string? FotoUrl { get; set; }
+        public Uri? FotoUrl { get; set; }
 
         public string? Descripcion { get; set; }
 

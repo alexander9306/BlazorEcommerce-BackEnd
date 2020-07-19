@@ -9,7 +9,7 @@ using Sistema.Web.Datos;
 namespace Sistema.Web.Migrations
 {
     [DbContext(typeof(DbContextSistema))]
-    [Migration("20200719174030_InitialCreate")]
+    [Migration("20200719231322_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,10 @@ namespace Sistema.Web.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<bool>("Estado")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -125,6 +128,9 @@ namespace Sistema.Web.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Cantidad")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("CarritoId")

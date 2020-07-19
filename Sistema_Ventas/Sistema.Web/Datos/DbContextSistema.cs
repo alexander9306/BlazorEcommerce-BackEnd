@@ -27,10 +27,7 @@
 
         public DbSet<Rol> Roles { get; set; }
 
-        public DbContextSistema(DbContextOptions<DbContextSistema> options) : base(options)
-        {
-
-        }
+        public DbContextSistema(DbContextOptions<DbContextSistema> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -50,8 +50,31 @@
                      Descripcion = p.Descripcion,
                      CreatedAt = p.CreatedAt,
                      UpdatedAt = p.UpdatedAt,
-                 })
-             );
+                 }));
+        }
+
+        // GET: api/Productos/ListarPorCategoria/categoriaId
+        [HttpGet("[action]/{categoriaId}")]
+        public async Task<ActionResult<IEnumerable<Producto>>> ListarPorCategoria(int categoriaId)
+        {
+            var productos = await _context.Productos.Where(a => a.CategoriaId == categoriaId)
+                .AsNoTracking().ToListAsync()
+                .ConfigureAwait(false);
+
+            return Ok(productos.Select(p => new ProductoViewModel
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Categoria = p.Categoria.Nombre,
+                Precio = p.Precio,
+                Estado = p.Estado,
+                Marca = p.Marca,
+                Stock = p.Stock,
+                FotoUrl = p.FotoUrl,
+                Descripcion = p.Descripcion,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt,
+            }));
         }
 
         // GET: api/Productos/Mostrar/id
@@ -113,7 +136,7 @@
 
             if (model.Foto != null)
             {
-               await CrearFoto(producto, model.Foto)!.ConfigureAwait(false);
+               await CrearFoto(producto, model.Foto) !.ConfigureAwait(false);
             }
 
             _context.Entry(producto).State = EntityState.Modified;
@@ -137,9 +160,12 @@
 
         // POST: api/Productos/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<Producto>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<ProductoViewModel>> Crear([FromForm] CrearViewModel model)
         {
-            if (model == null) return BadRequest();
+            if (model == null)
+            {
+                return BadRequest();
+            }
 
             if (!ModelState.IsValid)
             {
@@ -176,7 +202,22 @@
                 return BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return CreatedAtAction("Mostrar", new { id = producto.Id }, producto);
+            var productoModel = new ProductoViewModel
+            {
+                Id = producto.Id,
+                Nombre = producto.Nombre,
+                Categoria = producto.Categoria.Nombre,
+                Precio = producto.Precio,
+                Estado = producto.Estado,
+                Marca = producto.Marca,
+                Stock = producto.Stock,
+                FotoUrl = producto.FotoUrl,
+                Descripcion = producto.Descripcion,
+                CreatedAt = producto.CreatedAt,
+                UpdatedAt = producto.UpdatedAt,
+            };
+
+            return CreatedAtAction("Mostrar", new { id = producto.Id }, productoModel);
         }
 
         // PUT: api/Productos/Activar/id
@@ -221,32 +262,31 @@
             return NoContent();
         }
 
-        private async Task CrearFoto(Producto model, IFormFile Foto)
+        private async Task CrearFoto(Producto model, IFormFile foto)
         {
             var uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-            var uniqueFileName = Guid.NewGuid() + "." + Foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
+            var uniqueFileName = Guid.NewGuid() + "." + foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
             await using var stream = System.IO.File.Create(filePath);
-            await Foto.CopyToAsync(stream).ConfigureAwait(false);
+            await foto.CopyToAsync(stream).ConfigureAwait(false);
 
             Account account = new Account(
                 "alexander-damaso-26857",
                 "782676321813482",
-                "qLEL5oYEYE1rjbnFpzVriyX7mTE"
-                );
+                "qLEL5oYEYE1rjbnFpzVriyX7mTE");
 
             Cloudinary cloudinary = new Cloudinary(account);
 
-            var uploadParams = new ImageUploadParams()
+            var uploadParams = new ImageUploadParams
             {
 
-                File = new FileDescription(@filePath),
+                File = new FileDescription(filePath),
             };
             await stream.DisposeAsync().ConfigureAwait(false);
             var uploadResult = cloudinary.Upload(uploadParams);
 
-            model.FotoUrl = uploadResult.SecureUrl?.ToString();
+            model.FotoUrl = uploadResult.SecureUrl;
             model.FotoPublicId = uploadResult.PublicId;
 
             if (System.IO.File.Exists(filePath))

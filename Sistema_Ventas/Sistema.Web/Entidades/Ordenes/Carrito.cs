@@ -12,9 +12,11 @@
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime UpdateAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
-        public ICollection<DetalleCarrito> Detalles { get; set; }
+        public bool Estado { get; set; }
+
+        public ICollection<DetalleCarrito> Detalles { get; }
 
         public Orden Orden { get; set; }
 

@@ -12,6 +12,5 @@
 
         [MaxLength(255, ErrorMessage = "El campo {0} no debe de tener más de {1} caracteres.")]
         public string? Descripcion { get; set; }
-
     }
 }

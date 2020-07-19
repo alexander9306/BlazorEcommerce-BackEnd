@@ -25,14 +25,9 @@
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Categoria>>> Listar()
         {
-            return await _context.Categorias.ToListAsync().ConfigureAwait(false);
-        }
-
-        // GET: api/Categorias/ListarArticulos/id
-        [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<IEnumerable<Producto>>> ListarArticulos(int id)
-        {
-            return await _context.Productos.Where(a => a.CategoriaId == id).ToListAsync();
+            return await _context.Categorias
+                .AsNoTracking().ToListAsync()
+                .ConfigureAwait(false);
         }
 
         // GET: api/Categorias/Mostrar/id
@@ -137,7 +132,6 @@
         {
             return await CambiarEstado(id, false).ConfigureAwait(false);
         }
-
 
         private async Task<IActionResult> CambiarEstado(int id, bool estado)
         {

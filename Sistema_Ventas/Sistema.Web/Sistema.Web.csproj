@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Ordenes\Carrito\" />
     <Folder Include="Models\Usuario\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>

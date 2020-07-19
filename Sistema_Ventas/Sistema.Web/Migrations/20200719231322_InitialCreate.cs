@@ -94,7 +94,8 @@ namespace Sistema.Web.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ClienteId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false)
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    Estado = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -140,7 +141,8 @@ namespace Sistema.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CarritoId = table.Column<int>(nullable: false),
-                    ProductoId = table.Column<int>(nullable: false)
+                    ProductoId = table.Column<int>(nullable: false),
+                    Cantidad = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
