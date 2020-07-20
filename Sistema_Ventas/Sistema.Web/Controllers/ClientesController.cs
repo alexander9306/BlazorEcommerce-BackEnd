@@ -72,7 +72,7 @@ namespace Sistema.Web.Controllers
                 Email = model.Email,
                 PasswordHash = model.PasswordHash,
                 PasswordSalt = model.PasswordSalt,
-                UpdatedAt = DateTime.Now,
+                UpdateAt = DateTime.Now,
             };
 
             _context.Entry(cliente).State = EntityState.Modified;
@@ -118,7 +118,7 @@ namespace Sistema.Web.Controllers
                 PasswordSalt = model.PasswordSalt,
                 FechaNac = fecha,
                 CreatedAt = fecha,
-                UpdatedAt = fecha,
+                UpdateAt = fecha,
             };
 
 
@@ -141,7 +141,7 @@ namespace Sistema.Web.Controllers
                 PasswordSalt = cliente.PasswordSalt,
                 FechaNac = cliente.FechaNac,
                 CreatedAt = cliente.CreatedAt,
-                UpdatedAt = cliente.UpdatedAt,
+                UpdateAt = cliente.UpdateAt,
             };
 
             return CreatedAtAction("Mostrar", new { id = cliente.Id }, clienteModel);

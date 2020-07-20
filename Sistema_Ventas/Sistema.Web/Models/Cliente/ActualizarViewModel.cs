@@ -6,6 +6,8 @@ namespace Sistema.Web.Models.Usuario.Cliente
 
     public class ActualizarViewModel
     {
+        [Required(ErrorMessage = "El campo {0} es requerido.")]
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         [StringLength(50, MinimumLength = 15, ErrorMessage = "El email no debe de tener más de 50 caracteres, ni menos de 15 caracteres.")]
