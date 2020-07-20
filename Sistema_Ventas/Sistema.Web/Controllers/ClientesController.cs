@@ -53,6 +53,47 @@ namespace Sistema.Web.Controllers
 
         // PUT: api/Clientes/Actualizar/id
 
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (model == null || id != model.Id)
+            {
+                return BadRequest();
+            }
+
+            var cliente = new Cliente
+            {
+                Id = model.Id,
+                Email = model.Email,
+                PasswordHash = model.PasswordHash,
+                PasswordSalt = model.PasswordSalt,
+                UpdatedAt = DateTime.Now,
+            };
+
+            _context.Entry(cliente).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClienteExists(id))
+                {
+                    return NotFound();
+                }
+
+                return BadRequest("Hubo un error al guardar sus datos.");
+            }
+
+            return NoContent();
+        }
+
         // POST: api/Clientes/Crear
         [HttpPost("[action]")]
         public async Task<ActionResult<ClienteViewModel>> Crear([FromForm] CrearViewModel model)
