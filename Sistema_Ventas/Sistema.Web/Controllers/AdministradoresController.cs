@@ -10,7 +10,12 @@ namespace Sistema.Web.Controllers
     using Microsoft.EntityFrameworkCore;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Usuario;
-    //using Sistema.Web.Models.Usuario.Administrador;
+    using Sistema.Web.Models.Usuario.Administrador;
+    using System.IO;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -53,8 +58,101 @@ namespace Sistema.Web.Controllers
 
         // PUT: api/Administradores/Actualizar/id
 
-        // POST: api/Administradores/Crear
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            if (model == null || id != model.Id)
+            {
+                return BadRequest();
+            }
+
+            var administrador = new Administrador
+            {
+                Id = model.Id,
+                RolId = model.RolId,
+                Email = model.Email,
+                Username = model.Username,
+                PasswordHash = model.PasswordHash,
+                PasswordSalt = model.PasswordSalt,
+                Estado = true,
+                UpdateAt = DateTime.Now,
+            };
+
+            _context.Entry(administrador).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AdministradorExists(id))
+                {
+                    return NotFound();
+                }
+
+                return BadRequest("Hubo un error al guardar sus datos.");
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Administradores/Crear
+        [HttpPost("[action]")]
+        public async Task<ActionResult<AdministradorViewModel>> Crear([FromForm] CrearViewModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var fecha = DateTime.Now;
+
+            var administrador = new Administrador
+            {
+                RolId = model.RolId,
+                Email = model.Email,
+                Username = model.Username,
+                PasswordHash = model.PasswordHash,
+                PasswordSalt = model.PasswordSalt,
+                CreatedAt = fecha,
+                UpdateAt = fecha,
+            };
+
+            await _context.Administradores.AddAsync(administrador).ConfigureAwait(false);
+
+            try
+            {
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest("Hubo un error al guardar sus datos.");
+            }
+
+            var administradorModel = new AdministradorViewModel
+            {
+                Id = administrador.Id,
+                Email = model.Email,
+                Username = model.Username,
+                PasswordHash = model.PasswordHash,
+                PasswordSalt = model.PasswordSalt,
+                CreatedAt = administrador.CreatedAt,
+                UpdateAt = administrador.UpdateAt,
+            };
+
+            return CreatedAtAction("Mostrar", new { id = administrador.Id }, administradorModel);
+        }
 
         private bool AdministradorExists(int id)
         {

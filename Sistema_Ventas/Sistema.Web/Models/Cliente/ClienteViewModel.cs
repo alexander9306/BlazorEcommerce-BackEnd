@@ -17,9 +17,5 @@ namespace Sistema.Web.Models.Usuario.Cliente
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdateAt { get; set; }
-
-        public Carrito Carrito { get; set; }
-
-        public Orden Orden { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Sistema.Web.Controllers
     using Microsoft.EntityFrameworkCore;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Usuario;
-    //using Sistema.Web.Models.Usuario.Administrador;
+    using Sistema.Web.Models.Usuario.Cliente;
 
     [Route("api/[controller]")]
     [ApiController]
