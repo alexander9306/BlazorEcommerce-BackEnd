@@ -131,7 +131,6 @@
             };
         }
 
-
         // PUT: api/Carritos/Actualizar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, ActualizarViewModel model)
@@ -231,42 +230,6 @@
             }
 
             return CreatedAtAction("Mostrar", new { id = carrito.Id }, carrito);
-        }
-
-
-        // PUT: api/Carritos/Desactivar/id
-        [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Desactivar(int id)
-        {
-            return await CambiarEstado(id, false).ConfigureAwait(false);
-        }
-
-        private async Task<IActionResult> CambiarEstado(int id, bool estado)
-        {
-            if (id <= 0)
-            {
-                return BadRequest();
-            }
-
-            var carrito = await _context.Carritos.FindAsync(id).ConfigureAwait(false);
-
-            if (carrito == null)
-            {
-                return NotFound();
-            }
-
-            carrito.Estado = estado;
-
-            try
-            {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return BadRequest("Hubo un error al guardar sus datos.");
-            }
-
-            return NoContent();
         }
 
         private bool CarritoExists(int id)
