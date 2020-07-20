@@ -24,7 +24,7 @@
 
         [AllowedExtensions(ErrorMessage = "Solo se permiten archivos de tipo: jpg, jpeg, gif, png.")]
         [MaxFileSize(2 * 1024 * 1024, ErrorMessage = "El tamaño máximo permitido es: {1}")]
-        public IFormFile Foto { get; set; }
+        public IFormFile? Foto { get; set; }
 
         [MaxLength(255, ErrorMessage = "El campo {0} no debe de tener más de {1} caracteres.")]
         public string? Descripcion { get; set; }

@@ -206,7 +206,6 @@
             {
                 Id = producto.Id,
                 Nombre = producto.Nombre,
-                Categoria = producto.Categoria.Nombre,
                 Precio = producto.Precio,
                 Estado = producto.Estado,
                 Marca = producto.Marca,
