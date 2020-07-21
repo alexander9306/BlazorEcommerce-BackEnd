@@ -12,7 +12,7 @@
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime UpdateAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public double Latitud { get; set; }
 
