@@ -10,53 +10,48 @@ namespace Sistema.Web.Controllers
     using Microsoft.EntityFrameworkCore;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Usuario;
-    using Sistema.Web.Models.Usuario.Administrador;
-    using System.IO;
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
+    using Sistema.Web.Models.Usuario.Cliente;
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AdministradoresController : ControllerBase
+    public class ClientesController : ControllerBase
     {
         private readonly DbContextSistema _context;
 
-        public AdministradoresController(DbContextSistema context)
+        public ClientesController(DbContextSistema context)
         {
             _context = context;
         }
 
-        // GET: api/Administradores/Listar
+        // GET: api/Clientes/Listar
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<Administrador>>> Listar()
+        public async Task<ActionResult<IEnumerable<Cliente>>> Listar()
         {
-            return await _context.Administradores.ToListAsync().ConfigureAwait(false);
+            return await _context.Clientes.ToListAsync().ConfigureAwait(false);
         }
 
-        // GET: api/Administradores/ListarAdministradores/id
+        // GET: api/Clientes/Clientes/id
         [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<IEnumerable<Administrador>>> ListarAdministradores(int id)
+        public async Task<ActionResult<IEnumerable<Cliente>>> ListarClientes(int id)
         {
-            return await _context.Administradores.Where(a => a.RolId == id).ToListAsync();
+            return await _context.Clientes.Where(a => a.RolId == id).ToListAsync();
         }
 
-        // GET: api/Administradores/Mostrar/id
+        // GET: api/Clientes/Mostrar/id
         [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<Administrador>> Mostrar(int id)
+        public async Task<ActionResult<Cliente>> Mostrar(int id)
         {
-            var administrador = await _context.Administradores.FindAsync(id).ConfigureAwait(false);
+            var cliente = await _context.Clientes.FindAsync(id).ConfigureAwait(false);
 
-            if (administrador == null)
+            if (cliente == null)
             {
                 return NotFound();
             }
 
-            return administrador;
+            return cliente;
         }
 
-        // PUT: api/Administradores/Actualizar/id
+        // PUT: api/Clientes/Actualizar/id
 
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
@@ -71,19 +66,16 @@ namespace Sistema.Web.Controllers
                 return BadRequest();
             }
 
-            var administrador = new Administrador
+            var cliente = new Cliente
             {
                 Id = model.Id,
-                RolId = model.RolId,
                 Email = model.Email,
-                Username = model.Username,
                 PasswordHash = model.PasswordHash,
                 PasswordSalt = model.PasswordSalt,
-                Estado = true,
                 UpdateAt = DateTime.Now,
             };
 
-            _context.Entry(administrador).State = EntityState.Modified;
+            _context.Entry(cliente).State = EntityState.Modified;
 
             try
             {
@@ -91,7 +83,7 @@ namespace Sistema.Web.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AdministradorExists(id))
+                if (!ClienteExists(id))
                 {
                     return NotFound();
                 }
@@ -102,9 +94,9 @@ namespace Sistema.Web.Controllers
             return NoContent();
         }
 
-        // POST: api/Administradores/Crear
+        // POST: api/Clientes/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<AdministradorViewModel>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<ClienteViewModel>> Crear([FromForm] CrearViewModel model)
         {
             if (model == null)
             {
@@ -118,18 +110,19 @@ namespace Sistema.Web.Controllers
 
             var fecha = DateTime.Now;
 
-            var administrador = new Administrador
+            var cliente = new Cliente
             {
-                RolId = model.RolId,
+                Id = model.Id,
                 Email = model.Email,
-                Username = model.Username,
                 PasswordHash = model.PasswordHash,
                 PasswordSalt = model.PasswordSalt,
+                FechaNac = fecha,
                 CreatedAt = fecha,
                 UpdateAt = fecha,
             };
 
-            await _context.Administradores.AddAsync(administrador).ConfigureAwait(false);
+
+            await _context.Clientes.AddAsync(cliente).ConfigureAwait(false);
 
             try
             {
@@ -140,23 +133,23 @@ namespace Sistema.Web.Controllers
                 return BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            var administradorModel = new AdministradorViewModel
+            var clienteModel = new ClienteViewModel
             {
-                Id = administrador.Id,
-                Email = model.Email,
-                Username = model.Username,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
-                CreatedAt = administrador.CreatedAt,
-                UpdateAt = administrador.UpdateAt,
+                Id = cliente.Id,
+                Email = cliente.Email,
+                PasswordHash = cliente.PasswordHash,
+                PasswordSalt = cliente.PasswordSalt,
+                FechaNac = cliente.FechaNac,
+                CreatedAt = cliente.CreatedAt,
+                UpdateAt = cliente.UpdateAt,
             };
 
-            return CreatedAtAction("Mostrar", new { id = administrador.Id }, administradorModel);
+            return CreatedAtAction("Mostrar", new { id = cliente.Id }, clienteModel);
         }
 
-        private bool AdministradorExists(int id)
+        private bool ClienteExists(int id)
         {
-            return _context.Administradores.Any(e => e.Id == id);
+            return _context.Clientes.Any(e => e.Id == id);
         }
     }
 }

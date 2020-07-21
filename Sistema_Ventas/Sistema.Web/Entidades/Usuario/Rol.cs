@@ -1,6 +1,7 @@
 namespace Sistema.Web.Entidades.Usuario
 {
     using System.Collections.Generic;
+    using System;
 
     public class Rol
     {
@@ -8,9 +9,9 @@ namespace Sistema.Web.Entidades.Usuario
 
         public string Nombre { get; set; }
 
-        public string Estado { get; set; }
+        public bool Estado { get; set; }
 
-        public string Descripcion { get; set; }
+        public string? Descripcion { get; set; }
 
         public ICollection<Administrador> Administradores { get; }
     }
