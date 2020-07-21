@@ -42,20 +42,6 @@ namespace Sistema.Web.Controllers
             return await _context.Roles.Where(a => a.RolId == id).ToListAsync();
         }
 
-        // GET: api/Roles/Mostrar/id
-        [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<Rol>> Mostrar(int id)
-        {
-            var rol = await _context.Roles.FindAsync(id).ConfigureAwait(false);
-
-            if (rol == null)
-            {
-                return NotFound();
-            }
-
-            return rol;
-        }
-
         // PUT: api/Roles/Actualizar/id
 
         [HttpPut("[action]/{id}")]
