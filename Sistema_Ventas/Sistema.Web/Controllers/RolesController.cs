@@ -127,6 +127,48 @@ namespace Sistema.Web.Controllers
             return CreatedAtAction("Mostrar", new { id = rol.Id }, rolModel);
         }
 
+        // PUT: api/Roles/Activar/id
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Activar(int id)
+        {
+            return await CambiarEstado(id, true).ConfigureAwait(false);
+        }
+
+        // PUT: api/Roles/Desactivar/id
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Desactivar(int id)
+        {
+            return await CambiarEstado(id, false).ConfigureAwait(false);
+        }
+
+        private async Task<IActionResult> CambiarEstado(int id, bool estado)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var rol = await _context.Roles.FindAsync(id).ConfigureAwait(false);
+
+            if (rol == null)
+            {
+                return NotFound();
+            }
+
+            rol.Estado = estado;
+
+            try
+            {
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest("Hubo un error al guardar sus datos.");
+            }
+
+            return NoContent();
+        }
+
         private bool RolExists(int id)
         {
             return _context.Roles.Any(e => e.Id == id);
