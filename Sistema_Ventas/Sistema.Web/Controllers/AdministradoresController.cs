@@ -154,6 +154,48 @@ namespace Sistema.Web.Controllers
             return CreatedAtAction("Mostrar", new { id = administrador.Id }, administradorModel);
         }
 
+        // PUT: api/Administradores/Activar/id
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Activar(int id)
+        {
+            return await CambiarEstado(id, true).ConfigureAwait(false);
+        }
+
+        // PUT: api/Administradores/Desactivar/id
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> Desactivar(int id)
+        {
+            return await CambiarEstado(id, false).ConfigureAwait(false);
+        }
+
+        private async Task<IActionResult> CambiarEstado(int id, bool estado)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var administrador = await _context.Administradores.FindAsync(id).ConfigureAwait(false);
+
+            if (administrador == null)
+            {
+                return NotFound();
+            }
+
+            administrador.Estado = estado;
+
+            try
+            {
+                await _context.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest("Hubo un error al guardar sus datos.");
+            }
+
+            return NoContent();
+        }
+
         private bool AdministradorExists(int id)
         {
             return _context.Administradores.Any(e => e.Id == id);
