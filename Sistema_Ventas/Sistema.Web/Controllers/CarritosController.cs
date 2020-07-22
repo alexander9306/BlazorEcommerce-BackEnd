@@ -1,13 +1,16 @@
-﻿namespace Sistema.Web.Controllers
+﻿
+namespace Sistema.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Ordenes;
+    using Sistema.Web.Helpers;
     using Sistema.Web.Models.Ordenes.Carrito;
 
     [Route("api/[controller]")]
@@ -15,10 +18,12 @@
     public class CarritosController : ControllerBase
     {
         private readonly DbContextSistema _context;
+        private readonly CookieHelper cookieHelper;
 
-        public CarritosController(DbContextSistema context)
+        public CarritosController(DbContextSistema context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, this.User);
         }
 
         // GET: api/Carritos/Listar
@@ -94,16 +99,23 @@
             };
         }
 
-        // GET: api/Carritos/Mostrar/id
-        [HttpGet("[action]/{clienteId}")]
-        public async Task<ActionResult<CarritoViewModel>> MostrarPorCliente(int clienteId)
+        // GET: api/Carritos/MostrarPorCliente/id
+        [HttpGet("[action]")]
+        public async Task<ActionResult<CarritoViewModel>> MostrarPorCliente()
         {
+            var userId = this.cookieHelper.GetUserId();
+            var guId = this.cookieHelper.Get("UID");
+            if (string.IsNullOrEmpty(guId) && userId == null)
+            {
+                return NotFound();
+            }
+
             var carrito = await _context.Carritos
                 .Include(c => c.Detalles)
                 .ThenInclude(d => d.Producto)
                 .Include(c => c.Cliente)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.ClienteId == clienteId && c.Estado).ConfigureAwait(false);
+                .FirstOrDefaultAsync(c => c.Estado && c.ClienteGuid == guId).ConfigureAwait(false);
 
             if (carrito == null)
             {
@@ -168,7 +180,6 @@
 
             try
             {
-
                 await _context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)

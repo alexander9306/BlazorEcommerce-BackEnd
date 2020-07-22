@@ -8,7 +8,9 @@
     {
         public int Id { get; set; }
 
-        public int ClienteId { get; set; }
+        public int? ClienteId { get; set; }
+
+        public string? ClienteGuid { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

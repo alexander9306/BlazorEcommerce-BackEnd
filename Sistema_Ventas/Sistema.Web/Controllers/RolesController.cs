@@ -35,15 +35,8 @@ namespace Sistema.Web.Controllers
             return await _context.Roles.ToListAsync().ConfigureAwait(false);
         }
 
-        // GET: api/Roles/ListarRoles/id
-        [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<IEnumerable<Rol>>> ListarRoles(int id)
-        {
-            return await _context.Roles.Where(a => a.RolId == id).ToListAsync();
-        }
 
         // PUT: api/Roles/Actualizar/id
-
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
         {

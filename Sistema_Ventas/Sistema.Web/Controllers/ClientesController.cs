@@ -30,13 +30,6 @@ namespace Sistema.Web.Controllers
             return await _context.Clientes.ToListAsync().ConfigureAwait(false);
         }
 
-        // GET: api/Clientes/Clientes/id
-        [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<IEnumerable<Cliente>>> ListarClientes(int id)
-        {
-            return await _context.Clientes.Where(a => a.RolId == id).ToListAsync();
-        }
-
         // GET: api/Clientes/Mostrar/id
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<Cliente>> Mostrar(int id)
@@ -52,7 +45,6 @@ namespace Sistema.Web.Controllers
         }
 
         // PUT: api/Clientes/Actualizar/id
-
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
         {

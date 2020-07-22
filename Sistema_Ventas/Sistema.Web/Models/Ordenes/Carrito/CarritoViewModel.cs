@@ -9,7 +9,7 @@
 
         public string Cliente { get; set; }
 
-        public int ClienteId { get; set; }
+        public int? ClienteId { get; set; }
 
         public decimal Total { get; set; }
 
