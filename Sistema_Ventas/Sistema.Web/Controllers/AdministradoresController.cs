@@ -131,7 +131,7 @@ namespace Sistema.Web.Controllers
 
         // PUT: api/Administradores/Actualizar/id
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -180,7 +180,7 @@ namespace Sistema.Web.Controllers
 
         // POST: api/Administradores/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<AdministradorViewModel>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<AdministradorViewModel>> Crear([FromBody] CrearViewModel model)
         {
             if (model == null)
             {
