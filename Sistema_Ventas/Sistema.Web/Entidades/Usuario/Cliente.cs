@@ -15,7 +15,7 @@ namespace Sistema.Web.Entidades.Usuario
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime UpdateAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public Carrito Carrito { get; set; }
 

@@ -66,7 +66,7 @@ namespace Sistema.Web.Controllers
             {
                 Id = model.Id,
                 Email = model.Email,
-                UpdateAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
             };
 
             if (model.ActPassword)
@@ -118,7 +118,7 @@ namespace Sistema.Web.Controllers
                 PasswordHash = passwordHash,
                 FechaNac = fecha,
                 CreatedAt = fecha,
-                UpdateAt = fecha,
+                UpdatedAt = fecha,
             };
 
 
@@ -140,7 +140,7 @@ namespace Sistema.Web.Controllers
                 PasswordHash = cliente.PasswordHash,
                 FechaNac = cliente.FechaNac,
                 CreatedAt = cliente.CreatedAt,
-                UpdateAt = cliente.UpdateAt,
+                UpdatedAt = cliente.UpdatedAt,
             };
 
             return CreatedAtAction("Mostrar", new { id = cliente.Id }, clienteModel);

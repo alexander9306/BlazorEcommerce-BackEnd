@@ -86,7 +86,7 @@ namespace Sistema.Web.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Administrador>>> Listar()
         {
-             var adminstradores = await _context.Administradores
+             var administradores = await _context.Administradores
              .Include(a => a.Rol)
              .AsNoTracking()
              .ToListAsync()
@@ -98,7 +98,6 @@ namespace Sistema.Web.Controllers
                      Username = a.Username,
                      Rol = a.Rol.Nombre,
                      Email = a.Email,
-                     Username = a.Username,
                      Estado = a.Estado,
                      CreatedAt = a.CreatedAt,
                      UpdatedAt = a.UpdatedAt,
@@ -140,7 +139,7 @@ namespace Sistema.Web.Controllers
                 Email = model.Email,
                 Username = model.Username,
                 Estado = true,
-                UpdateAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
             };
 
             if (model.ActPassword)
@@ -192,7 +191,7 @@ namespace Sistema.Web.Controllers
                 Username = model.Username,
                 PasswordHash = passwordHash,
                 CreatedAt = fecha,
-                UpdateAt = fecha,
+                UpdatedAt = fecha,
             };
 
             await _context.Administradores.AddAsync(administrador).ConfigureAwait(false);
@@ -211,9 +210,8 @@ namespace Sistema.Web.Controllers
                 Id = administrador.Id,
                 Email = model.Email,
                 Username = model.Username,
-                PasswordHash = passwordHash,
                 CreatedAt = administrador.CreatedAt,
-                UpdateAt = administrador.UpdateAt,
+                UpdatedAt = administrador.UpdatedAt,
             };
 
             return CreatedAtAction("Mostrar", new { id = administrador.Id }, administradorModel);
