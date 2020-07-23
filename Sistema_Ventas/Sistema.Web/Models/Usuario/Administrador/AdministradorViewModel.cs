@@ -12,10 +12,6 @@ namespace Sistema.Web.Models.Usuario.Administrador
 
         public string Username { get; set; }
 
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
-
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdateAt { get; set; }

@@ -86,7 +86,23 @@ namespace Sistema.Web.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Administrador>>> Listar()
         {
-            return await _context.Administradores.ToListAsync().ConfigureAwait(false);
+             var adminstradores = await _context.Administradores
+             .Include(a => a.Rol)
+             .AsNoTracking()
+             .ToListAsync()
+             .ConfigureAwait(false);
+
+             return Ok(administradores.Select(a => new AdministradorViewModel
+                 {
+                     Id = a.Id,
+                     Username = a.Username,
+                     Rol = a.Rol.Nombre,
+                     Email = a.Email,
+                     Username = a.Username,
+                     Estado = a.Estado,
+                     CreatedAt = a.CreatedAt,
+                     UpdatedAt = a.UpdatedAt,
+                 }));
         }
 
         // GET: api/Administradores/Mostrar/id
