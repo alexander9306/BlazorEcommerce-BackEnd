@@ -1,31 +1,85 @@
 /*reynaldo yunior*/
 
+using System.Globalization;
+using System.Security.Claims;
+using System.Text;
+
 namespace Sistema.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Web.WebPages;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Usuario;
+    using Sistema.Web.Helpers;
     using Sistema.Web.Models.Usuario.Administrador;
-    using System.IO;
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
 
     [Route("api/[controller]")]
     [ApiController]
     public class AdministradoresController : ControllerBase
     {
         private readonly DbContextSistema _context;
+        private readonly PasswordHelper passwordHelper;
 
-        public AdministradoresController(DbContextSistema context)
+        public AdministradoresController(DbContextSistema context, IConfiguration config)
         {
             _context = context;
+            passwordHelper = new PasswordHelper(config);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            var username = model.Usuario.ToLower(CultureInfo.CurrentCulture);
+
+            var usuario = await _context.Administradores.Where(a => a.Estado)
+                .Include(a => a.Rol)
+                .FirstOrDefaultAsync(a => this.IsValidEmail(username) ? a.Email == username : a.Username == username)
+                .ConfigureAwait(false);
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            if (!passwordHelper.VerificarPasswordHash(model.Password, usuario.PasswordHash))
+            {
+                return NotFound();
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim(ClaimTypes.Email, usuario.Email),
+                new Claim(ClaimTypes.Role, usuario.Rol.Nombre),
+                new Claim("Id", usuario.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim("Rol", usuario.Rol.Nombre ),
+                new Claim("Username", usuario.Username),
+            };
+
+            return Ok(
+                new { token = GenerarToken(claims) }
+            );
+        }
+
+        private string GenerarToken(List<Claim> claims)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"],
+                _config["Jwt:Issuer"],
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds,
+                claims: claims);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         // GET: api/Administradores/Listar
@@ -33,13 +87,6 @@ namespace Sistema.Web.Controllers
         public async Task<ActionResult<IEnumerable<Administrador>>> Listar()
         {
             return await _context.Administradores.ToListAsync().ConfigureAwait(false);
-        }
-
-        // GET: api/Administradores/ListarAdministradores/id
-        [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<IEnumerable<Administrador>>> ListarAdministradores(int id)
-        {
-            return await _context.Administradores.Where(a => a.RolId == id).ToListAsync();
         }
 
         // GET: api/Administradores/Mostrar/id
@@ -57,7 +104,6 @@ namespace Sistema.Web.Controllers
         }
 
         // PUT: api/Administradores/Actualizar/id
-
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
         {
@@ -77,11 +123,15 @@ namespace Sistema.Web.Controllers
                 RolId = model.RolId,
                 Email = model.Email,
                 Username = model.Username,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
                 Estado = true,
                 UpdateAt = DateTime.Now,
             };
+
+            if (model.ActPassword)
+            {
+                this.passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
+                administrador.PasswordHash = passwordHash;
+            }
 
             _context.Entry(administrador).State = EntityState.Modified;
 
@@ -117,14 +167,14 @@ namespace Sistema.Web.Controllers
             }
 
             var fecha = DateTime.Now;
+            this.passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
 
             var administrador = new Administrador
             {
                 RolId = model.RolId,
                 Email = model.Email,
                 Username = model.Username,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
+                PasswordHash = passwordHash,
                 CreatedAt = fecha,
                 UpdateAt = fecha,
             };
@@ -145,8 +195,7 @@ namespace Sistema.Web.Controllers
                 Id = administrador.Id,
                 Email = model.Email,
                 Username = model.Username,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
+                PasswordHash = passwordHash,
                 CreatedAt = administrador.CreatedAt,
                 UpdateAt = administrador.UpdateAt,
             };
@@ -194,6 +243,19 @@ namespace Sistema.Web.Controllers
             }
 
             return NoContent();
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private bool AdministradorExists(int id)

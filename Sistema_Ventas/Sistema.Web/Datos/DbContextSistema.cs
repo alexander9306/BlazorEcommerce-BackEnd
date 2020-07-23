@@ -46,6 +46,22 @@
             modelBuilder.Entity<Cliente>()
                 .HasIndex(p => p.Email)
                 .IsUnique();
+
+            modelBuilder.Entity<Rol>()
+                .HasData(
+                    new Rol
+                    {
+                        Id = 1,
+                        Nombre = "Administrador",
+                        Descripcion = "Acceso máximo del sistema",
+                    },
+                    new Rol
+                    {
+                        Id = 2,
+                        Nombre = "Organizador",
+                        Descripcion = "Acceso a las ordenes del sistema",
+                    }
+                );
         }
     }
 }

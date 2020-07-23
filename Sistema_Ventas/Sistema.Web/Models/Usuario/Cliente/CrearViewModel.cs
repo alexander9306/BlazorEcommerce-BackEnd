@@ -1,8 +1,6 @@
 namespace Sistema.Web.Models.Usuario.Cliente
 {
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
-    using Sistema.Web.Helpers.Validators;
 
     public class CrearViewModel
     {
@@ -15,10 +13,7 @@ namespace Sistema.Web.Models.Usuario.Cliente
 
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         [StringLength(20, MinimumLength = 8, ErrorMessage = "La PasswordHash no debe de tener más de 20 caracteres, ni menos de 8 caracteres.")]
-        public byte[] PasswordHash { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es requerido.")]
-        [StringLength(20, MinimumLength = 8, ErrorMessage = "La PasswordSalt no debe de tener más de 20 caracteres, ni menos de 8 caracteres.")]
-        public byte[] PasswordSalt { get; set; }
+        public string Password { get; set; }
     }
 }

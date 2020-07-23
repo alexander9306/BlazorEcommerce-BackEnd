@@ -1,8 +1,8 @@
 ﻿namespace Sistema.Web.Models.Ordenes.Orden
 {
-    using Sistema.Web.Models.Ordenes.Orden.Pedido;
     using System;
     using System.Collections.Generic;
+    using Sistema.Web.Models.Ordenes.Orden.Pedido;
 
     public class OrdenViewModel
     {

@@ -8,8 +8,10 @@ namespace Sistema.Web.Controllers
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Usuario;
+    using Sistema.Web.Helpers;
     using Sistema.Web.Models.Usuario.Cliente;
 
     [Route("api/[controller]")]
@@ -17,10 +19,12 @@ namespace Sistema.Web.Controllers
     public class ClientesController : ControllerBase
     {
         private readonly DbContextSistema _context;
+        private readonly PasswordHelper passwordHelper;
 
-        public ClientesController(DbContextSistema context)
+        public ClientesController(DbContextSistema context, IConfiguration config)
         {
             _context = context;
+            passwordHelper = new PasswordHelper(config);
         }
 
         // GET: api/Clientes/Listar
@@ -62,10 +66,14 @@ namespace Sistema.Web.Controllers
             {
                 Id = model.Id,
                 Email = model.Email,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
                 UpdateAt = DateTime.Now,
             };
+
+            if (model.ActPassword)
+            {
+                this.passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
+                cliente.PasswordHash = passwordHash;
+            }
 
             _context.Entry(cliente).State = EntityState.Modified;
 
@@ -101,13 +109,13 @@ namespace Sistema.Web.Controllers
             }
 
             var fecha = DateTime.Now;
+            this.passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
 
             var cliente = new Cliente
             {
                 Id = model.Id,
                 Email = model.Email,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
+                PasswordHash = passwordHash,
                 FechaNac = fecha,
                 CreatedAt = fecha,
                 UpdateAt = fecha,
@@ -130,7 +138,6 @@ namespace Sistema.Web.Controllers
                 Id = cliente.Id,
                 Email = cliente.Email,
                 PasswordHash = cliente.PasswordHash,
-                PasswordSalt = cliente.PasswordSalt,
                 FechaNac = cliente.FechaNac,
                 CreatedAt = cliente.CreatedAt,
                 UpdateAt = cliente.UpdateAt,

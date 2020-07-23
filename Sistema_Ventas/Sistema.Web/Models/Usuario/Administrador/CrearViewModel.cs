@@ -1,8 +1,6 @@
 namespace Sistema.Web.Models.Usuario.Administrador
 {
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
-    using Sistema.Web.Helpers.Validators;
 
     public class CrearViewModel
     {
@@ -18,9 +16,6 @@ namespace Sistema.Web.Models.Usuario.Administrador
         public string Username { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido.")]
-        public byte[] PasswordHash { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es requerido.")]
-        public byte[] PasswordSalt { get; set; }
+        public string Password { get; set; }
     }
 }

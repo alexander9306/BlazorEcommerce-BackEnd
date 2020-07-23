@@ -1,7 +1,6 @@
 namespace Sistema.Web.Models.Usuario.Administrador
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
 
     public class AdministradorViewModel
     {

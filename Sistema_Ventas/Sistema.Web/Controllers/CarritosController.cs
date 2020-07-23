@@ -1,8 +1,6 @@
-﻿
-namespace Sistema.Web.Controllers
+﻿namespace Sistema.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
@@ -12,6 +10,7 @@ namespace Sistema.Web.Controllers
     using Sistema.Web.Entidades.Ordenes;
     using Sistema.Web.Helpers;
     using Sistema.Web.Models.Ordenes.Carrito;
+    using Sistema.Web.Models.Ordenes.Carrito.Detalle;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -26,52 +25,12 @@ namespace Sistema.Web.Controllers
             cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, this.User);
         }
 
-        // GET: api/Carritos/Listar
+        // GET: api/Carritos/Mostrar
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<CarritoViewModel>>> Listar()
+        public async Task<ActionResult<CarritoViewModel>> Mostrar()
         {
-            var carritos = await _context.Carritos
-                .Include(c => c.Detalles)
-                .ThenInclude(d => d.Producto)
-                .Include(c => c.Cliente)
-                .AsNoTracking()
-                .ToListAsync().ConfigureAwait(false);
 
-            return Ok(carritos.Select(c =>
-            {
-                var detalles = c.Detalles.Select(d => new DetalleViewModel
-                {
-                    ProductoId = d.ProductoId,
-                    Producto = d.Producto.Nombre,
-                    Total = d.Producto.Precio * d.Cantidad,
-                    Precio = d.Producto.Precio,
-                    Cantidad = d.Cantidad,
-                });
-
-                var carrito = new CarritoViewModel
-                {
-                    Id = c.Id,
-                    Cliente = c.Cliente.Email,
-                    ClienteId = c.ClienteId,
-                    Total = detalles.Sum(d => d.Total),
-                    CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.UpdatedAt,
-                    Detalles = detalles,
-                };
-                return carrito;
-            }));
-        }
-
-        // GET: api/Carritos/Mostrar/id
-        [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<CarritoViewModel>> Mostrar(int id)
-        {
-            var carrito = await _context.Carritos
-                .Include(c => c.Detalles)
-                .ThenInclude(d => d.Producto)
-                .Include(c => c.Cliente)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == id).ConfigureAwait(false);
+            var carrito = await VerificarCarrito(true).ConfigureAwait(false);
 
             if (carrito == null)
             {
@@ -99,84 +58,82 @@ namespace Sistema.Web.Controllers
             };
         }
 
-        // GET: api/Carritos/MostrarPorCliente/id
-        [HttpGet("[action]")]
-        public async Task<ActionResult<CarritoViewModel>> MostrarPorCliente()
-        {
-            var userId = this.cookieHelper.GetUserId();
-            var guId = this.cookieHelper.Get("UID");
-            if (string.IsNullOrEmpty(guId) && userId == null)
-            {
-                return NotFound();
-            }
-
-            var carrito = await _context.Carritos
-                .Include(c => c.Detalles)
-                .ThenInclude(d => d.Producto)
-                .Include(c => c.Cliente)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Estado && c.ClienteGuid == guId).ConfigureAwait(false);
-
-            if (carrito == null)
-            {
-                return NotFound();
-            }
-
-            var detalles = carrito.Detalles.Select(d => new DetalleViewModel
-            {
-                ProductoId = d.ProductoId,
-                Producto = d.Producto.Nombre,
-                Total = d.Producto.Precio * d.Cantidad,
-                Precio = d.Producto.Precio,
-                Cantidad = d.Cantidad,
-            });
-            var detalleViewModels = detalles.ToList();
-            return new CarritoViewModel
-            {
-                Id = carrito.Id,
-                Cliente = carrito.Cliente.Email,
-                ClienteId = carrito.ClienteId,
-                Total = detalleViewModels.Sum(d => d.Total),
-                CreatedAt = carrito.CreatedAt,
-                UpdatedAt = carrito.UpdatedAt,
-                Detalles = detalleViewModels,
-            };
-        }
-
-        // PUT: api/Carritos/Actualizar/id
-        [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, ActualizarViewModel model)
+        // PUT: api/Carritos/Agregar/id
+        [HttpPost("[action]/{id}")]
+        public async Task<IActionResult> Agregar(int id, [FromBody] ActualizarDetalleViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (model == null || id != model.Id)
+            if (model == null || id != model.ProductoId)
             {
                 return BadRequest();
             }
 
-            var carrito = new Carrito
-            {
-                Id = model.Id,
-                ClienteId = model.ClienteId,
-                UpdatedAt = DateTime.Now,
-            };
-            _context.Entry(carrito).State = EntityState.Modified;
+            var carrito = await VerificarCarrito(false).ConfigureAwait(false);
+            var userId = this.cookieHelper.GetUserId();
+            var guId = this.cookieHelper.Get("UID");
+            var fecha = DateTime.Now;
 
-            model.Detalles.Select(d =>
+            if (carrito == null)
             {
-                var detalle = new DetalleCarrito
+                carrito = new Carrito
                 {
-                    CarritoId = carrito.Id,
-                    ProductoId = d.ProductoId,
-                    Cantidad = d.Cantidad,
+                    ClienteId = userId,
+                    ClienteGuid = guId,
+                    Estado = true,
+                    CreatedAt = fecha,
+                    UpdatedAt = fecha,
                 };
-                _context.Entry(detalle).State = EntityState.Modified;
 
-                return detalle;
-            });
+                await _context.Carritos.AddAsync(carrito).ConfigureAwait(false);
+
+                try
+                {
+                    await _context.SaveChangesAsync().ConfigureAwait(false);
+
+                    var detalle = new DetalleCarrito
+                    {
+                        CarritoId = carrito.Id,
+                        ProductoId = model.ProductoId,
+                        Cantidad = model.Cantidad,
+                    };
+
+                    await _context.DetalleCarritos.AddAsync(detalle).ConfigureAwait(false);
+
+                    await _context.SaveChangesAsync().ConfigureAwait(false);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return BadRequest("Hubo un error al guardar sus datos.");
+                }
+
+                return CreatedAtAction("Mostrar", new { id = carrito.Id }, carrito);
+            }
+
+            carrito.ClienteId = userId;
+            carrito.UpdatedAt = fecha;
+
+            if (carrito.Detalles.Any(d => d.ProductoId == model.ProductoId))
+            {
+                foreach (var detalle in carrito.Detalles)
+                {
+                    if (detalle.ProductoId == model.ProductoId)
+                    {
+                        detalle.Cantidad = model.Cantidad;
+                    }
+                }
+            }
+            else
+            {
+                carrito.Detalles.Add(new DetalleCarrito
+                {
+                    ProductoId = model.ProductoId,
+                    Cantidad = model.Cantidad,
+                });
+            }
 
             try
             {
@@ -195,52 +152,35 @@ namespace Sistema.Web.Controllers
             return NoContent();
         }
 
-        // POST: api/Carritos/Crear
-        [HttpPost("[action]")]
-        public async Task<ActionResult<Carrito>> Crear(CrearViewModel model)
+        private async Task<Carrito?> VerificarCarrito(bool? AsNoTracking)
         {
-            if (!ModelState.IsValid)
+            var userId = this.cookieHelper.GetUserId();
+            var guId = this.cookieHelper.Get("UID");
+
+            if (string.IsNullOrEmpty(guId) && userId == null)
             {
-                return BadRequest(ModelState);
+                return null;
             }
 
-            var fecha = DateTime.Now;
-
-            var carrito = new Carrito
+            if (AsNoTracking == true)
             {
-                ClienteId = model.ClienteId,
-                Estado = true,
-                CreatedAt = fecha,
-                UpdatedAt = fecha,
-            };
-
-            await _context.Carritos.AddAsync(carrito).ConfigureAwait(false);
-
-            try
-            {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-
-                model.Detalles.Select(d =>
-                {
-                    var detalle = new DetalleCarrito
-                    {
-                        CarritoId = carrito.Id,
-                        ProductoId = d.ProductoId,
-                        Cantidad = d.Cantidad,
-                    };
-                    _context.DetalleCarritos.Add(detalle);
-
-                    return detalle;
-                });
-
-                await _context.SaveChangesAsync().ConfigureAwait(false);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return await this._context.Carritos
+                    .Include(c => c.Detalles)
+                    .ThenInclude(d => d.Producto)
+                    .Include(c => c.Cliente)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(c =>
+                        (userId != null) ? c.Estado && c.ClienteId == userId : c.Estado && c.ClienteGuid == guId)
+                    .ConfigureAwait(false);
             }
 
-            return CreatedAtAction("Mostrar", new { id = carrito.Id }, carrito);
+            return await this._context.Carritos
+                .Include(c => c.Detalles)
+                .ThenInclude(d => d.Producto)
+                .Include(c => c.Cliente)
+                .FirstOrDefaultAsync(c =>
+                    (userId != null) ? c.Estado && c.ClienteId == userId : c.Estado && c.ClienteGuid == guId)
+                .ConfigureAwait(false);
         }
 
         private bool CarritoExists(int id)

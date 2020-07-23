@@ -1,8 +1,6 @@
 namespace Sistema.Web.Models.Usuario.Rol
 {
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
-    using Sistema.Web.Helpers.Validators;
 
     public class CrearViewModel
     {
