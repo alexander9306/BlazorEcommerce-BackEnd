@@ -106,16 +106,27 @@ namespace Sistema.Web.Controllers
 
         // GET: api/Administradores/Mostrar/id
         [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<Administrador>> Mostrar(int id)
+        public async Task<ActionResult<AdministradorViewModel>> Mostrar(int id)
         {
-            var administrador = await _context.Administradores.FindAsync(id).ConfigureAwait(false);
+            var administrador = await _context.Administradores
+            .Include(a => a.Rol)
+            .FirstOrDefaultAsync(a => a.Id == id) 
+            .ConfigureAwait(false);
 
             if (administrador == null)
             {
                 return NotFound();
             }
 
-            return administrador;
+            return new AdministradorViewModel {
+                Id = administrador.Id,
+                Rol = administrador.Rol.Nombre,
+                Email = administrador.Email,
+                Username = administrador.Username,
+                Estado = administrador.Estado,
+                CreatedAt = administrador.CreatedAt,
+                UpdatedAt = administrador.UpdatedAt,
+            };
         }
 
         // PUT: api/Administradores/Actualizar/id
