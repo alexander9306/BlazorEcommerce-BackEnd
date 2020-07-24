@@ -1,5 +1,6 @@
 namespace Sistema.Web
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
@@ -7,15 +8,19 @@ namespace Sistema.Web
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Sistema.Web.Datos;
+    using Sistema.Web.Helpers;
 
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
+            _tokenHelper = new TokenHelper(configuration);
         }
 
         public IConfiguration Configuration { get; }
+
+        private static TokenHelper _tokenHelper;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public static void ConfigureServices(IServiceCollection services)
@@ -26,8 +31,13 @@ namespace Sistema.Web
             {
                 options.AddPolicy(
                     "Todos",
-                    builder => builder.WithOrigins("*").WithHeaders("*").WithMethods("*"));
+                    builder => builder
+                        .AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials().Build());
+                //builder => builder.WithOrigins("*").WithHeaders("*").WithMethods("*"));
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => _tokenHelper.GetTokenOptions(options));
             services.AddControllers();
             services.AddHttpContextAccessor();
         }
@@ -43,6 +53,8 @@ namespace Sistema.Web
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

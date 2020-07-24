@@ -60,12 +60,6 @@
                         Id = 2,
                         Nombre = "Organizador",
                         Descripcion = "Acceso a las ordenes del sistema.",
-                    },
-                     new Rol
-                    {
-                        Id = 3,
-                        Nombre = "Cliente",
-                        Descripcion = "Utilizado para hacer compras en el sistema.",
                     }
                 );
         }

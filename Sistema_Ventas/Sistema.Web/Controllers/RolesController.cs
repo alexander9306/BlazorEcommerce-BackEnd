@@ -18,14 +18,14 @@ namespace Sistema.Web.Controllers
 
         public RolesController(DbContextSistema context)
         {
-            _context = context;
+            this._context = context;
         }
 
         // GET: api/Roles/Listar
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Rol>>> Listar()
         {
-            return await _context.Roles.Where(r => r.Estado).ToListAsync().ConfigureAwait(false);
+            return await this._context.Roles.Where(r => r.Estado).ToListAsync().ConfigureAwait(false);
         }
 
     }

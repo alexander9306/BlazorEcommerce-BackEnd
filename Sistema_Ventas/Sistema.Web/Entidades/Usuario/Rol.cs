@@ -1,7 +1,6 @@
 namespace Sistema.Web.Entidades.Usuario
 {
     using System.Collections.Generic;
-    using System;
 
     public class Rol
     {

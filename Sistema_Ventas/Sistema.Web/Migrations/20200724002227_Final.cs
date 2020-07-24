@@ -1,9 +1,9 @@
-﻿namespace Sistema.Web.Migrations
-{
-    using System;
-    using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-    public partial class InitialCreate : Migration
+namespace Sistema.Web.Migrations
+{
+    public partial class Final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,10 +32,9 @@
                         .Annotation("Sqlite:Autoincrement", true),
                     Email = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<byte[]>(nullable: false),
-                    PasswordSalt = table.Column<byte[]>(nullable: false),
                     FechaNac = table.Column<DateTime>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false)
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,8 +48,8 @@
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(nullable: false),
-                    Estado = table.Column<string>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: false)
+                    Estado = table.Column<bool>(nullable: false),
+                    Descripcion = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -92,7 +91,8 @@
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ClienteId = table.Column<int>(nullable: false),
+                    ClienteId = table.Column<int>(nullable: true),
+                    ClienteGuid = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     Estado = table.Column<bool>(nullable: false)
@@ -105,7 +105,7 @@
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,9 +118,8 @@
                     Email = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<byte[]>(nullable: false),
-                    PasswordSalt = table.Column<byte[]>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
                     Estado = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -170,7 +169,7 @@
                     ClienteId = table.Column<int>(nullable: false),
                     CarritoId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
                     Latitud = table.Column<double>(nullable: false),
                     Longitud = table.Column<double>(nullable: false),
                     Email = table.Column<string>(nullable: false),
@@ -236,6 +235,16 @@
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Descripcion", "Estado", "Nombre" },
+                values: new object[] { 1, "Acceso máximo del sistema.", false, "Administrador" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Descripcion", "Estado", "Nombre" },
+                values: new object[] { 2, "Acceso a las ordenes del sistema.", false, "Organizador" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Administradores_Email",

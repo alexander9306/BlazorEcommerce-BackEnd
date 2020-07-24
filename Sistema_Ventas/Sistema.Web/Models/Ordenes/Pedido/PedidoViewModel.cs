@@ -1,9 +1,6 @@
-﻿namespace Sistema.Web.Models.Ordenes.Orden.Pedido
+﻿namespace Sistema.Web.Models.Ordenes.Pedido
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class PedidoViewModel
     {

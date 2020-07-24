@@ -102,7 +102,10 @@ namespace Sistema.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ClienteId")
+                    b.Property<string>("ClienteGuid")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ClienteId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
@@ -178,7 +181,7 @@ namespace Sistema.Web.Migrations
                     b.Property<int>("Telefono")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -261,14 +264,10 @@ namespace Sistema.Web.Migrations
                         .IsRequired()
                         .HasColumnType("BLOB");
 
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
                     b.Property<int>("RolId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
@@ -308,11 +307,7 @@ namespace Sistema.Web.Migrations
                         .IsRequired()
                         .HasColumnType("BLOB");
 
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -330,12 +325,10 @@ namespace Sistema.Web.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -344,6 +337,22 @@ namespace Sistema.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Acceso máximo del sistema.",
+                            Estado = false,
+                            Nombre = "Administrador"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Acceso a las ordenes del sistema.",
+                            Estado = false,
+                            Nombre = "Organizador"
+                        });
                 });
 
             modelBuilder.Entity("Sistema.Web.Entidades.Almacen.Producto", b =>
@@ -359,9 +368,7 @@ namespace Sistema.Web.Migrations
                 {
                     b.HasOne("Sistema.Web.Entidades.Usuario.Cliente", "Cliente")
                         .WithOne("Carrito")
-                        .HasForeignKey("Sistema.Web.Entidades.Ordenes.Carrito", "ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Sistema.Web.Entidades.Ordenes.Carrito", "ClienteId");
                 });
 
             modelBuilder.Entity("Sistema.Web.Entidades.Ordenes.DetalleCarrito", b =>

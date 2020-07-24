@@ -16,24 +16,24 @@
     public class OrdenesController : ControllerBase
     {
         private readonly DbContextSistema _context;
-        private readonly IWebHostEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
         public OrdenesController(DbContextSistema context, IWebHostEnvironment hostingEnvironment)
         {
-            _context = context;
-            this.hostingEnvironment = hostingEnvironment;
+            this._context = context;
+            this._hostingEnvironment = hostingEnvironment;
         }
 
         // GET: api/Ordenes/Listar
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<OrdenViewModel>>> Listar()
         {
-             var Ordenes = await _context.Ordenes.
+             var ordenes = await this._context.Ordenes.
                  Include(orden => orden.ClienteId)
                  .AsNoTracking()
                  .ToListAsync().ConfigureAwait(false);
 
-             return Ok(Ordenes.Select(orden => new OrdenViewModel
+             return this.Ok(ordenes.Select(orden => new OrdenViewModel
              {
                      Id = orden.Id,
                      ClienteId = orden.ClienteId,
@@ -50,13 +50,13 @@
 
         // GET: api/Ordenes/ListarPorCliente/ClienteId
         [HttpGet("[action]/{ClienteId}")]
-        public async Task<ActionResult<IEnumerable<Orden>>> ListarPorCliente(int ClienteId)
+        public async Task<ActionResult<IEnumerable<Orden>>> ListarPorCliente(int clienteId)
         {
-            var Ordenes = await _context.Ordenes.Where(a => a.ClienteId == ClienteId)
+            var ordenes = await this._context.Ordenes.Where(a => a.ClienteId == clienteId)
                 .AsNoTracking().ToListAsync()
                 .ConfigureAwait(false);
 
-            return Ok(Ordenes.Select(orden => new OrdenViewModel
+            return this.Ok(ordenes.Select(orden => new OrdenViewModel
             {
                 Id = orden.Id,
                 ClienteId = orden.ClienteId,
@@ -75,28 +75,28 @@
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<OrdenViewModel>> Mostrar(int id)
         {
-            var Orden = await _context.Ordenes
+            var orden = await this._context.Ordenes
                 .Include(o => o.CarritoId)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(o => o.Id == id).ConfigureAwait(false);
 
-            if (Orden == null)
+            if (orden == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             return new OrdenViewModel
             {
-                Id = Orden.Id,
-                ClienteId = Orden.ClienteId,
-                CarritoId = Orden.CarritoId,
-                Latitud = Orden.Latitud,
-                Longitud = Orden.Longitud,
-                Email = Orden.Email,
-                Direccion = Orden.Direccion,
-                Telefono = Orden.Telefono,
-                CreatedAt = Orden.CreatedAt,
-                UpdatedAt = Orden.UpdatedAt,
+                Id = orden.Id,
+                ClienteId = orden.ClienteId,
+                CarritoId = orden.CarritoId,
+                Latitud = orden.Latitud,
+                Longitud = orden.Longitud,
+                Email = orden.Email,
+                Direccion = orden.Direccion,
+                Telefono = orden.Telefono,
+                CreatedAt = orden.CreatedAt,
+                UpdatedAt = orden.UpdatedAt,
             };
         }
 
@@ -104,17 +104,17 @@
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             if (model == null || id != model.Id)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            var Orden = new Orden
+            var orden = new Orden
             {
                 Id = model.Id,
                 ClienteId = model.ClienteId,
@@ -127,23 +127,23 @@
                 UpdatedAt = DateTime.Now,
             };
 
-            _context.Entry(Orden).State = EntityState.Modified;
+            this._context.Entry(orden).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrdenExists(id))
+                if (!this.OrdenExists(id))
                 {
-                    return NotFound();
+                    return this.NotFound();
                 }
 
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         // POST: api/Ordenes/Crear
@@ -152,17 +152,17 @@
         {
             if (model == null)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var fecha = DateTime.Now;
 
-            var Orden = new Orden
+            var orden = new Orden
             {
                 ClienteId = model.ClienteId,
                 CarritoId = model.CarritoId,
@@ -175,37 +175,37 @@
                 UpdatedAt = fecha,
             };
 
-            await _context.Ordenes.AddAsync(Orden).ConfigureAwait(false);
+            await this._context.Ordenes.AddAsync(orden).ConfigureAwait(false);
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            var OrdenModel = new OrdenViewModel
+            var ordenModel = new OrdenViewModel
             {
-                Id = Orden.Id,
-                ClienteId = Orden.ClienteId,
-                CarritoId = Orden.CarritoId,
-                Latitud = Orden.Latitud,
-                Longitud = Orden.Longitud,
-                Email = Orden.Email,
-                Direccion = Orden.Direccion,
-                Telefono = Orden.Telefono,
-                CreatedAt = Orden.CreatedAt,
-                UpdatedAt = Orden.UpdatedAt,
+                Id = orden.Id,
+                ClienteId = orden.ClienteId,
+                CarritoId = orden.CarritoId,
+                Latitud = orden.Latitud,
+                Longitud = orden.Longitud,
+                Email = orden.Email,
+                Direccion = orden.Direccion,
+                Telefono = orden.Telefono,
+                CreatedAt = orden.CreatedAt,
+                UpdatedAt = orden.UpdatedAt,
             };
 
-            return CreatedAtAction("Mostrar", new { id = Orden.Id }, OrdenModel);
+            return this.CreatedAtAction("Mostrar", new { id = orden.Id }, ordenModel);
         }
 
         private bool OrdenExists(int id)
         {
-            return _context.Ordenes.Any(e => e.Id == id);
+            return this._context.Ordenes.Any(e => e.Id == id);
         }
     }
 }

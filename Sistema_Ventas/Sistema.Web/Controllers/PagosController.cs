@@ -18,43 +18,43 @@
 
         public PagosController(DbContextSistema context)
         {
-            _context = context;
+            this._context = context;
         }
 
         // GET: api/Pagos/Listar
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<PagoViewModel>>> Listar()
         {
-            var Pagos = await _context.Pagos.
-                Include(Pago => Pago.OrdenId)
+            var pagos = await this._context.Pagos.
+                Include(pago => pago.OrdenId)
                 .AsNoTracking()
                 .ToListAsync().ConfigureAwait(false);
 
-            return Ok(Pagos.Select(Pago => new PagoViewModel
+            return this.Ok(pagos.Select(pago => new PagoViewModel
             {
-                Id = Pago.Id,
-                OrdenId = Pago.OrdenId,
-                Monto = Pago.Monto,
-                Estado = Pago.Estado,
-                CreatedAt = Pago.CreatedAt,
+                Id = pago.Id,
+                OrdenId = pago.OrdenId,
+                Monto = pago.Monto,
+                Estado = pago.Estado,
+                CreatedAt = pago.CreatedAt,
             }));
         }
 
         // GET: api/Pagos/ListarPorOrden/OrdenId
         [HttpGet("[action]/{OrdenId}")]
-        public async Task<ActionResult<IEnumerable<Pago>>> ListarPorOrden(int OrdenId)
+        public async Task<ActionResult<IEnumerable<Pago>>> ListarPorOrden(int ordenId)
         {
-            var Pagos = await _context.Pagos.Where(a => a.OrdenId == OrdenId)
+            var pagos = await this._context.Pagos.Where(a => a.OrdenId == ordenId)
                 .AsNoTracking().ToListAsync()
                 .ConfigureAwait(false);
 
-            return Ok(Pagos.Select(Pago => new PagoViewModel
+            return this.Ok(pagos.Select(pago => new PagoViewModel
             {
-                Id = Pago.Id,
-                OrdenId = Pago.OrdenId,
-                Monto = Pago.Monto,
-                Estado = Pago.Estado,
-                CreatedAt = Pago.CreatedAt,
+                Id = pago.Id,
+                OrdenId = pago.OrdenId,
+                Monto = pago.Monto,
+                Estado = pago.Estado,
+                CreatedAt = pago.CreatedAt,
             }));
         }
 
@@ -62,23 +62,23 @@
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<PagoViewModel>> Mostrar(int id)
         {
-            var Pago = await _context.Pagos
+            var pago = await this._context.Pagos
                 .Include(p => p.OrdenId)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
-            if (Pago == null)
+            if (pago == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             return new PagoViewModel
             {
-                Id = Pago.Id,
-                OrdenId = Pago.OrdenId,
-                Monto = Pago.Monto,
-                Estado = Pago.Estado,
-                CreatedAt = Pago.CreatedAt,
+                Id = pago.Id,
+                OrdenId = pago.OrdenId,
+                Monto = pago.Monto,
+                Estado = pago.Estado,
+                CreatedAt = pago.CreatedAt,
             };
         }
 
@@ -88,49 +88,49 @@
         {
             if (model == null)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var fecha = DateTime.Now;
 
-            var Pago = new Pago
+            var pago = new Pago
             {
                 OrdenId = model.OrdenId,
                 Monto = model.Monto,
                 CreatedAt = fecha,
             };
 
-            await _context.Pagos.AddAsync(Pago).ConfigureAwait(false);
+            await this._context.Pagos.AddAsync(pago).ConfigureAwait(false);
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            var PagoModel = new PagoViewModel
+            var pagoModel = new PagoViewModel
             {
-                Id = Pago.Id,
-                OrdenId = Pago.OrdenId,
-                Monto = Pago.Monto,
-                Estado = Pago.Estado,
-                CreatedAt = Pago.CreatedAt,
+                Id = pago.Id,
+                OrdenId = pago.OrdenId,
+                Monto = pago.Monto,
+                Estado = pago.Estado,
+                CreatedAt = pago.CreatedAt,
             };
 
-            return CreatedAtAction("Mostrar", new { id = Pago.Id }, PagoModel);
+            return this.CreatedAtAction("Mostrar", new { id = pago.Id }, pagoModel);
         }
 
         private bool PagoExists(int id)
         {
-            return _context.Pagos.Any(e => e.Id == id);
+            return this._context.Pagos.Any(e => e.Id == id);
         }
     }
 }

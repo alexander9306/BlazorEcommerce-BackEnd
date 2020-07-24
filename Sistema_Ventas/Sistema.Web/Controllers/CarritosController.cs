@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,12 @@
     public class CarritosController : ControllerBase
     {
         private readonly DbContextSistema _context;
-        private readonly CookieHelper cookieHelper;
+        private readonly CookieHelper _cookieHelper;
 
         public CarritosController(DbContextSistema context, IHttpContextAccessor httpContextAccessor)
         {
-            _context = context;
-            cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, this.User);
+            this._context = context;
+            this._cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, this.User);
         }
 
         // GET: api/Carritos/Mostrar
@@ -30,11 +31,11 @@
         public async Task<ActionResult<CarritoViewModel>> Mostrar()
         {
 
-            var carrito = await VerificarCarrito(true).ConfigureAwait(false);
+            var carrito = await this.VerificarCarrito(true).ConfigureAwait(false);
 
             if (carrito == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             var detalles = carrito.Detalles.Select(d => new DetalleViewModel
@@ -62,19 +63,19 @@
         [HttpPost("[action]/{id}")]
         public async Task<IActionResult> Agregar(int id, [FromBody] ActualizarDetalleViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             if (model == null || id != model.ProductoId)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            var carrito = await VerificarCarrito(false).ConfigureAwait(false);
-            var userId = this.cookieHelper.GetUserId();
-            var guId = this.cookieHelper.Get("UID");
+            var carrito = await this.VerificarCarrito(false).ConfigureAwait(false);
+            var userId = this._cookieHelper.GetUserId();
+            var guId = this._cookieHelper.Get("UID");
             var fecha = DateTime.Now;
 
             if (carrito == null)
@@ -88,11 +89,11 @@
                     UpdatedAt = fecha,
                 };
 
-                await _context.Carritos.AddAsync(carrito).ConfigureAwait(false);
+                await this._context.Carritos.AddAsync(carrito).ConfigureAwait(false);
 
                 try
                 {
-                    await _context.SaveChangesAsync().ConfigureAwait(false);
+                    await this._context.SaveChangesAsync().ConfigureAwait(false);
 
                     var detalle = new DetalleCarrito
                     {
@@ -101,16 +102,16 @@
                         Cantidad = model.Cantidad,
                     };
 
-                    await _context.DetalleCarritos.AddAsync(detalle).ConfigureAwait(false);
+                    await this._context.DetalleCarritos.AddAsync(detalle).ConfigureAwait(false);
 
-                    await _context.SaveChangesAsync().ConfigureAwait(false);
+                    await this._context.SaveChangesAsync().ConfigureAwait(false);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    return BadRequest("Hubo un error al guardar sus datos.");
+                    return this.BadRequest("Hubo un error al guardar sus datos.");
                 }
 
-                return CreatedAtAction("Mostrar", new { id = carrito.Id }, carrito);
+                return this.CreatedAtAction("Mostrar", new { id = carrito.Id }, carrito);
             }
 
             carrito.ClienteId = userId;
@@ -137,32 +138,32 @@
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CarritoExists(id))
+                if (!this.CarritoExists(id))
                 {
-                    return NotFound();
+                    return this.NotFound();
                 }
 
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
-        private async Task<Carrito?> VerificarCarrito(bool? AsNoTracking)
+        private async Task<Carrito?> VerificarCarrito(bool? asNoTracking)
         {
-            var userId = this.cookieHelper.GetUserId();
-            var guId = this.cookieHelper.Get("UID");
+            var userId = this._cookieHelper.GetUserId();
+            var guId = this._cookieHelper.Get("UID");
 
             if (string.IsNullOrEmpty(guId) && userId == null)
             {
                 return null;
             }
 
-            if (AsNoTracking == true)
+            if (asNoTracking == true)
             {
                 return await this._context.Carritos
                     .Include(c => c.Detalles)
@@ -185,7 +186,7 @@
 
         private bool CarritoExists(int id)
         {
-            return _context.Carritos.Any(e => e.Id == id);
+            return this._context.Carritos.Any(e => e.Id == id);
         }
     }
 }

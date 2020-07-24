@@ -8,7 +8,6 @@
     using Microsoft.EntityFrameworkCore;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Ordenes;
-    using Sistema.Web.Models.Ordenes.Orden.Pedido;
     using Sistema.Web.Models.Ordenes.Pedido;
 
     [Route("api/[controller]")]
@@ -19,41 +18,41 @@
 
         public PedidosController(DbContextSistema context)
         {
-            _context = context;
+            this._context = context;
         }
 
         // GET: api/Pedidos/Listar
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<PedidoViewModel>>> Listar()
         {
-            var Pedidos = await _context.Pedidos.
-                Include(Pedido => Pedido.OrdenId)
+            var pedidos = await this._context.Pedidos.
+                Include(pedido => pedido.OrdenId)
                 .AsNoTracking()
                 .ToListAsync().ConfigureAwait(false);
 
-            return Ok(Pedidos.Select(Pedido => new PedidoViewModel
+            return this.Ok(pedidos.Select(pedido => new PedidoViewModel
             {
-                Id = Pedido.Id,
-                OrdenId = Pedido.OrdenId,
-                Estado = Pedido.Estado,
-                CreatedAt = Pedido.CreatedAt,
+                Id = pedido.Id,
+                OrdenId = pedido.OrdenId,
+                Estado = pedido.Estado,
+                CreatedAt = pedido.CreatedAt,
             }));
         }
 
         // GET: api/Pedidos/ListarPorOrden/OrdenId
         [HttpGet("[action]/{OrdenId}")]
-        public async Task<ActionResult<IEnumerable<Pedido>>> ListarPorOrden(int OrdenId)
+        public async Task<ActionResult<IEnumerable<Pedido>>> ListarPorOrden(int ordenId)
         {
-            var Pedidos = await _context.Pedidos.Where(a => a.OrdenId == OrdenId)
+            var pedidos = await this._context.Pedidos.Where(a => a.OrdenId == ordenId)
                 .AsNoTracking().ToListAsync()
                 .ConfigureAwait(false);
 
-            return Ok(Pedidos.Select(Pedido => new PedidoViewModel
+            return this.Ok(pedidos.Select(pedido => new PedidoViewModel
             {
-                Id = Pedido.Id,
-                OrdenId = Pedido.OrdenId,
-                Estado = Pedido.Estado,
-                CreatedAt = Pedido.CreatedAt,
+                Id = pedido.Id,
+                OrdenId = pedido.OrdenId,
+                Estado = pedido.Estado,
+                CreatedAt = pedido.CreatedAt,
             }));
         }
 
@@ -61,22 +60,22 @@
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<PedidoViewModel>> Mostrar(int id)
         {
-            var Pedido = await _context.Pedidos
+            var pedido = await this._context.Pedidos
                 .Include(p => p.OrdenId)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
-            if (Pedido == null)
+            if (pedido == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             return new PedidoViewModel
             {
-                Id = Pedido.Id,
-                OrdenId = Pedido.OrdenId,
-                Estado = Pedido.Estado,
-                CreatedAt = Pedido.CreatedAt,
+                Id = pedido.Id,
+                OrdenId = pedido.OrdenId,
+                Estado = pedido.Estado,
+                CreatedAt = pedido.CreatedAt,
             };
         }
 
@@ -86,47 +85,47 @@
         {
             if (model == null)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var fecha = DateTime.Now;
 
-            var Pedido = new Pedido
+            var pedido = new Pedido
             {
                 OrdenId = model.OrdenId,
                 CreatedAt = fecha,
             };
 
-            await _context.Pedidos.AddAsync(Pedido).ConfigureAwait(false);
+            await this._context.Pedidos.AddAsync(pedido).ConfigureAwait(false);
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            var PedidoModel = new PedidoViewModel
+            var pedidoModel = new PedidoViewModel
             {
-                Id = Pedido.Id,
-                OrdenId = Pedido.OrdenId,
-                Estado = Pedido.Estado,
-                CreatedAt = Pedido.CreatedAt,
+                Id = pedido.Id,
+                OrdenId = pedido.OrdenId,
+                Estado = pedido.Estado,
+                CreatedAt = pedido.CreatedAt,
             };
 
-            return CreatedAtAction("Mostrar", new { id = Pedido.Id }, PedidoModel);
+            return this.CreatedAtAction("Mostrar", new { id = pedido.Id }, pedidoModel);
         }
 
         private bool PedidoExists(int id)
         {
-            return _context.Pedidos.Any(e => e.Id == id);
+            return this._context.Pedidos.Any(e => e.Id == id);
         }
     }
 }

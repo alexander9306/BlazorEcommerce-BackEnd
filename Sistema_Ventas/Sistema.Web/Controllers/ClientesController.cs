@@ -4,8 +4,11 @@ namespace Sistema.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -14,52 +17,112 @@ namespace Sistema.Web.Controllers
     using Sistema.Web.Helpers;
     using Sistema.Web.Models.Usuario.Cliente;
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientesController : ControllerBase
     {
         private readonly DbContextSistema _context;
-        private readonly PasswordHelper passwordHelper;
+        private readonly PasswordHelper _passwordHelper;
+        private readonly TokenHelper _tokenHelper;
 
         public ClientesController(DbContextSistema context, IConfiguration config)
         {
-            _context = context;
-            passwordHelper = new PasswordHelper(config);
+            this._context = context;
+            this._passwordHelper = new PasswordHelper(config);
+            this._tokenHelper = new TokenHelper(config);
+        }
+
+        // POST: api/Administradores/login
+        [AllowAnonymous]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            var email = model.Email.ToLower(CultureInfo.CurrentCulture);
+
+            var cliente = await this._context.Clientes
+                .FirstOrDefaultAsync(a => a.Email == email)
+                .ConfigureAwait(false);
+
+            if (cliente == null)
+            {
+                return this.NotFound();
+            }
+
+            if (!this._passwordHelper.VerificarPasswordHash(model.Password, cliente.PasswordHash))
+            {
+                return this.NotFound();
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, cliente.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim(ClaimTypes.Email, cliente.Email),
+                new Claim(ClaimTypes.Role, "Cliente"),
+                new Claim("Id", cliente.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim("Rol", "Cliente" ),
+                new Claim("Username", cliente.Email),
+            };
+
+            return this.Ok(
+                new { token = this._tokenHelper.GenerarToken(claims) }
+            );
         }
 
         // GET: api/Clientes/Listar
+        [Authorize(Roles = "Administrador, Organizador")]
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<Cliente>>> Listar()
+        public async Task<ActionResult<IEnumerable<ClienteViewModel>>> Listar()
         {
-            return await _context.Clientes.ToListAsync().ConfigureAwait(false);
+            var clientes =  await this._context.Clientes
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            return this.Ok(clientes.Select(c => new ClienteViewModel
+                {
+                    Id = c.Id,
+                    Email = c.Email,
+                    FechaNac = c.FechaNac,
+                    CreatedAt = c.CreatedAt,
+                    UpdatedAt = c.CreatedAt,
+                })
+            );
         }
 
         // GET: api/Clientes/Mostrar/id
         [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<Cliente>> Mostrar(int id)
+        public async Task<ActionResult<ClienteViewModel>> Mostrar(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id).ConfigureAwait(false);
+            var cliente = await this._context.Clientes.FindAsync(id).ConfigureAwait(false);
 
             if (cliente == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return cliente;
+            return new ClienteViewModel
+            {
+                Id = cliente.Id,
+                Email = cliente.Email,
+                FechaNac = cliente.FechaNac,
+                CreatedAt = cliente.CreatedAt,
+                UpdatedAt = cliente.UpdatedAt,
+            };
         }
 
         // PUT: api/Clientes/Actualizar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             if (model == null || id != model.Id)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
             var cliente = new Cliente
@@ -71,45 +134,46 @@ namespace Sistema.Web.Controllers
 
             if (model.ActPassword)
             {
-                this.passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
+                this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
                 cliente.PasswordHash = passwordHash;
             }
 
-            _context.Entry(cliente).State = EntityState.Modified;
+            this._context.Entry(cliente).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClienteExists(id))
+                if (!this.ClienteExists(id))
                 {
-                    return NotFound();
+                    return this.NotFound();
                 }
 
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         // POST: api/Clientes/Crear
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<ActionResult<ClienteViewModel>> Crear([FromForm] CrearViewModel model)
         {
             if (model == null)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var fecha = DateTime.Now;
-            this.passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
+            this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
 
             var cliente = new Cliente
             {
@@ -121,34 +185,32 @@ namespace Sistema.Web.Controllers
                 UpdatedAt = fecha,
             };
 
-
-            await _context.Clientes.AddAsync(cliente).ConfigureAwait(false);
+            await this._context.Clientes.AddAsync(cliente).ConfigureAwait(false);
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
             var clienteModel = new ClienteViewModel
             {
                 Id = cliente.Id,
                 Email = cliente.Email,
-                PasswordHash = cliente.PasswordHash,
                 FechaNac = cliente.FechaNac,
                 CreatedAt = cliente.CreatedAt,
                 UpdatedAt = cliente.UpdatedAt,
             };
 
-            return CreatedAtAction("Mostrar", new { id = cliente.Id }, clienteModel);
+            return this.CreatedAtAction("Mostrar", new { id = cliente.Id }, clienteModel);
         }
 
         private bool ClienteExists(int id)
         {
-            return _context.Clientes.Any(e => e.Id == id);
+            return this._context.Clientes.Any(e => e.Id == id);
         }
     }
 }

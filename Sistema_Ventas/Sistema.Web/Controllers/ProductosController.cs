@@ -20,24 +20,24 @@
     public class ProductosController : ControllerBase
     {
         private readonly DbContextSistema _context;
-        private readonly IWebHostEnvironment hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
         public ProductosController(DbContextSistema context, IWebHostEnvironment hostingEnvironment)
         {
-            _context = context;
-            this.hostingEnvironment = hostingEnvironment;
+            this._context = context;
+            this._hostingEnvironment = hostingEnvironment;
         }
 
         // GET: api/Productos/Listar
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar()
         {
-             var productos = await _context.Productos.
+             var productos = await this._context.Productos.
                  Include(p => p.Categoria)
                  .AsNoTracking()
                  .ToListAsync().ConfigureAwait(false);
 
-             return Ok(productos.Select(p => new ProductoViewModel
+             return this.Ok(productos.Select(p => new ProductoViewModel
                  {
                      Id = p.Id,
                      Nombre = p.Nombre,
@@ -57,11 +57,11 @@
         [HttpGet("[action]/{categoriaId}")]
         public async Task<ActionResult<IEnumerable<Producto>>> ListarPorCategoria(int categoriaId)
         {
-            var productos = await _context.Productos.Where(a => a.CategoriaId == categoriaId)
+            var productos = await this._context.Productos.Where(a => a.CategoriaId == categoriaId)
                 .AsNoTracking().ToListAsync()
                 .ConfigureAwait(false);
 
-            return Ok(productos.Select(p => new ProductoViewModel
+            return this.Ok(productos.Select(p => new ProductoViewModel
             {
                 Id = p.Id,
                 Nombre = p.Nombre,
@@ -81,14 +81,14 @@
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<ProductoViewModel>> Mostrar(int id)
         {
-            var producto = await _context.Productos
+            var producto = await this._context.Productos
                 .Include(p => p.Categoria)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
             if (producto == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             return new ProductoViewModel
@@ -111,14 +111,14 @@
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             if (model == null || id != model.Id)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
             var producto = new Producto
@@ -136,26 +136,26 @@
 
             if (model.Foto != null)
             {
-               await CrearFoto(producto, model.Foto) !.ConfigureAwait(false);
+               await this.CrearFoto(producto, model.Foto) !.ConfigureAwait(false);
             }
 
-            _context.Entry(producto).State = EntityState.Modified;
+            this._context.Entry(producto).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductoExists(id))
+                if (!this.ProductoExists(id))
                 {
-                    return NotFound();
+                    return this.NotFound();
                 }
 
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         // POST: api/Productos/Crear
@@ -164,12 +164,12 @@
         {
             if (model == null)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var fecha = DateTime.Now;
@@ -188,18 +188,18 @@
 
             if (model.Foto != null)
             {
-                await CrearFoto(producto, model.Foto).ConfigureAwait(false);
+                await this.CrearFoto(producto, model.Foto).ConfigureAwait(false);
             }
 
-            await _context.Productos.AddAsync(producto).ConfigureAwait(false);
+            await this._context.Productos.AddAsync(producto).ConfigureAwait(false);
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
             var productoModel = new ProductoViewModel
@@ -216,54 +216,54 @@
                 UpdatedAt = producto.UpdatedAt,
             };
 
-            return CreatedAtAction("Mostrar", new { id = producto.Id }, productoModel);
+            return this.CreatedAtAction("Mostrar", new { id = producto.Id }, productoModel);
         }
 
         // PUT: api/Productos/Activar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Activar(int id)
         {
-            return await CambiarEstado(id, true).ConfigureAwait(false);
+            return await this.CambiarEstado(id, true).ConfigureAwait(false);
         }
 
         // PUT: api/Productos/Desactivar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Desactivar(int id)
         {
-            return await CambiarEstado(id, false).ConfigureAwait(false);
+            return await this.CambiarEstado(id, false).ConfigureAwait(false);
         }
 
         private async Task<IActionResult> CambiarEstado(int id, bool estado)
         {
             if (id <= 0)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            var producto = await _context.Productos.FindAsync(id).ConfigureAwait(false);
+            var producto = await this._context.Productos.FindAsync(id).ConfigureAwait(false);
 
             if (producto == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             producto.Estado = estado;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         private async Task CrearFoto(Producto model, IFormFile foto)
         {
-            var uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+            var uploadsFolder = Path.Combine(this._hostingEnvironment.WebRootPath, "images");
             var uniqueFileName = Guid.NewGuid() + "." + foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
@@ -296,7 +296,7 @@
 
         private bool ProductoExists(int id)
         {
-            return _context.Productos.Any(e => e.Id == id);
+            return this._context.Productos.Any(e => e.Id == id);
         }
     }
 }

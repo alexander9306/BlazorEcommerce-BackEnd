@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Ordenes.Carrito
+﻿namespace Sistema.Web.Models.Ordenes.Carrito.Detalle
 {
     public class DetalleViewModel
     {

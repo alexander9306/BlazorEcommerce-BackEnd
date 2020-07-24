@@ -9,16 +9,16 @@
     {
         public CookieHelper(HttpResponse response, HttpRequest request, ClaimsPrincipal user)
         {
-            this.response = response;
-            this.request = request;
-            this.user = user;
+            this.Response = response;
+            this.Request = request;
+            this.User = user;
         }
 
-        public ClaimsPrincipal user { get; }
+        private ClaimsPrincipal User { get; }
 
-        private HttpResponse response { get; set; }
+        private HttpResponse Response { get; set; }
 
-        private HttpRequest request { get; set; }
+        private HttpRequest Request { get; set; }
 
         /// <summary>
         /// Set the cookie.
@@ -39,7 +39,7 @@
                 option.Expires = DateTime.Now.AddMilliseconds(10);
             }
 
-            this.response.Cookies.Append(key, value, option);
+            this.Response.Cookies.Append(key, value, option);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@
         /// <param name="key">Key.</param>
         public void Remove(string key)
         {
-            this.response.Cookies.Delete(key);
+            this.Response.Cookies.Delete(key);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@
         /// <param name="key">Key.</param>
         public string? Get(string key)
         {
-            return this.request.Cookies[key];
+            return this.Request.Cookies[key];
         }
 
         /// <summary>
@@ -65,7 +65,7 @@
         /// </summary>
         public int? GetUserId()
         {
-            return int.Parse(this.user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            return int.Parse(this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@
         /// <param name="key">Key.</param>
         public string? GetHeader(string key)
         {
-            return this.request.Headers.FirstOrDefault(x => x.Key == key).Value.FirstOrDefault();
+            return this.Request.Headers.FirstOrDefault(x => x.Key == key).Value.FirstOrDefault();
         }
 
     }

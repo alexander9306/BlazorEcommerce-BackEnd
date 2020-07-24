@@ -13,18 +13,18 @@
 
         public string Extensions
         {
-            get => string.IsNullOrWhiteSpace(_extensions) ? "png,jpg,jpeg,gif" : _extensions;
-            set => _extensions = value;
+            get => string.IsNullOrWhiteSpace(this._extensions) ? "png,jpg,jpeg,gif" : this._extensions;
+            set => this._extensions = value;
         }
 
-        private string ExtensionsFormatted => ExtensionsParsed.Aggregate((left, right) => left + ", " + right);
+        private string ExtensionsFormatted => this.ExtensionsParsed.Aggregate((left, right) => left + ", " + right);
 
         private string ExtensionsNormalized =>
-            Extensions.Replace(" ", string.Empty, StringComparison.InvariantCulture).Replace(".", string.Empty, StringComparison.InvariantCulture).ToUpperInvariant();
+            this.Extensions.Replace(" ", string.Empty, StringComparison.InvariantCulture).Replace(".", string.Empty, StringComparison.InvariantCulture).ToUpperInvariant();
 
         private IEnumerable<string> ExtensionsParsed
         {
-            get { return ExtensionsNormalized.Split(',').Select(e => "." + e); }
+            get { return this.ExtensionsNormalized.Split(',').Select(e => "." + e); }
         }
 
         public override bool IsValid(object value)
@@ -37,13 +37,13 @@
             var valueAsIFormFile = value as IFormFile;
             if (valueAsIFormFile != null)
             {
-                return ValidateExtension(valueAsIFormFile.FileName);
+                return this.ValidateExtension(valueAsIFormFile.FileName);
             }
 
             var valueAsString = value as string;
             if (valueAsString != null)
             {
-                return ValidateExtension(valueAsString);
+                return this.ValidateExtension(valueAsString);
             }
 
             return false;
@@ -51,7 +51,7 @@
 
         private bool ValidateExtension(string fileName)
         {
-            return ExtensionsParsed.Contains(Path.GetExtension(fileName).ToUpperInvariant());
+            return this.ExtensionsParsed.Contains(Path.GetExtension(fileName).ToUpperInvariant());
         }
     }
 }

@@ -18,14 +18,14 @@
 
         public CategoriasController(DbContextSistema context)
         {
-            _context = context;
+            this._context = context;
         }
 
         // GET: api/Categorias/Listar
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Categoria>>> Listar()
         {
-            return await _context.Categorias
+            return await this._context.Categorias
                 .AsNoTracking().ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -34,11 +34,11 @@
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<Categoria>> Mostrar(int id)
         {
-            var categoria = await _context.Categorias.FindAsync(id).ConfigureAwait(false);
+            var categoria = await this._context.Categorias.FindAsync(id).ConfigureAwait(false);
 
             if (categoria == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             return categoria;
@@ -48,14 +48,14 @@
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Actualizar(int id, ActualizarViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             if (model == null || id != model.Id)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
             var categoria = new Categoria
@@ -66,32 +66,32 @@
                 UpdatedAt = DateTime.Now,
             };
 
-            _context.Entry(categoria).State = EntityState.Modified;
+            this._context.Entry(categoria).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoriaExists(id))
+                if (!this.CategoriaExists(id))
                 {
-                    return NotFound();
+                    return this.NotFound();
                 }
 
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         // POST: api/Categorias/Crear
         [HttpPost("[action]")]
         public async Task<ActionResult<Categoria>> Crear(CrearViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var fecha = DateTime.Now;
@@ -105,65 +105,65 @@
                 UpdatedAt = fecha,
             };
 
-            await _context.Categorias.AddAsync(categoria).ConfigureAwait(false);
+            await this._context.Categorias.AddAsync(categoria).ConfigureAwait(false);
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return CreatedAtAction("Mostrar", new { id = categoria.Id }, categoria);
+            return this.CreatedAtAction("Mostrar", new { id = categoria.Id }, categoria);
         }
 
         // PUT: api/Categorias/Activar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Activar(int id)
         {
-            return await CambiarEstado(id, true).ConfigureAwait(false);
+            return await this.CambiarEstado(id, true).ConfigureAwait(false);
         }
 
         // PUT: api/Categorias/Desactivar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Desactivar(int id)
         {
-            return await CambiarEstado(id, false).ConfigureAwait(false);
+            return await this.CambiarEstado(id, false).ConfigureAwait(false);
         }
 
         private async Task<IActionResult> CambiarEstado(int id, bool estado)
         {
             if (id <= 0)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            var categoria = await _context.Categorias.FindAsync(id).ConfigureAwait(false);
+            var categoria = await this._context.Categorias.FindAsync(id).ConfigureAwait(false);
 
             if (categoria == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             categoria.Estado = estado;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         private bool CategoriaExists(int id)
         {
-            return _context.Categorias.Any(e => e.Id == id);
+            return this._context.Categorias.Any(e => e.Id == id);
         }
     }
 }
