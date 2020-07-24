@@ -1,4 +1,6 @@
-﻿namespace Sistema.Web.Entidades.Almacen
+﻿using System.Collections.Generic;
+
+namespace Sistema.Web.Entidades.Almacen
 {
     using System;
 
@@ -18,10 +20,6 @@
 
         public int Stock { get; set; }
 
-        public Uri? FotoUrl { get; set; }
-
-        public string? FotoPublicId { get; set; }
-
         public string? Descripcion { get; set; }
 
         public DateTime CreatedAt { get; set; }
@@ -29,5 +27,7 @@
         public DateTime UpdatedAt { get; set; }
 
         public Categoria Categoria { get; set; }
+
+        public ICollection<ProductoFoto> Fotos { get; set; }
     }
 }

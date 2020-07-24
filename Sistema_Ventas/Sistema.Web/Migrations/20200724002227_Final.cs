@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace Sistema.Web.Migrations
+﻿namespace Sistema.Web.Migrations
 {
+    using System;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class Final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -1,6 +1,8 @@
 ﻿namespace Sistema.Web.Datos
 {
     using Microsoft.EntityFrameworkCore;
+    using Sistema.Web.Datos.Mapping.Almacen;
+    using Sistema.Web.Datos.Mapping.Usuario;
     using Sistema.Web.Entidades.Almacen;
     using Sistema.Web.Entidades.Ordenes;
     using Sistema.Web.Entidades.Usuario;
@@ -10,6 +12,8 @@
         public DbSet<Categoria> Categorias { get; set; }
 
         public DbSet<Producto> Productos { get; set; }
+
+        public DbSet<ProductoFoto> ProductoFotos { get; set; }
 
         public DbSet<DetalleCarrito> DetalleCarritos { get; set; }
 
@@ -31,37 +35,12 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Producto>()
-                .HasIndex(p => p.Nombre)
-                .IsUnique();
-            modelBuilder.Entity<Categoria>()
-                .HasIndex(p => p.Nombre)
-                .IsUnique();
-            modelBuilder.Entity<Administrador>()
-                .HasIndex(p => p.Email)
-                .IsUnique();
-            modelBuilder.Entity<Administrador>()
-                .HasIndex(p => p.Username)
-                .IsUnique();
-            modelBuilder.Entity<Cliente>()
-                .HasIndex(p => p.Email)
-                .IsUnique();
-
-            modelBuilder.Entity<Rol>()
-                .HasData(
-                    new Rol
-                    {
-                        Id = 1,
-                        Nombre = "Administrador",
-                        Descripcion = "Acceso máximo del sistema.",
-                    },
-                    new Rol
-                    {
-                        Id = 2,
-                        Nombre = "Organizador",
-                        Descripcion = "Acceso a las ordenes del sistema.",
-                    }
-                );
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new CategoriaMap());
+            modelBuilder.ApplyConfiguration(new ProductoMap());
+            modelBuilder.ApplyConfiguration(new AdministradorMap());
+            modelBuilder.ApplyConfiguration(new ClienteMap());
+            modelBuilder.ApplyConfiguration(new RolMap());
         }
     }
 }

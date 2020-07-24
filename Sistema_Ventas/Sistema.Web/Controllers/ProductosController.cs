@@ -1,31 +1,24 @@
 ﻿namespace Sistema.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Sistema.Web.Datos;
-    using Sistema.Web.Entidades.Almacen;
-    using Sistema.Web.Models.Almacen.Producto;
+  using System;
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Threading.Tasks;
+  using Microsoft.AspNetCore.Mvc;
+  using Microsoft.EntityFrameworkCore;
+  using Sistema.Web.Datos;
+  using Sistema.Web.Entidades.Almacen;
+  using Sistema.Web.Models.Almacen.Producto;
 
-    [Route("api/[controller]")]
+  [Route("api/[controller]")]
     [ApiController]
     public class ProductosController : ControllerBase
     {
         private readonly DbContextSistema _context;
-        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ProductosController(DbContextSistema context, IWebHostEnvironment hostingEnvironment)
+        public ProductosController(DbContextSistema context)
         {
             this._context = context;
-            this._hostingEnvironment = hostingEnvironment;
         }
 
         // GET: api/Productos/Listar
@@ -46,7 +39,6 @@
                      Estado = p.Estado,
                      Marca = p.Marca,
                      Stock = p.Stock,
-                     FotoUrl = p.FotoUrl,
                      Descripcion = p.Descripcion,
                      CreatedAt = p.CreatedAt,
                      UpdatedAt = p.UpdatedAt,
@@ -70,7 +62,6 @@
                 Estado = p.Estado,
                 Marca = p.Marca,
                 Stock = p.Stock,
-                FotoUrl = p.FotoUrl,
                 Descripcion = p.Descripcion,
                 CreatedAt = p.CreatedAt,
                 UpdatedAt = p.UpdatedAt,
@@ -100,7 +91,6 @@
                 Estado = producto.Estado,
                 Marca = producto.Marca,
                 Stock = producto.Stock,
-                FotoUrl = producto.FotoUrl,
                 Descripcion = producto.Descripcion,
                 CreatedAt = producto.CreatedAt,
                 UpdatedAt = producto.UpdatedAt,
@@ -133,11 +123,6 @@
                 Estado = true,
                 UpdatedAt = DateTime.Now,
             };
-
-            if (model.Foto != null)
-            {
-               await this.CrearFoto(producto, model.Foto) !.ConfigureAwait(false);
-            }
 
             this._context.Entry(producto).State = EntityState.Modified;
 
@@ -186,11 +171,6 @@
                 UpdatedAt = fecha,
             };
 
-            if (model.Foto != null)
-            {
-                await this.CrearFoto(producto, model.Foto).ConfigureAwait(false);
-            }
-
             await this._context.Productos.AddAsync(producto).ConfigureAwait(false);
 
             try
@@ -210,7 +190,6 @@
                 Estado = producto.Estado,
                 Marca = producto.Marca,
                 Stock = producto.Stock,
-                FotoUrl = producto.FotoUrl,
                 Descripcion = producto.Descripcion,
                 CreatedAt = producto.CreatedAt,
                 UpdatedAt = producto.UpdatedAt,
@@ -259,39 +238,6 @@
             }
 
             return this.NoContent();
-        }
-
-        private async Task CrearFoto(Producto model, IFormFile foto)
-        {
-            var uploadsFolder = Path.Combine(this._hostingEnvironment.WebRootPath, "images");
-            var uniqueFileName = Guid.NewGuid() + "." + foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            await using var stream = System.IO.File.Create(filePath);
-            await foto.CopyToAsync(stream).ConfigureAwait(false);
-
-            Account account = new Account(
-                "alexander-damaso-26857",
-                "782676321813482",
-                "qLEL5oYEYE1rjbnFpzVriyX7mTE");
-
-            Cloudinary cloudinary = new Cloudinary(account);
-
-            var uploadParams = new ImageUploadParams
-            {
-
-                File = new FileDescription(filePath),
-            };
-            await stream.DisposeAsync().ConfigureAwait(false);
-            var uploadResult = cloudinary.Upload(uploadParams);
-
-            model.FotoUrl = uploadResult.SecureUrl;
-            model.FotoPublicId = uploadResult.PublicId;
-
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
         }
 
         private bool ProductoExists(int id)
