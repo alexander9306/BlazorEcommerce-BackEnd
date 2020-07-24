@@ -32,10 +32,9 @@ namespace Sistema.Web.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Email = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<byte[]>(nullable: false),
-                    PasswordSalt = table.Column<byte[]>(nullable: false),
                     FechaNac = table.Column<DateTime>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false)
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,8 +48,8 @@ namespace Sistema.Web.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombre = table.Column<string>(nullable: false),
-                    Estado = table.Column<string>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: false)
+                    Estado = table.Column<bool>(nullable: false),
+                    Descripcion = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -69,8 +68,6 @@ namespace Sistema.Web.Migrations
                     Estado = table.Column<bool>(nullable: false),
                     Marca = table.Column<string>(nullable: true),
                     Stock = table.Column<int>(nullable: false),
-                    FotoUrl = table.Column<string>(nullable: true),
-                    FotoPublicId = table.Column<string>(nullable: true),
                     Descripcion = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false)
@@ -92,7 +89,8 @@ namespace Sistema.Web.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ClienteId = table.Column<int>(nullable: false),
+                    ClienteId = table.Column<int>(nullable: true),
+                    ClienteGuid = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     Estado = table.Column<bool>(nullable: false)
@@ -105,7 +103,7 @@ namespace Sistema.Web.Migrations
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,9 +116,8 @@ namespace Sistema.Web.Migrations
                     Email = table.Column<string>(nullable: false),
                     Username = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<byte[]>(nullable: false),
-                    PasswordSalt = table.Column<byte[]>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
                     Estado = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -130,6 +127,29 @@ namespace Sistema.Web.Migrations
                         name: "FK_Administradores_Roles_RolId",
                         column: x => x.RolId,
                         principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductoFotos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductoId = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    IsPrincipal = table.Column<bool>(nullable: true),
+                    FotoUrl = table.Column<string>(nullable: true),
+                    FotoPublicId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductoFotos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductoFotos_Productos_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Productos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -170,7 +190,7 @@ namespace Sistema.Web.Migrations
                     ClienteId = table.Column<int>(nullable: false),
                     CarritoId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdateAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
                     Latitud = table.Column<double>(nullable: false),
                     Longitud = table.Column<double>(nullable: false),
                     Email = table.Column<string>(nullable: false),
@@ -236,6 +256,46 @@ namespace Sistema.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Categorias",
+                columns: new[] { "Id", "CreatedAt", "Descripcion", "Estado", "Nombre", "UpdatedAt" },
+                values: new object[] { 1, new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(1109), "Celulares nuevos y usados.", true, "Celulares", new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(8877) });
+
+            migrationBuilder.InsertData(
+                table: "Categorias",
+                columns: new[] { "Id", "CreatedAt", "Descripcion", "Estado", "Nombre", "UpdatedAt" },
+                values: new object[] { 2, new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(9223), "Tenemos computadoras de ultima generacion.", true, "Computadoras", new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(9232) });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Descripcion", "Estado", "Nombre" },
+                values: new object[] { 1, "Acceso máximo del sistema.", false, "Administrador" });
+
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "Descripcion", "Estado", "Nombre" },
+                values: new object[] { 2, "Acceso a las ordenes del sistema.", false, "Organizador" });
+
+            migrationBuilder.InsertData(
+                table: "Productos",
+                columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
+                values: new object[] { 1, 1, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6002), null, true, "Apple", "Iphone 7 - Usado", 27000.00m, 15, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(5716) });
+
+            migrationBuilder.InsertData(
+                table: "Productos",
+                columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
+                values: new object[] { 2, 1, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6328), null, true, "Apple", "Iphone 7 - Nuevo", 34000.00m, 5, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6319) });
+
+            migrationBuilder.InsertData(
+                table: "Productos",
+                columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
+                values: new object[] { 3, 2, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6337), null, true, "Lenovo", "Lenovo N10 - Nuevo", 34000.00m, 10, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6336) });
+
+            migrationBuilder.InsertData(
+                table: "Productos",
+                columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
+                values: new object[] { 4, 2, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6340), null, true, "Lenovo", "Lenovo L34 - Nuevo", 40000.00m, 10, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6339) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Administradores_Email",
@@ -307,6 +367,11 @@ namespace Sistema.Web.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductoFotos_ProductoId",
+                table: "ProductoFotos",
+                column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Productos_CategoriaId",
                 table: "Productos",
                 column: "CategoriaId");
@@ -314,6 +379,12 @@ namespace Sistema.Web.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Productos_Nombre",
                 table: "Productos",
+                column: "Nombre",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Roles_Nombre",
+                table: "Roles",
                 column: "Nombre",
                 unique: true);
         }
@@ -333,19 +404,22 @@ namespace Sistema.Web.Migrations
                 name: "Pedidos");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "ProductoFotos");
 
             migrationBuilder.DropTable(
-                name: "Productos");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Ordenes");
 
             migrationBuilder.DropTable(
-                name: "Categorias");
+                name: "Productos");
 
             migrationBuilder.DropTable(
                 name: "Carritos");
+
+            migrationBuilder.DropTable(
+                name: "Categorias");
 
             migrationBuilder.DropTable(
                 name: "Clientes");

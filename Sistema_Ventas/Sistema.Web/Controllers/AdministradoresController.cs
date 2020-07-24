@@ -4,71 +4,129 @@ namespace Sistema.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Usuario;
+    using Sistema.Web.Helpers;
+    using Sistema.Web.Helpers.Validators;
     using Sistema.Web.Models.Usuario.Administrador;
-    using System.IO;
-    using CloudinaryDotNet;
-    using CloudinaryDotNet.Actions;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
 
     [Route("api/[controller]")]
     [ApiController]
     public class AdministradoresController : ControllerBase
     {
         private readonly DbContextSistema _context;
+        private readonly PasswordHelper _passwordHelper;
+        private readonly TokenHelper _tokenHelper;
 
-        public AdministradoresController(DbContextSistema context)
+        public AdministradoresController(DbContextSistema context, IConfiguration config)
         {
-            _context = context;
+            this._context = context;
+            this._passwordHelper = new PasswordHelper(config);
+            this._tokenHelper = new TokenHelper(config);
+        }
+
+        // POST: api/Administradores/login
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            var username = model.Usuario.ToLower(CultureInfo.CurrentCulture);
+
+            var usuario = await this._context.Administradores.Where(a => a.Estado)
+                .Include(a => a.Rol)
+                .FirstOrDefaultAsync(a => EmailVerifier.IsValid(username) ? a.Email == username : a.Username == username)
+                .ConfigureAwait(false);
+
+            if (usuario == null)
+            {
+                return this.NotFound();
+            }
+
+            if (!this._passwordHelper.VerificarPasswordHash(model.Password, usuario.PasswordHash))
+            {
+                return this.NotFound();
+            }
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim(ClaimTypes.Email, usuario.Email),
+                new Claim(ClaimTypes.Role, usuario.Rol.Nombre),
+                new Claim("Id", usuario.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim("Rol", usuario.Rol.Nombre ),
+                new Claim("Username", usuario.Username),
+            };
+
+            return this.Ok(
+                new { token = this._tokenHelper.GenerarToken(claims) }
+            );
         }
 
         // GET: api/Administradores/Listar
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Administrador>>> Listar()
         {
-            return await _context.Administradores.ToListAsync().ConfigureAwait(false);
-        }
+             var administradores = await this._context.Administradores
+             .Include(a => a.Rol)
+             .AsNoTracking()
+             .ToListAsync()
+             .ConfigureAwait(false);
 
-        // GET: api/Administradores/ListarAdministradores/id
-        [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<IEnumerable<Administrador>>> ListarAdministradores(int id)
-        {
-            return await _context.Administradores.Where(a => a.RolId == id).ToListAsync();
+             return this.Ok(administradores.Select(a => new AdministradorViewModel
+                 {
+                     Id = a.Id,
+                     Username = a.Username,
+                     Rol = a.Rol.Nombre,
+                     Email = a.Email,
+                     Estado = a.Estado,
+                     CreatedAt = a.CreatedAt,
+                     UpdatedAt = a.UpdatedAt,
+                 }));
         }
 
         // GET: api/Administradores/Mostrar/id
         [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<Administrador>> Mostrar(int id)
+        public async Task<ActionResult<AdministradorViewModel>> Mostrar(int id)
         {
-            var administrador = await _context.Administradores.FindAsync(id).ConfigureAwait(false);
+            var administrador = await this._context.Administradores
+            .Include(a => a.Rol)
+            .FirstOrDefaultAsync(a => a.Id == id) 
+            .ConfigureAwait(false);
 
             if (administrador == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return administrador;
+            return new AdministradorViewModel {
+                Id = administrador.Id,
+                Rol = administrador.Rol.Nombre,
+                Email = administrador.Email,
+                Username = administrador.Username,
+                Estado = administrador.Estado,
+                CreatedAt = administrador.CreatedAt,
+                UpdatedAt = administrador.UpdatedAt,
+            };
         }
 
         // PUT: api/Administradores/Actualizar/id
-
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             if (model == null || id != model.Id)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
             var administrador = new Administrador
@@ -77,67 +135,71 @@ namespace Sistema.Web.Controllers
                 RolId = model.RolId,
                 Email = model.Email,
                 Username = model.Username,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
                 Estado = true,
-                UpdateAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
             };
 
-            _context.Entry(administrador).State = EntityState.Modified;
+            if (model.ActPassword)
+            {
+                this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
+                administrador.PasswordHash = passwordHash;
+            }
+
+            this._context.Entry(administrador).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AdministradorExists(id))
+                if (!this.AdministradorExists(id))
                 {
-                    return NotFound();
+                    return this.NotFound();
                 }
 
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         // POST: api/Administradores/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<AdministradorViewModel>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<AdministradorViewModel>> Crear([FromBody] CrearViewModel model)
         {
             if (model == null)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return this.BadRequest(this.ModelState);
             }
 
             var fecha = DateTime.Now;
+            this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
 
             var administrador = new Administrador
             {
                 RolId = model.RolId,
                 Email = model.Email,
                 Username = model.Username,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
+                PasswordHash = passwordHash,
                 CreatedAt = fecha,
-                UpdateAt = fecha,
+                UpdatedAt = fecha,
             };
 
-            await _context.Administradores.AddAsync(administrador).ConfigureAwait(false);
+            await this._context.Administradores.AddAsync(administrador).ConfigureAwait(false);
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
             var administradorModel = new AdministradorViewModel
@@ -145,60 +207,58 @@ namespace Sistema.Web.Controllers
                 Id = administrador.Id,
                 Email = model.Email,
                 Username = model.Username,
-                PasswordHash = model.PasswordHash,
-                PasswordSalt = model.PasswordSalt,
                 CreatedAt = administrador.CreatedAt,
-                UpdateAt = administrador.UpdateAt,
+                UpdatedAt = administrador.UpdatedAt,
             };
 
-            return CreatedAtAction("Mostrar", new { id = administrador.Id }, administradorModel);
+            return this.CreatedAtAction("Mostrar", new { id = administrador.Id }, administradorModel);
         }
 
         // PUT: api/Administradores/Activar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Activar(int id)
         {
-            return await CambiarEstado(id, true).ConfigureAwait(false);
+            return await this.CambiarEstado(id, true).ConfigureAwait(false);
         }
 
         // PUT: api/Administradores/Desactivar/id
         [HttpPut("[action]/{id}")]
         public async Task<IActionResult> Desactivar(int id)
         {
-            return await CambiarEstado(id, false).ConfigureAwait(false);
+            return await this.CambiarEstado(id, false).ConfigureAwait(false);
         }
 
         private async Task<IActionResult> CambiarEstado(int id, bool estado)
         {
             if (id <= 0)
             {
-                return BadRequest();
+                return this.BadRequest();
             }
 
-            var administrador = await _context.Administradores.FindAsync(id).ConfigureAwait(false);
+            var administrador = await this._context.Administradores.FindAsync(id).ConfigureAwait(false);
 
             if (administrador == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             administrador.Estado = estado;
 
             try
             {
-                await _context.SaveChangesAsync().ConfigureAwait(false);
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
             {
-                return BadRequest("Hubo un error al guardar sus datos.");
+                return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return NoContent();
+            return this.NoContent();
         }
 
         private bool AdministradorExists(int id)
         {
-            return _context.Administradores.Any(e => e.Id == id);
+            return this._context.Administradores.Any(e => e.Id == id);
         }
     }
 }

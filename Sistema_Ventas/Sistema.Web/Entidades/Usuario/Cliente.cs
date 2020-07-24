@@ -11,13 +11,11 @@ namespace Sistema.Web.Entidades.Usuario
 
         public byte[] PasswordHash { get; set; }
 
-        public byte[] PasswordSalt { get; set; }
-
         public DateTime FechaNac { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
-        public DateTime UpdateAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public Carrito Carrito { get; set; }
 

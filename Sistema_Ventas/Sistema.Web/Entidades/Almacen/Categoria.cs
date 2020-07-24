@@ -1,7 +1,6 @@
 ﻿namespace Sistema.Web.Entidades.Almacen
 {
     using System;
-    using System.Collections.Generic;
 
     public class Categoria
     {

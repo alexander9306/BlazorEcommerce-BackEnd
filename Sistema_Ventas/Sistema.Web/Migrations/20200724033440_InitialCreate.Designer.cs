@@ -9,7 +9,7 @@ using Sistema.Web.Datos;
 namespace Sistema.Web.Migrations
 {
     [DbContext(typeof(DbContextSistema))]
-    [Migration("20200719231322_InitialCreate")]
+    [Migration("20200724033440_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,6 +46,26 @@ namespace Sistema.Web.Migrations
                         .IsUnique();
 
                     b.ToTable("Categorias");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(1109),
+                            Descripcion = "Celulares nuevos y usados.",
+                            Estado = true,
+                            Nombre = "Celulares",
+                            UpdatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(8877)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(9223),
+                            Descripcion = "Tenemos computadoras de ultima generacion.",
+                            Estado = true,
+                            Nombre = "Computadoras",
+                            UpdatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(9232)
+                        });
                 });
 
             modelBuilder.Entity("Sistema.Web.Entidades.Almacen.Producto", b =>
@@ -65,12 +85,6 @@ namespace Sistema.Web.Migrations
 
                     b.Property<bool>("Estado")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("FotoPublicId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FotoUrl")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Marca")
                         .HasColumnType("TEXT");
@@ -96,6 +110,84 @@ namespace Sistema.Web.Migrations
                         .IsUnique();
 
                     b.ToTable("Productos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoriaId = 1,
+                            CreatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6002),
+                            Estado = true,
+                            Marca = "Apple",
+                            Nombre = "Iphone 7 - Usado",
+                            Precio = 27000.00m,
+                            Stock = 15,
+                            UpdatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(5716)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoriaId = 1,
+                            CreatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6328),
+                            Estado = true,
+                            Marca = "Apple",
+                            Nombre = "Iphone 7 - Nuevo",
+                            Precio = 34000.00m,
+                            Stock = 5,
+                            UpdatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6319)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6337),
+                            Estado = true,
+                            Marca = "Lenovo",
+                            Nombre = "Lenovo N10 - Nuevo",
+                            Precio = 34000.00m,
+                            Stock = 10,
+                            UpdatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6336)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6340),
+                            Estado = true,
+                            Marca = "Lenovo",
+                            Nombre = "Lenovo L34 - Nuevo",
+                            Precio = 40000.00m,
+                            Stock = 10,
+                            UpdatedAt = new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6339)
+                        });
+                });
+
+            modelBuilder.Entity("Sistema.Web.Entidades.Almacen.ProductoFoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FotoPublicId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FotoUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool?>("IsPrincipal")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("ProductoFotos");
                 });
 
             modelBuilder.Entity("Sistema.Web.Entidades.Ordenes.Carrito", b =>
@@ -104,7 +196,10 @@ namespace Sistema.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ClienteId")
+                    b.Property<string>("ClienteGuid")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ClienteId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CreatedAt")
@@ -180,7 +275,7 @@ namespace Sistema.Web.Migrations
                     b.Property<int>("Telefono")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -263,14 +358,10 @@ namespace Sistema.Web.Migrations
                         .IsRequired()
                         .HasColumnType("BLOB");
 
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
                     b.Property<int>("RolId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
@@ -310,11 +401,7 @@ namespace Sistema.Web.Migrations
                         .IsRequired()
                         .HasColumnType("BLOB");
 
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("BLOB");
-
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -332,12 +419,10 @@ namespace Sistema.Web.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Descripcion")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("Estado")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -345,7 +430,26 @@ namespace Sistema.Web.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Acceso máximo del sistema.",
+                            Estado = false,
+                            Nombre = "Administrador"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Acceso a las ordenes del sistema.",
+                            Estado = false,
+                            Nombre = "Organizador"
+                        });
                 });
 
             modelBuilder.Entity("Sistema.Web.Entidades.Almacen.Producto", b =>
@@ -357,13 +461,20 @@ namespace Sistema.Web.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Sistema.Web.Entidades.Almacen.ProductoFoto", b =>
+                {
+                    b.HasOne("Sistema.Web.Entidades.Almacen.Producto", "Producto")
+                        .WithMany("Fotos")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Sistema.Web.Entidades.Ordenes.Carrito", b =>
                 {
                     b.HasOne("Sistema.Web.Entidades.Usuario.Cliente", "Cliente")
                         .WithOne("Carrito")
-                        .HasForeignKey("Sistema.Web.Entidades.Ordenes.Carrito", "ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Sistema.Web.Entidades.Ordenes.Carrito", "ClienteId");
                 });
 
             modelBuilder.Entity("Sistema.Web.Entidades.Ordenes.DetalleCarrito", b =>

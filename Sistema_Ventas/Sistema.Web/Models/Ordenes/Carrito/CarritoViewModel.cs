@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Sistema.Web.Models.Ordenes.Carrito.Detalle;
 
     public class CarritoViewModel
     {
@@ -9,7 +10,7 @@
 
         public string Cliente { get; set; }
 
-        public int ClienteId { get; set; }
+        public int? ClienteId { get; set; }
 
         public decimal Total { get; set; }
 

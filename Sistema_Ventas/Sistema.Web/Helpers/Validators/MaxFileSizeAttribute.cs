@@ -10,22 +10,22 @@
 
         public MaxFileSizeAttribute(int maxFileSize)
         {
-            _maxFileSize = maxFileSize;
+            this._maxFileSize = maxFileSize;
         }
 
         public override string FormatErrorMessage(string name)
         {
-            var fileSize = _maxFileSize / 1024 / 1024;
-            var size = _maxFileSize > 1000000 ? $"{fileSize} MB" : $"{fileSize} B";
+            var fileSize = this._maxFileSize / 1024 / 1024;
+            var size = this._maxFileSize > 1000000 ? $"{fileSize} MB" : $"{fileSize} B";
 
-            return string.Format(CultureInfo.CurrentCulture, ErrorMessageString, name, size);
+            return string.Format(CultureInfo.CurrentCulture, this.ErrorMessageString, name, size);
         }
 
         public override bool IsValid(object value)
         {
             var file = value as IFormFile;
 
-            return file == null || file.Length < _maxFileSize;
+            return file == null || file.Length < this._maxFileSize;
         }
     }
 }
