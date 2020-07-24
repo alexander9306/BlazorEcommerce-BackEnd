@@ -31,6 +31,8 @@
 
         public DbSet<Rol> Roles { get; set; }
 
+        public Dbset<Slider> Sliders { get; set; }
+
         public DbContextSistema(DbContextOptions<DbContextSistema> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
