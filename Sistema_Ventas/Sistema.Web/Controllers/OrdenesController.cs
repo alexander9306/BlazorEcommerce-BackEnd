@@ -10,6 +10,9 @@
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Ordenes;
     using Sistema.Web.Models.Ordenes.Orden;
+    using PayPalCheckoutSdk.Core;
+    using PayPalCheckoutSdk.Orders;
+    using PayPalHttp;
 
     [Route("api/[controller]")]
     [ApiController]
