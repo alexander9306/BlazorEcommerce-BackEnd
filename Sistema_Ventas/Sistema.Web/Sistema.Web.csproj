@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Datos\Mapping\Ordenes\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\images\slider\" />
   </ItemGroup>
 
   <ItemGroup>

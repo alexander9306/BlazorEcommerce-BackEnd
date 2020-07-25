@@ -1,9 +1,7 @@
-﻿namespace Sistema.Web.Entidades.Almacen
+﻿namespace Sistema.Web.Models.Almacen.Slider
 {
-    public class Slider
+    public class SliderViewModel
     {
-        public int Id { get; set; }
-
         public int ClienteId { get; set; }
 
         public DateTime CreatedAt { get; set; }
