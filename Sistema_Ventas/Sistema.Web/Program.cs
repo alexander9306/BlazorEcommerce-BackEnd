@@ -1,4 +1,4 @@
-namespace Sistema.Web
+namespace Api
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;

@@ -1,10 +1,13 @@
-﻿namespace Sistema.Web.Controllers
+﻿namespace Api.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+    using Api.Datos;
+    using Api.Entidades.Almacen;
+    using Api.Models.Almacen.ProductoFoto;
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Hosting;
@@ -12,9 +15,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
-    using Sistema.Web.Datos;
-    using Sistema.Web.Entidades.Almacen;
-    using Sistema.Web.Models.Almacen.ProductoFoto;
 
     [Route("api/[controller]")]
     [ApiController]

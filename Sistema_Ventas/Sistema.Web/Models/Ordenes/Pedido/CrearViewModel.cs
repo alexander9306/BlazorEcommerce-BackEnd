@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Ordenes.Pedido
+﻿namespace Api.Models.Ordenes.Pedido
 {
     using System.ComponentModel.DataAnnotations;
 

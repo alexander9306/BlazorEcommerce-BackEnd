@@ -1,4 +1,4 @@
-namespace Sistema.Web.Entidades.Usuario
+namespace Api.Entidades.Usuario
 {
     using System;
 

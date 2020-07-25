@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Almacen.Producto
+﻿namespace Api.Models.Almacen.Producto
 {
     using System;
 

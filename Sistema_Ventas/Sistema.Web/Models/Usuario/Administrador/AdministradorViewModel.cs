@@ -1,4 +1,4 @@
-namespace Sistema.Web.Models.Usuario.Administrador
+namespace Api.Models.Usuario.Administrador
 {
     using System;
 

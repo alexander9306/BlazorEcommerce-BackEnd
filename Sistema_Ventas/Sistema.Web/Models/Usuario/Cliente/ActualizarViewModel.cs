@@ -1,4 +1,4 @@
-namespace Sistema.Web.Models.Usuario.Cliente
+namespace Api.Models.Usuario.Cliente
 {
     using System.ComponentModel.DataAnnotations;
 

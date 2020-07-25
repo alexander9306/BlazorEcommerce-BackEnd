@@ -1,8 +1,8 @@
-﻿namespace Sistema.Web.Entidades.Ordenes
+﻿namespace Api.Entidades.Ordenes
 {
     using System;
     using System.Collections.Generic;
-    using Sistema.Web.Entidades.Usuario;
+    using Api.Entidades.Usuario;
 
     public class Carrito
     {

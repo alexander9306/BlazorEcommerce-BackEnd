@@ -1,14 +1,14 @@
 /*reynaldo yunior*/
 
-namespace Sistema.Web.Controllers
+namespace Api.Controllers
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Api.Datos;
+    using Api.Entidades.Usuario;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Sistema.Web.Datos;
-    using Sistema.Web.Entidades.Usuario;
 
     [Route("api/[controller]")]
     [ApiController]

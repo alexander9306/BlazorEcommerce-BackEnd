@@ -1,8 +1,8 @@
-﻿namespace Sistema.Web.Models.Ordenes.Carrito
+﻿namespace Api.Models.Ordenes.Carrito
 {
     using System;
     using System.Collections.Generic;
-    using Sistema.Web.Models.Ordenes.Carrito.Detalle;
+    using Api.Models.Ordenes.Carrito.Detalle;
 
     public class CarritoViewModel
     {

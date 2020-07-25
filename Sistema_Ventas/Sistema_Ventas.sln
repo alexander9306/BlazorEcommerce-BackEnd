@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Web", "Sistema.Web\Sistema.Web.csproj", "{E50B6765-DDDA-4940-9F42-387D7836D0C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Sistema.Web\Api.csproj", "{E50B6765-DDDA-4940-9F42-387D7836D0C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecomerce", "Ecomerce\Ecomerce.csproj", "{D5CB2A60-F195-43EE-B6D1-DF9FBC1B620C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecomerce", "Ecomerce\Ecomerce.csproj", "{D5CB2A60-F195-43EE-B6D1-DF9FBC1B620C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

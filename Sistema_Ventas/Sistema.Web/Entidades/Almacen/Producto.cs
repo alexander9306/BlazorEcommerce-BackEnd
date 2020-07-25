@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Sistema.Web.Entidades.Almacen
+﻿namespace Api.Entidades.Almacen
 {
     using System;
+    using System.Collections.Generic;
 
     public class Producto
     {

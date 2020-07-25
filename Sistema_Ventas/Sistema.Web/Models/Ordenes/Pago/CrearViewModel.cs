@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Ordenes.Pago
+﻿namespace Api.Models.Ordenes.Pago
 {
     using System.ComponentModel.DataAnnotations;
 

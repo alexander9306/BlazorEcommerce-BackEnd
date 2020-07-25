@@ -1,8 +1,8 @@
-﻿namespace Sistema.Web.Datos.Mapping.Usuario
+﻿namespace Api.Datos.Mapping.Usuario
 {
+    using Api.Entidades.Usuario;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Sistema.Web.Entidades.Usuario;
 
     public class RolMap : IEntityTypeConfiguration<Rol>
     {

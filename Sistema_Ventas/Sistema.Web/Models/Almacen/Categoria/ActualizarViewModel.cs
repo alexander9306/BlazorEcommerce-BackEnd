@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Almacen.Categoria
+﻿namespace Api.Models.Almacen.Categoria
 {
     using System.ComponentModel.DataAnnotations;
 

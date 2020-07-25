@@ -1,7 +1,7 @@
-namespace Sistema.Web.Entidades.Usuario
+namespace Api.Entidades.Usuario
 {
     using System;
-    using Sistema.Web.Entidades.Ordenes;
+    using Api.Entidades.Ordenes;
 
     public class Cliente
     {

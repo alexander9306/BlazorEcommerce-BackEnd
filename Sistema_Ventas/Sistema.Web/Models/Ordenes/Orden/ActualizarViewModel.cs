@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Ordenes.Orden
+﻿namespace Api.Models.Ordenes.Orden
 {
     using System.ComponentModel.DataAnnotations;
 

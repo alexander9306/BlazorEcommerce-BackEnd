@@ -1,16 +1,16 @@
-﻿namespace Sistema.Web.Controllers
+﻿namespace Api.Controllers
 {
-  using System;
-  using System.Collections.Generic;
-  using System.Linq;
-  using System.Threading.Tasks;
-  using Microsoft.AspNetCore.Mvc;
-  using Microsoft.EntityFrameworkCore;
-  using Sistema.Web.Datos;
-  using Sistema.Web.Entidades.Almacen;
-  using Sistema.Web.Models.Almacen.Producto;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Api.Datos;
+    using Api.Entidades.Almacen;
+    using Api.Models.Almacen.Producto;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
 
-  [Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProductosController : ControllerBase
     {

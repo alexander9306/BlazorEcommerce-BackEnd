@@ -1,6 +1,6 @@
-﻿namespace Sistema.Web.Entidades.Ordenes
+﻿namespace Api.Entidades.Ordenes
 {
-    using Sistema.Web.Entidades.Almacen;
+    using Api.Entidades.Almacen;
 
     public class DetalleCarrito
     {

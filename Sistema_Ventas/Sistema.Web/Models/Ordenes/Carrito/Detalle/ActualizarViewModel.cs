@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Ordenes.Carrito.Detalle
+﻿namespace Api.Models.Ordenes.Carrito.Detalle
 {
     using System.ComponentModel.DataAnnotations;
 

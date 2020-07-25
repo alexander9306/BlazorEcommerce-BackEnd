@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Helpers
+﻿namespace Api.Helpers
 {
     using System;
     using System.Linq;

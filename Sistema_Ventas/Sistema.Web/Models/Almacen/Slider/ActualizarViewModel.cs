@@ -1,8 +1,8 @@
-﻿namespace Sistema.Web.Models.Almacen.ProductoFoto
+﻿namespace Api.Models.Almacen.Slider
 {
     using System.ComponentModel.DataAnnotations;
+    using Api.Helpers.Validators;
     using Microsoft.AspNetCore.Http;
-    using Sistema.Web.Helpers.Validators;
 
     public class ActualizarViewModel
     {

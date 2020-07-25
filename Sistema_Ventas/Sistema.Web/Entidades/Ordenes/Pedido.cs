@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Entidades.Ordenes
+﻿namespace Api.Entidades.Ordenes
 {
     using System;
 

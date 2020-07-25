@@ -1,8 +1,6 @@
-﻿namespace Sistema.Web.Models.Almacen.Producto
+﻿namespace Api.Models.Almacen.Producto
 {
     using System.ComponentModel.DataAnnotations;
-    using Microsoft.AspNetCore.Http;
-    using Sistema.Web.Helpers.Validators;
 
     public class ActualizarViewModel
     {

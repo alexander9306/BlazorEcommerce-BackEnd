@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Entidades.Almacen
+﻿namespace Api.Entidades.Almacen
 {
     using System;
 

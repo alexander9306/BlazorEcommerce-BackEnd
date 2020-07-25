@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Models.Almacen.Slider
+﻿namespace Api.Models.Almacen.Slider
 {
     public class SliderViewModel
     {

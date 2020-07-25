@@ -1,5 +1,5 @@
 ﻿
-namespace Sistema.Web.Models.Almacen.ProductoFoto
+namespace Api.Models.Almacen.ProductoFoto
 {
     using System;
 

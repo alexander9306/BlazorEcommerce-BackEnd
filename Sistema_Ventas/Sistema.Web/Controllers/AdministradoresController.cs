@@ -1,6 +1,6 @@
 /*reynaldo yunior*/
 
-namespace Sistema.Web.Controllers
+namespace Api.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -8,14 +8,14 @@ namespace Sistema.Web.Controllers
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Api.Datos;
+    using Api.Entidades.Usuario;
+    using Api.Helpers;
+    using Api.Helpers.Validators;
+    using Api.Models.Usuario.Administrador;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
-    using Sistema.Web.Datos;
-    using Sistema.Web.Entidades.Usuario;
-    using Sistema.Web.Helpers;
-    using Sistema.Web.Helpers.Validators;
-    using Sistema.Web.Models.Usuario.Administrador;
 
     [Route("api/[controller]")]
     [ApiController]

@@ -1,16 +1,16 @@
-﻿namespace Sistema.Web.Controllers
+﻿namespace Api.Controllers
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Api.Datos;
+    using Api.Entidades.Ordenes;
+    using Api.Helpers;
+    using Api.Models.Ordenes.Carrito;
+    using Api.Models.Ordenes.Carrito.Detalle;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Sistema.Web.Datos;
-    using Sistema.Web.Entidades.Ordenes;
-    using Sistema.Web.Helpers;
-    using Sistema.Web.Models.Ordenes.Carrito;
-    using Sistema.Web.Models.Ordenes.Carrito.Detalle;
 
     [Route("api/[controller]")]
     [ApiController]

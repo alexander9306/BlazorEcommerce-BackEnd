@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Sistema.Web.Models.Almacen.Slider
+﻿namespace Api.Models.Almacen.Slider
 {
     public class CrearViewModel
     {

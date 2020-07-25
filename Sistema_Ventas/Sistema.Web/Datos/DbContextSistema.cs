@@ -1,11 +1,11 @@
-﻿namespace Sistema.Web.Datos
+﻿namespace Api.Datos
 {
+    using Api.Datos.Mapping.Almacen;
+    using Api.Datos.Mapping.Usuario;
+    using Api.Entidades.Almacen;
+    using Api.Entidades.Ordenes;
+    using Api.Entidades.Usuario;
     using Microsoft.EntityFrameworkCore;
-    using Sistema.Web.Datos.Mapping.Almacen;
-    using Sistema.Web.Datos.Mapping.Usuario;
-    using Sistema.Web.Entidades.Almacen;
-    using Sistema.Web.Entidades.Ordenes;
-    using Sistema.Web.Entidades.Usuario;
 
     public class DbContextSistema : DbContext
     {

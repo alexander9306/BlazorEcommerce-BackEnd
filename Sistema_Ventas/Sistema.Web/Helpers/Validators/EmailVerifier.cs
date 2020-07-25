@@ -1,4 +1,4 @@
-﻿namespace Sistema.Web.Helpers.Validators
+﻿namespace Api.Helpers.Validators
 {
     public static class EmailVerifier
     {

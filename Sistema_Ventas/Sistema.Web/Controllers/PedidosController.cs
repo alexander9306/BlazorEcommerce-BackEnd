@@ -1,14 +1,14 @@
-﻿namespace Sistema.Web.Controllers
+﻿namespace Api.Controllers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Api.Datos;
+    using Api.Entidades.Ordenes;
+    using Api.Models.Ordenes.Pedido;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Sistema.Web.Datos;
-    using Sistema.Web.Entidades.Ordenes;
-    using Sistema.Web.Models.Ordenes.Pedido;
 
     [Route("api/[controller]")]
     [ApiController]

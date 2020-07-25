@@ -1,9 +1,9 @@
-﻿namespace Sistema.Web.Datos.Mapping.Almacen
+﻿namespace Api.Datos.Mapping.Almacen
 {
     using System;
+    using Api.Entidades.Almacen;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
-    using Sistema.Web.Entidades.Almacen;
 
     public class CategoriaMap : IEntityTypeConfiguration<Categoria>
     {
