@@ -1,6 +1,5 @@
 ﻿namespace Sistema.Web.Controllers
 {
-
     using Sistema.Web.Datos;
     using Sistema.Web.Entidades.Almacen;
     using Sistema.Web.Models.Almacen.Slider;
