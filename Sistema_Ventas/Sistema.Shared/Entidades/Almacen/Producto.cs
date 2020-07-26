@@ -1,4 +1,6 @@
-﻿namespace Sistema.Shared.Entidades.Almacen
+﻿using System.Collections.Generic;
+
+namespace Sistema.Shared.Entidades.Almacen
 {
     using System;
 
@@ -23,5 +25,7 @@
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public IEnumerable<ProductoFoto> Fotos { get; set; }
     }
 }

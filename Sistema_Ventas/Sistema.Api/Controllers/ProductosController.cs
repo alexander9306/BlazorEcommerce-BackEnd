@@ -1,4 +1,7 @@
-﻿namespace Sistema.Api.Controllers
+﻿using System.Globalization;
+using Sistema.Api.Helpers;
+
+namespace Sistema.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +12,7 @@
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
     using Sistema.Api.Models.Almacen.Producto;
+    using Sistema.Api.Models.Almacen.ProductoFoto;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -21,18 +25,22 @@
             this._context = context;
         }
 
-        // GET: api/Productos/Listar
-        [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit)
+        // GET: api/Productos/Listar/5/10-02-2017
+        [HttpGet("[action]/{limit}/{after}")]
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit, string after)
         {
-             var productos = await this._context.Productos.
+            var hasCursor = DateTime.TryParse(after, out var cursor);
+
+            var productos = await this._context.Productos.
                  Include(p => p.Categoria)
+                 .Include(p => p.Fotos)
                  .OrderByDescending(p => p.UpdatedAt)
+                 .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
                  .Take(limit)
                  .AsNoTracking()
                  .ToListAsync().ConfigureAwait(false);
 
-             return this.Ok(productos.Select(p => new ProductoViewModel
+            return this.Ok(productos.Select(p => new ProductoViewModel
                  {
                      Id = p.Id,
                      Nombre = p.Nombre,
@@ -44,14 +52,23 @@
                      Descripcion = p.Descripcion,
                      CreatedAt = p.CreatedAt,
                      UpdatedAt = p.UpdatedAt,
+                     Fotos = p.Fotos.Select(f => new ProductoFotoViewModel
+                     {
+                         ProductoId = f.ProductoId,
+                         CreatedAt = f.CreatedAt,
+                         IsPrincipal = f.IsPrincipal,
+                         FotoUrl = f.FotoUrl,
+                         FotoPublicId = f.FotoPublicId,
+                     }),
                  }));
         }
 
         // GET: api/Productos/ListarPorCategoria/categoriaId
         [HttpGet("[action]/{categoriaId}")]
-        public async Task<ActionResult<IEnumerable<Producto>>> ListarPorCategoria(int categoriaId)
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorCategoria(int categoriaId)
         {
             var productos = await this._context.Productos.Where(a => a.CategoriaId == categoriaId)
+                .Include(p => p.Fotos)
                 .AsNoTracking().ToListAsync()
                 .ConfigureAwait(false);
 
@@ -67,6 +84,14 @@
                 Descripcion = p.Descripcion,
                 CreatedAt = p.CreatedAt,
                 UpdatedAt = p.UpdatedAt,
+                Fotos = p.Fotos.Select(f => new ProductoFotoViewModel
+                {
+                    ProductoId = f.ProductoId,
+                    CreatedAt = f.CreatedAt,
+                    IsPrincipal = f.IsPrincipal,
+                    FotoUrl = f.FotoUrl,
+                    FotoPublicId = f.FotoPublicId,
+                }),
             }));
         }
 
@@ -76,6 +101,7 @@
         {
             var producto = await this._context.Productos
                 .Include(p => p.Categoria)
+                .Include(p => p.Fotos)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
@@ -96,6 +122,14 @@
                 Descripcion = producto.Descripcion,
                 CreatedAt = producto.CreatedAt,
                 UpdatedAt = producto.UpdatedAt,
+                Fotos = producto.Fotos.Select(f => new ProductoFotoViewModel
+                {
+                    ProductoId = f.ProductoId,
+                    CreatedAt = f.CreatedAt,
+                    IsPrincipal = f.IsPrincipal,
+                    FotoUrl = f.FotoUrl,
+                    FotoPublicId = f.FotoPublicId,
+                }),
             };
         }
 

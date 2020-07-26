@@ -15,7 +15,5 @@
         public Uri? FotoUrl { get; set; }
 
         public string? FotoPublicId { get; set; }
-
-        public Producto Producto { get; set; }
     }
 }

@@ -82,7 +82,7 @@
 
         // PUT: api/ProductoFotos/Actualizar/id
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, ActualizarProductoFotoViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -126,7 +126,7 @@
 
         // POST: api/ProductoFotos/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<ProductoFoto>> Crear(CrearViewModel model)
+        public async Task<ActionResult<ProductoFoto>> Crear(CrearProductofotoViewModel model)
         {
             if (!this.ModelState.IsValid)
             {

@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Http;
     using Sistema.Api.Helpers.Validators;
 
-    public class CrearViewModel
+    public class CrearProductofotoViewModel
     {
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public int ProductoId { get; set; }

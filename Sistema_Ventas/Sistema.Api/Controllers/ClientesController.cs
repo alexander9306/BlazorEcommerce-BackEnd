@@ -33,7 +33,7 @@ namespace Sistema.Api.Controllers
             this._tokenHelper = new TokenHelper(config);
         }
 
-        // POST: api/Administradores/login
+        // POST: api/clientes/login
         [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(LoginViewModel model)

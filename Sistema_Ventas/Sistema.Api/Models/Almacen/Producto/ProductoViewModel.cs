@@ -1,6 +1,8 @@
 ﻿namespace Sistema.Api.Models.Almacen.Producto
 {
     using System;
+    using System.Collections.Generic;
+    using Sistema.Api.Models.Almacen.ProductoFoto;
 
     public class ProductoViewModel
     {
@@ -23,5 +25,7 @@
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+
+        public IEnumerable<ProductoFotoViewModel> Fotos { get; set; }
     }
 }

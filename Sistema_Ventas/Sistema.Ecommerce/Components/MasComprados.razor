@@ -1,4 +1,6 @@
-﻿<section class="clean-block clean-info dark" style="padding-top: 10px;">
+﻿@inherits MasCompradosBase
+
+<section class="clean-block clean-info dark" style="padding-top: 10px;">
     <div class="container">
         <section class="clean-block about-us">
             <div class="container">
@@ -6,10 +8,39 @@
                     <h2 class="text-info">Tendencias</h2>
                     <p></p>
                 </div>
+                @if (Productos != null)
+                {
+                    
+                    @foreach (var p in Productos)
+                    {
+                        <h1>@p.Nombre </h1>
+                    }
+                }
+
+
+                @*@for (var i = 0; i < Productos.Count; i++)
+                {
+                    @if (Counter == 0)
+                    {
+                        <div class="row justify-content-center pt-2 pb-2">
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card clean-card text-center">
+                                    <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
+                                    <div class="card-body info">
+                                        <h4 class="card-title">Iphone 5</h4>
+                                        <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                   @(Counter = Counter++)
+                }*@
+
                 <div class="row justify-content-center pt-2 pb-2">
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250;">
+                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
                             <div class="card-body info">
                                 <h4 class="card-title">Iphone 5</h4>
                                 <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
@@ -18,7 +49,7 @@
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250;">
+                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
                             <div class="card-body info">
                                 <h4 class="card-title">Iphone 5</h4>
                                 <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
@@ -27,7 +58,7 @@
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250;">
+                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
                             <div class="card-body info">
                                 <h4 class="card-title">Iphone 5</h4>
                                 <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
@@ -38,7 +69,7 @@
                 <div class="row justify-content-center pt-2 pb-2">
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250;">
+                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
                             <div class="card-body info">
                                 <h4 class="card-title">Iphone 5</h4>
                                 <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
@@ -47,7 +78,7 @@
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250;">
+                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
                             <div class="card-body info">
                                 <h4 class="card-title">Iphone 5</h4>
                                 <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
@@ -56,7 +87,7 @@
                     </div>
                     <div class="col-sm-6 col-lg-4">
                         <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250;">
+                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
                             <div class="card-body info">
                                 <h4 class="card-title">Iphone 5</h4>
                                 <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>

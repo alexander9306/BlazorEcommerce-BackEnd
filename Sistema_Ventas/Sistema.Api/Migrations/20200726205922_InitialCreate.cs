@@ -260,12 +260,12 @@
             migrationBuilder.InsertData(
                 table: "Categorias",
                 columns: new[] { "Id", "CreatedAt", "Descripcion", "Estado", "Nombre", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(1109), "Celulares nuevos y usados.", true, "Celulares", new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(8877) });
+                values: new object[] { 1, new DateTime(2020, 7, 26, 16, 59, 21, 850, DateTimeKind.Local).AddTicks(7680), "Celulares nuevos y usados.", true, "Celulares", new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5429) });
 
             migrationBuilder.InsertData(
                 table: "Categorias",
                 columns: new[] { "Id", "CreatedAt", "Descripcion", "Estado", "Nombre", "UpdatedAt" },
-                values: new object[] { 2, new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(9223), "Tenemos computadoras de ultima generacion.", true, "Computadoras", new DateTime(2020, 7, 23, 23, 34, 40, 125, DateTimeKind.Local).AddTicks(9232) });
+                values: new object[] { 2, new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5789), "Tenemos computadoras de ultima generacion.", true, "Computadoras", new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5798) });
 
             migrationBuilder.InsertData(
                 table: "Roles",
@@ -280,22 +280,22 @@
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 1, 1, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6002), null, true, "Apple", "Iphone 7 - Usado", 27000.00m, 15, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(5716) });
+                values: new object[] { 1, 1, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3297), null, true, "Apple", "Iphone 7 - Usado", 27000.00m, 15, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3001) });
 
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 2, 1, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6328), null, true, "Apple", "Iphone 7 - Nuevo", 34000.00m, 5, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6319) });
+                values: new object[] { 2, 1, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3639), null, true, "Apple", "Iphone 7 - Nuevo", 34000.00m, 5, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3630) });
 
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 3, 2, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6337), null, true, "Lenovo", "Lenovo N10 - Nuevo", 34000.00m, 10, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6336) });
+                values: new object[] { 3, 2, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3647), null, true, "Lenovo", "Lenovo N10 - Nuevo", 34000.00m, 10, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3646) });
 
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 4, 2, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6340), null, true, "Lenovo", "Lenovo L34 - Nuevo", 40000.00m, 10, new DateTime(2020, 7, 23, 23, 34, 40, 127, DateTimeKind.Local).AddTicks(6339) });
+                values: new object[] { 4, 2, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3650), null, true, "Lenovo", "Lenovo L34 - Nuevo", 40000.00m, 10, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3649) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Administradores_Email",
