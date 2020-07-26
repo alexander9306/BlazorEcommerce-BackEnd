@@ -23,7 +23,7 @@
 
         // GET: api/Productos/Listar
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar([FromBody] int limit, [FromBody] DateTime? after)
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit)
         {
              var productos = await this._context.Productos.
                  Include(p => p.Categoria)

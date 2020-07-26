@@ -1,10 +1,8 @@
 ﻿namespace Sistema.Ecommerce.Services
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
+    //using Sistema.Shared.Entidades;
     public interface IProductoDataService
     {
-        //Task<IEnumerable<>>
+        //Task<IEnumerable<Producto>>
     }
 }

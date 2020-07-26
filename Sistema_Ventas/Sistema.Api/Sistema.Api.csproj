@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <StartupObject>Api.Program</StartupObject>
+    <StartupObject>Sistema.Api.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
