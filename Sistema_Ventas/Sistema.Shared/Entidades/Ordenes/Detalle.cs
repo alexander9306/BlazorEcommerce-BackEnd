@@ -1,4 +1,4 @@
-﻿namespace Sistema.Shared.Models.Ordenes
+﻿namespace Sistema.Shared.Entidades.Ordenes
 {
     public class Detalle
     {

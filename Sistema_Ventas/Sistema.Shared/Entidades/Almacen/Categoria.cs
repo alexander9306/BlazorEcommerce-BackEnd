@@ -1,4 +1,4 @@
-﻿namespace Sistema.Shared.Models.Almacen
+﻿namespace Sistema.Shared.Entidades.Almacen
 {
     using System;
 

@@ -1,4 +1,4 @@
-namespace Sistema.Shared.Models.Usuario
+namespace Sistema.Shared.Entidades.Usuario
 {
     using System;
 
