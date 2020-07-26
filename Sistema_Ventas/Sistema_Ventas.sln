@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Api", "Sistema.Api\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Ecommerce", "Sistema.Ecommerce\Sistema.Ecommerce.csproj", "{FC94A084-3428-422F-815A-A39BC7162BF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Shared", "Sistema.Shared\Sistema.Shared.csproj", "{1A1656A2-BE7F-4440-8F9B-2B689539AE03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Shared", "Sistema.Shared\Sistema.Shared.csproj", "{5B921E9D-C43D-41F7-9A27-51A5713DA340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{FC94A084-3428-422F-815A-A39BC7162BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC94A084-3428-422F-815A-A39BC7162BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC94A084-3428-422F-815A-A39BC7162BF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1A1656A2-BE7F-4440-8F9B-2B689539AE03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1A1656A2-BE7F-4440-8F9B-2B689539AE03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1A1656A2-BE7F-4440-8F9B-2B689539AE03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1A1656A2-BE7F-4440-8F9B-2B689539AE03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B921E9D-C43D-41F7-9A27-51A5713DA340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B921E9D-C43D-41F7-9A27-51A5713DA340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B921E9D-C43D-41F7-9A27-51A5713DA340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B921E9D-C43D-41F7-9A27-51A5713DA340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
