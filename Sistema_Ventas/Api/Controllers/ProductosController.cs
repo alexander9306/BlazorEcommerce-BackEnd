@@ -23,10 +23,12 @@
 
         // GET: api/Productos/Listar
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar()
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar([FromBody] int limit, [FromBody] DateTime? after)
         {
              var productos = await this._context.Productos.
                  Include(p => p.Categoria)
+                 .OrderByDescending(p => p.UpdatedAt)
+                 .Take(limit)
                  .AsNoTracking()
                  .ToListAsync().ConfigureAwait(false);
 

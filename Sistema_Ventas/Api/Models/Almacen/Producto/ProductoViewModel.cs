@@ -18,8 +18,6 @@
 
         public int Stock { get; set; }
 
-        public Uri? FotoUrl { get; set; }
-
         public string? Descripcion { get; set; }
 
         public DateTime CreatedAt { get; set; }
