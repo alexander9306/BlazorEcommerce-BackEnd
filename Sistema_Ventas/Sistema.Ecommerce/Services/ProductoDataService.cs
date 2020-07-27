@@ -18,10 +18,12 @@
             this._baseAddress = "api/productos";
         }
 
-        public async Task<IEnumerable<Producto>> Listar(int limit, string after)
+        public async Task<IEnumerable<Producto>> Listar(int limit, string? after)
         {
+            var cursor = after ?? "null";
+
             var res = await JsonSerializer.DeserializeAsync<IEnumerable<Producto>>(
-                    await _httpClient.GetStreamAsync($"{_baseAddress}/listar/{limit}/{after}").ConfigureAwait(false),
+                    await _httpClient.GetStreamAsync($"{_baseAddress}/listar/{limit}/{cursor}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);
             return res;

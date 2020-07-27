@@ -49,20 +49,20 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 850, DateTimeKind.Local).AddTicks(7680),
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 895, DateTimeKind.Local).AddTicks(3714),
                             Descripcion = "Celulares nuevos y usados.",
                             Estado = true,
                             Nombre = "Celulares",
-                            UpdatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5429)
+                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1086)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5789),
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1441),
                             Descripcion = "Tenemos computadoras de ultima generacion.",
                             Estado = true,
                             Nombre = "Computadoras",
-                            UpdatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5798)
+                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1450)
                         });
                 });
 
@@ -114,49 +114,50 @@ namespace Sistema.Api.Migrations
                         {
                             Id = 1,
                             CategoriaId = 1,
-                            CreatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3297),
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9184),
+                            Descripcion = "Los clientes empresariales han utilizado durante mucho tiempo la familia de portátiles empresariales de gama alta Lenovo, anteriormente IBM, ThinkPad",
                             Estado = true,
-                            Marca = "Apple",
-                            Nombre = "Iphone 7 - Usado",
-                            Precio = 27000.00m,
+                            Marca = "Lenovo",
+                            Nombre = "Thinkpad T440 - Nuevo",
+                            Precio = 55000.00m,
                             Stock = 15,
-                            UpdatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3001)
+                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(8887)
                         },
                         new
                         {
                             Id = 2,
                             CategoriaId = 1,
-                            CreatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3639),
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9519),
                             Estado = true,
-                            Marca = "Apple",
-                            Nombre = "Iphone 7 - Nuevo",
-                            Precio = 34000.00m,
+                            Marca = "Dell",
+                            Nombre = "Latitude E6540 - Nuevo",
+                            Precio = 44000.00m,
                             Stock = 5,
-                            UpdatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3630)
+                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9512)
                         },
                         new
                         {
                             Id = 3,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3647),
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9528),
                             Estado = true,
-                            Marca = "Lenovo",
-                            Nombre = "Lenovo N10 - Nuevo",
+                            Marca = "Huawei",
+                            Nombre = "Honor 20 - Nuevo",
                             Precio = 34000.00m,
                             Stock = 10,
-                            UpdatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3646)
+                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9527)
                         },
                         new
                         {
                             Id = 4,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3650),
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9531),
                             Estado = true,
                             Marca = "Lenovo",
                             Nombre = "Lenovo L34 - Nuevo",
                             Precio = 40000.00m,
                             Stock = 10,
-                            UpdatedAt = new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3649)
+                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9530)
                         });
                 });
 
@@ -186,6 +187,48 @@ namespace Sistema.Api.Migrations
                     b.HasIndex("ProductoId");
 
                     b.ToTable("ProductoFotos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4299),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_lenodiK59HL_bfzqjo.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_lenodiK59HL_bfzqjo.jpg",
+                            ProductoId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4894),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_81giqVlenosi_m4gfmm.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_710c9klejuso_mn1uht.jpg",
+                            ProductoId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4994),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_710c9klejuso_mn1uht.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_81giqVlenosi_m4gfmm.jpg",
+                            ProductoId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(5076),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_776540h7hdell_kwtv8a.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_776540h7hdell_kwtv8a.jpg",
+                            ProductoId = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(5149),
+                            FotoPublicId = "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg",
+                            ProductoId = 3
+                        });
                 });
 
             modelBuilder.Entity("Sistema.Api.Entidades.Ordenes.Carrito", b =>

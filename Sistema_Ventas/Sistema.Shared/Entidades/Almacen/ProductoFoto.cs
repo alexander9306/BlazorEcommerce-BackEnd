@@ -9,7 +9,7 @@ namespace Sistema.Shared.Entidades.Almacen
 
         public DateTime CreatedAt { get; set; }
 
-        public bool IsPrincipal { get; set; }
+        public bool? IsPrincipal { get; set; }
 
         public Uri? FotoUrl { get; set; }
 

@@ -10,91 +10,27 @@
                 </div>
                 @if (Productos != null)
                 {
-                    
-                    @foreach (var p in Productos)
-                    {
-                        <h1>@p.Nombre </h1>
-                    }
-                }
-
-
-                @*@for (var i = 0; i < Productos.Count; i++)
-                {
-                    @if (Counter == 0)
+                    for (int i = 0; i < 2; i++)
                     {
                         <div class="row justify-content-center pt-2 pb-2">
-                            <div class="col-sm-6 col-lg-4">
-                                <div class="card clean-card text-center">
-                                    <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
-                                    <div class="card-body info">
-                                        <h4 class="card-title">Iphone 5</h4>
-                                        <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
+                            @for (int j = ((i == 0) ? 0 : 3); j < ((i == 0) ? 3 : 6); j++)
+                            {
+                                if (j < Productos.Count)
+                                {
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="card clean-card text-center">
+                                            <img class="card-img-top w-100 d-block" src="@GetFotoUrl(Productos[j].Fotos.ToList().Count > 0 ? Productos[j].Fotos.ToList()[0] : null)" style="height: 250px;">
+                                            <div class="card-body info">
+                                                <h4 class="card-title">@Productos[j].Nombre</h4>
+                                                <p class="card-text">@GetDescripcion(Productos[j].Descripcion)</p><a href="producto/@Productos[j].Id" class="btn btn-primary" type="button">Ver</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                }
+                            }
                         </div>
                     }
-                   @(Counter = Counter++)
-                }*@
-
-                <div class="row justify-content-center pt-2 pb-2">
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
-                            <div class="card-body info">
-                                <h4 class="card-title">Iphone 5</h4>
-                                <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
-                            <div class="card-body info">
-                                <h4 class="card-title">Iphone 5</h4>
-                                <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
-                            <div class="card-body info">
-                                <h4 class="card-title">Iphone 5</h4>
-                                <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row justify-content-center pt-2 pb-2">
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
-                            <div class="card-body info">
-                                <h4 class="card-title">Iphone 5</h4>
-                                <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
-                            <div class="card-body info">
-                                <h4 class="card-title">Iphone 5</h4>
-                                <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                        <div class="card clean-card text-center">
-                            <img class="card-img-top w-100 d-block" src="assets/img/tech/image1.jpg" style="height: 250px;">
-                            <div class="card-body info">
-                                <h4 class="card-title">Iphone 5</h4>
-                                <p class="card-text">Capacidad 16GB ...</p><button class="btn btn-primary" type="button">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </section>
     </div>

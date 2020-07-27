@@ -28,18 +28,9 @@ namespace Sistema.Api
             services.AddDbContext<DbContextSistema>(options =>
                 options.UseSqlite("Data Source=Sistema.db"));
 
-            //services.AddCors(options =>
-            //{
-            ////    options.AddPolicy(
-            ////        "Todos",
-            ////    //builder => builder
-            ////    //    .AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials().Build());
-            ////        builder => builder.WithOrigins("*").WithHeaders("*").WithMethods("*"));
-            ////});
-            
             services.AddCors(options =>
             {
-                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader());
+                options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

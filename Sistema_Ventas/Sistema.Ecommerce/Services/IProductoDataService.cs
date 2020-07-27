@@ -7,7 +7,7 @@
 
     public interface IProductoDataService
     {
-        Task<IEnumerable<Producto>> Listar(int limit, string after);
+        Task<IEnumerable<Producto>> Listar(int limit, string? after);
 
         Task<Producto> Mostrar(int id);
 

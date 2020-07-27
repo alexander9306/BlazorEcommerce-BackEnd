@@ -1,8 +1,8 @@
-﻿namespace Sistema.Api.Migrations
-{
-    using System;
-    using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
+namespace Sistema.Api.Migrations
+{
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -260,12 +260,12 @@
             migrationBuilder.InsertData(
                 table: "Categorias",
                 columns: new[] { "Id", "CreatedAt", "Descripcion", "Estado", "Nombre", "UpdatedAt" },
-                values: new object[] { 1, new DateTime(2020, 7, 26, 16, 59, 21, 850, DateTimeKind.Local).AddTicks(7680), "Celulares nuevos y usados.", true, "Celulares", new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5429) });
+                values: new object[] { 1, new DateTime(2020, 7, 26, 23, 33, 57, 895, DateTimeKind.Local).AddTicks(3714), "Celulares nuevos y usados.", true, "Celulares", new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1086) });
 
             migrationBuilder.InsertData(
                 table: "Categorias",
                 columns: new[] { "Id", "CreatedAt", "Descripcion", "Estado", "Nombre", "UpdatedAt" },
-                values: new object[] { 2, new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5789), "Tenemos computadoras de ultima generacion.", true, "Computadoras", new DateTime(2020, 7, 26, 16, 59, 21, 851, DateTimeKind.Local).AddTicks(5798) });
+                values: new object[] { 2, new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1441), "Tenemos computadoras de ultima generacion.", true, "Computadoras", new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1450) });
 
             migrationBuilder.InsertData(
                 table: "Roles",
@@ -280,22 +280,47 @@
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 1, 1, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3297), null, true, "Apple", "Iphone 7 - Usado", 27000.00m, 15, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3001) });
+                values: new object[] { 1, 1, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9184), "Los clientes empresariales han utilizado durante mucho tiempo la familia de portátiles empresariales de gama alta Lenovo, anteriormente IBM, ThinkPad", true, "Lenovo", "Thinkpad T440 - Nuevo", 55000.00m, 15, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(8887) });
 
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 2, 1, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3639), null, true, "Apple", "Iphone 7 - Nuevo", 34000.00m, 5, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3630) });
+                values: new object[] { 2, 1, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9519), null, true, "Dell", "Latitude E6540 - Nuevo", 44000.00m, 5, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9512) });
 
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 3, 2, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3647), null, true, "Lenovo", "Lenovo N10 - Nuevo", 34000.00m, 10, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3646) });
+                values: new object[] { 3, 2, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9528), null, true, "Huawei", "Honor 20 - Nuevo", 34000.00m, 10, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9527) });
 
             migrationBuilder.InsertData(
                 table: "Productos",
                 columns: new[] { "Id", "CategoriaId", "CreatedAt", "Descripcion", "Estado", "Marca", "Nombre", "Precio", "Stock", "UpdatedAt" },
-                values: new object[] { 4, 2, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3650), null, true, "Lenovo", "Lenovo L34 - Nuevo", 40000.00m, 10, new DateTime(2020, 7, 26, 16, 59, 21, 853, DateTimeKind.Local).AddTicks(3649) });
+                values: new object[] { 4, 2, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9531), null, true, "Lenovo", "Lenovo L34 - Nuevo", 40000.00m, 10, new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9530) });
+
+            migrationBuilder.InsertData(
+                table: "ProductoFotos",
+                columns: new[] { "Id", "CreatedAt", "FotoPublicId", "FotoUrl", "IsPrincipal", "ProductoId" },
+                values: new object[] { 1, new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4299), "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_lenodiK59HL_bfzqjo.jpg", "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_lenodiK59HL_bfzqjo.jpg", null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "ProductoFotos",
+                columns: new[] { "Id", "CreatedAt", "FotoPublicId", "FotoUrl", "IsPrincipal", "ProductoId" },
+                values: new object[] { 2, new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4894), "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_81giqVlenosi_m4gfmm.jpg", "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_710c9klejuso_mn1uht.jpg", null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "ProductoFotos",
+                columns: new[] { "Id", "CreatedAt", "FotoPublicId", "FotoUrl", "IsPrincipal", "ProductoId" },
+                values: new object[] { 3, new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4994), "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_710c9klejuso_mn1uht.jpg", "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_81giqVlenosi_m4gfmm.jpg", null, 1 });
+
+            migrationBuilder.InsertData(
+                table: "ProductoFotos",
+                columns: new[] { "Id", "CreatedAt", "FotoPublicId", "FotoUrl", "IsPrincipal", "ProductoId" },
+                values: new object[] { 4, new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(5076), "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_776540h7hdell_kwtv8a.jpg", "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_776540h7hdell_kwtv8a.jpg", null, 2 });
+
+            migrationBuilder.InsertData(
+                table: "ProductoFotos",
+                columns: new[] { "Id", "CreatedAt", "FotoPublicId", "FotoUrl", "IsPrincipal", "ProductoId" },
+                values: new object[] { 5, new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(5149), "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg", "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg", null, 3 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Administradores_Email",

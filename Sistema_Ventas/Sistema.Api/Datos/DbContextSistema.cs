@@ -43,6 +43,7 @@
             modelBuilder.ApplyConfiguration(new AdministradorMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
             modelBuilder.ApplyConfiguration(new RolMap());
+            modelBuilder.ApplyConfiguration(new ProductoFotoMap());
         }
     }
 }

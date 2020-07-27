@@ -33,12 +33,17 @@ namespace Sistema.Api.Controllers
 
             var productos = await this._context.Productos.
                  Include(p => p.Categoria)
-                 .Include(p => p.Fotos)
                  .OrderByDescending(p => p.UpdatedAt)
                  .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
                  .Take(limit)
                  .AsNoTracking()
                  .ToListAsync().ConfigureAwait(false);
+
+            var fotos = await this._context.ProductoFotos
+                .Where(f => productos.Select(p => p.Id).Contains(f.ProductoId))
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             return this.Ok(productos.Select(p => new ProductoViewModel
                  {
@@ -52,7 +57,7 @@ namespace Sistema.Api.Controllers
                      Descripcion = p.Descripcion,
                      CreatedAt = p.CreatedAt,
                      UpdatedAt = p.UpdatedAt,
-                     Fotos = p.Fotos.Select(f => new ProductoFotoViewModel
+                     Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
                      {
                          ProductoId = f.ProductoId,
                          CreatedAt = f.CreatedAt,
