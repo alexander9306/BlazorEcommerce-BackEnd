@@ -1,5 +1,3 @@
-using Sistema.Ecommerce.Helpers;
-
 namespace Sistema.Ecommerce
 {
     using System;
@@ -7,6 +5,7 @@ namespace Sistema.Ecommerce
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
+    using Sistema.Ecommerce.Helpers;
     using Sistema.Ecommerce.Services;
 
     public class Program
