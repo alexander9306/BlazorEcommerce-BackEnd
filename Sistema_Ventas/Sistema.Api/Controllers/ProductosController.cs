@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using Sistema.Api.Helpers;
-
-namespace Sistema.Api.Controllers
+﻿namespace Sistema.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -25,11 +22,11 @@ namespace Sistema.Api.Controllers
             this._context = context;
         }
 
-        // GET: api/Productos/Listar/5/10-02-2017
-        [HttpGet("[action]/{limit}/{after}")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit, string after)
+        // GET: api/Productos/Listar/limit/before
+        [HttpGet("[action]/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit, string before)
         {
-            var hasCursor = DateTime.TryParse(after, out var cursor);
+            var hasCursor = DateTime.TryParse(before, out var cursor);
 
             var productos = await this._context.Productos.
                  Include(p => p.Categoria)
@@ -68,13 +65,24 @@ namespace Sistema.Api.Controllers
                  }));
         }
 
-        // GET: api/Productos/ListarPorCategoria/categoriaId
-        [HttpGet("[action]/{categoriaId}")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorCategoria(int categoriaId)
+        // GET: api/Productos/ListarPorCategoria/categoriaid/limit/before
+        [HttpGet("[action]/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorCategoria(int categoriaId, int limit, string before)
         {
-            var productos = await this._context.Productos.Where(a => a.CategoriaId == categoriaId)
-                .Include(p => p.Fotos)
-                .AsNoTracking().ToListAsync()
+            var hasCursor = DateTime.TryParse(before, out var cursor);
+
+            var productos = await this._context.Productos.
+                Include(p => p.Categoria)
+                .OrderByDescending(p => p.UpdatedAt)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0 && p.CategoriaId == categoriaId)
+                .Take(limit)
+                .AsNoTracking()
+                .ToListAsync().ConfigureAwait(false);
+
+            var fotos = await this._context.ProductoFotos
+                .Where(f => productos.Select(p => p.Id).Contains(f.ProductoId))
+                .AsNoTracking()
+                .ToListAsync()
                 .ConfigureAwait(false);
 
             return this.Ok(productos.Select(p => new ProductoViewModel
@@ -89,7 +97,50 @@ namespace Sistema.Api.Controllers
                 Descripcion = p.Descripcion,
                 CreatedAt = p.CreatedAt,
                 UpdatedAt = p.UpdatedAt,
-                Fotos = p.Fotos.Select(f => new ProductoFotoViewModel
+                Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
+                {
+                    ProductoId = f.ProductoId,
+                    CreatedAt = f.CreatedAt,
+                    IsPrincipal = f.IsPrincipal,
+                    FotoUrl = f.FotoUrl,
+                    FotoPublicId = f.FotoPublicId,
+                }),
+            }));
+        }
+
+        // GET: api/Productos/ListarPorCategoria/marca/limit/before
+        [HttpGet("[action]/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorMarca(string marca, int limit, string before)
+        {
+            var hasCursor = DateTime.TryParse(before, out var cursor);
+
+            var productos = await this._context.Productos.
+                Include(p => p.Categoria)
+                .OrderByDescending(p => p.UpdatedAt)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0 && p.Marca == marca)
+                .Take(limit)
+                .AsNoTracking()
+                .ToListAsync().ConfigureAwait(false);
+
+            var fotos = await this._context.ProductoFotos
+                .Where(f => productos.Select(p => p.Id).Contains(f.ProductoId))
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            return this.Ok(productos.Select(p => new ProductoViewModel
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Categoria = p.Categoria.Nombre,
+                Precio = p.Precio,
+                Estado = p.Estado,
+                Marca = p.Marca,
+                Stock = p.Stock,
+                Descripcion = p.Descripcion,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt,
+                Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
                 {
                     ProductoId = f.ProductoId,
                     CreatedAt = f.CreatedAt,
@@ -106,7 +157,6 @@ namespace Sistema.Api.Controllers
         {
             var producto = await this._context.Productos
                 .Include(p => p.Categoria)
-                .Include(p => p.Fotos)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
@@ -114,6 +164,12 @@ namespace Sistema.Api.Controllers
             {
                 return this.NotFound();
             }
+
+            var fotos = await this._context.ProductoFotos
+                .Where(f => f.ProductoId == producto.Id)
+                .AsNoTracking()
+                .ToListAsync()
+                .ConfigureAwait(false);
 
             return new ProductoViewModel
             {
@@ -127,7 +183,7 @@ namespace Sistema.Api.Controllers
                 Descripcion = producto.Descripcion,
                 CreatedAt = producto.CreatedAt,
                 UpdatedAt = producto.UpdatedAt,
-                Fotos = producto.Fotos.Select(f => new ProductoFotoViewModel
+                Fotos = fotos.Select(f => new ProductoFotoViewModel
                 {
                     ProductoId = f.ProductoId,
                     CreatedAt = f.CreatedAt,
