@@ -15,10 +15,13 @@ namespace Sistema.Ecommerce
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            var baseAddress = "https://localhost:44303/";
+            var baseAddress = "https://localhost:44303/api/";
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress));
+                client.BaseAddress = new Uri(baseAddress + "productos"));
+
+            builder.Services.AddHttpClient<ICategoriaDataService, CategoriaDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "categorias"));
 
             builder.Services.AddSingleton<IProductoHelper, ProductoHelper>();
 
