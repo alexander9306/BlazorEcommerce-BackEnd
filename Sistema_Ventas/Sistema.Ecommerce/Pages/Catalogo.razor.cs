@@ -14,6 +14,9 @@
         public IProductoDataService ProductoDataService { get; set; }
 
         [Inject]
+        public ICategoriaDataService CategoriaDataService { get; set; }
+
+        [Inject]
         public IProductoHelper PoductoHelper { get; set; }
 
         [Parameter]
@@ -26,8 +29,13 @@
 
         public List<Producto> Productos { get; set; }
 
+        public List<Categoria> Categorias { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
+            this.Categorias = (await this.CategoriaDataService.Listar()
+            .ConfigureAwait(false)).ToList();
+
             if (int.TryParse(this.CategoriaId, out var categoriaId))
             {
                 this.GetPaginationInfo(

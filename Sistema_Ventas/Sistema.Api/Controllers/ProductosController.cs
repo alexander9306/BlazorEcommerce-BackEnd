@@ -66,7 +66,7 @@
         }
 
         // GET: api/Productos/ListarPorCategoria/categoriaid/limit/before
-        [HttpGet("[action]/{limit}/{before}")]
+        [HttpGet("[action]/{categoriaId}/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorCategoria(int categoriaId, int limit, string before)
         {
             var hasCursor = DateTime.TryParse(before, out var cursor);
@@ -109,7 +109,7 @@
         }
 
         // GET: api/Productos/ListarPorCategoria/marca/limit/before
-        [HttpGet("[action]/{limit}/{before}")]
+        [HttpGet("[action]/{marca}/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorMarca(string marca, int limit, string before)
         {
             var hasCursor = DateTime.TryParse(before, out var cursor);
