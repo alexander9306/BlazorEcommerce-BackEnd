@@ -49,20 +49,20 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 895, DateTimeKind.Local).AddTicks(3714),
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 937, DateTimeKind.Local).AddTicks(1582),
                             Descripcion = "Celulares nuevos y usados.",
                             Estado = true,
                             Nombre = "Celulares",
-                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1086)
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 938, DateTimeKind.Local).AddTicks(1925)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1441),
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 938, DateTimeKind.Local).AddTicks(2280),
                             Descripcion = "Tenemos computadoras de ultima generacion.",
                             Estado = true,
                             Nombre = "Computadoras",
-                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 896, DateTimeKind.Local).AddTicks(1450)
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 938, DateTimeKind.Local).AddTicks(2288)
                         });
                 });
 
@@ -113,51 +113,129 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 1,
-                            CategoriaId = 1,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9184),
-                            Descripcion = "Los clientes empresariales han utilizado durante mucho tiempo la familia de portátiles empresariales de gama alta Lenovo, anteriormente IBM, ThinkPad",
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(3709),
+                            Descripcion = "Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico",
                             Estado = true,
-                            Marca = "Lenovo",
-                            Nombre = "Thinkpad T440 - Nuevo",
-                            Precio = 55000.00m,
+                            Marca = "Dell",
+                            Nombre = "Laptop Dell Latitude E6540",
+                            Precio = 30000.00m,
                             Stock = 15,
-                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(8887)
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(3351)
                         },
                         new
                         {
                             Id = 2,
-                            CategoriaId = 1,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9519),
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4051),
+                            Descripcion = "LAPTOP ACER PREDATOR CORE I7",
                             Estado = true,
-                            Marca = "Dell",
-                            Nombre = "Latitude E6540 - Nuevo",
+                            Marca = "Acer",
+                            Nombre = "LAPTOP ACER PREDATOR",
                             Precio = 44000.00m,
                             Stock = 5,
-                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9512)
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4044)
                         },
                         new
                         {
                             Id = 3,
-                            CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9528),
+                            CategoriaId = 1,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4060),
                             Estado = true,
-                            Marca = "Huawei",
-                            Nombre = "Honor 20 - Nuevo",
-                            Precio = 34000.00m,
+                            Marca = "BLU",
+                            Nombre = " BLU G70",
+                            Precio = 7000.00m,
                             Stock = 10,
-                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9527)
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4059)
                         },
                         new
                         {
                             Id = 4,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9531),
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4063),
+                            Descripcion = "Laptop Asus Q301L – Intel Core i5 - 4200u – 8GB RAM – 500GB – Pantalla Touch – Teclado Iluminado – Ultra Liviana",
                             Estado = true,
-                            Marca = "Lenovo",
-                            Nombre = "Lenovo L34 - Nuevo",
-                            Precio = 40000.00m,
+                            Marca = "Asus",
+                            Nombre = "Laptop Asus Q301L",
+                            Precio = 25000.00m,
                             Stock = 10,
-                            UpdatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 897, DateTimeKind.Local).AddTicks(9530)
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4062)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4066),
+                            Descripcion = "LAPTOP DELL G3 15 3579 8va GENERACION",
+                            Estado = true,
+                            Marca = "Dell",
+                            Nombre = "LAPTOP DELL G3 15 3579",
+                            Precio = 45000.00m,
+                            Stock = 15,
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4065)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4069),
+                            Descripcion = "Laptop DELL Inspiron 14-3459 – Intel Core i5-6200U Sexta Gen – 6GB RAM – 500GB HDD – AMD Radeon R5",
+                            Estado = true,
+                            Marca = "DELL",
+                            Nombre = "Laptop DELL Inspiron 14-3459",
+                            Precio = 29000.00m,
+                            Stock = 20,
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4068)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoriaId = 1,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4073),
+                            Estado = true,
+                            Marca = "Google",
+                            Nombre = "Google Pixel 4",
+                            Precio = 10000.00m,
+                            Stock = 12,
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4071)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoriaId = 1,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4076),
+                            Estado = true,
+                            Marca = "Huawei",
+                            Nombre = "Huawei Honor 20",
+                            Precio = 15000.00m,
+                            Stock = 14,
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4075)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4079),
+                            Descripcion = "LAPTOP DELL INSPIRON 15 SILVER",
+                            Estado = true,
+                            Marca = "DELL",
+                            Nombre = "LAPTOP DELL INSPIRON 15",
+                            Precio = 35000.00m,
+                            Stock = 10,
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4078)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoriaId = 2,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4082),
+                            Descripcion = "Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD",
+                            Estado = true,
+                            Marca = "DELL",
+                            Nombre = "Laptop DELL INSPIRON 15-3558",
+                            Precio = 40000.00m,
+                            Stock = 16,
+                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4081)
                         });
                 });
 
@@ -192,42 +270,226 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4299),
-                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_lenodiK59HL_bfzqjo.jpg",
-                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_lenodiK59HL_bfzqjo.jpg",
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(2969),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_6540h7hdell2_uckxvb.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_6540h7hdell2_uckxvb.jpg",
                             ProductoId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4894),
-                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_81giqVlenosi_m4gfmm.jpg",
-                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_710c9klejuso_mn1uht.jpg",
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3511),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_346540h7hdell_snunj0.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_346540h7hdell_snunj0.jpg",
                             ProductoId = 1
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(4994),
-                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Lenovo%20Thinkpad%20T440%20%E2%80%93%20Intel%20Core%20i5-4200U%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20Teclado%20Num%C3%A9rico%20%E2%80%93%20Lector%20De%20Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Num%C3%A9rico_Lector_De_Huellas_710c9klejuso_mn1uht.jpg",
-                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816989/Sistema-Ventas/Laptops/Laptop Lenovo Thinkpad T440 – Intel Core i5-4200U – 8GB RAM – 500GB HDD – Teclado Numérico – Lector De Huellas/Laptop_Lenovo_Thinkpad_T440_Intel_Core_i5-4200U_8GB_RAM_500GB_HDD_Teclado_Numérico_Lector_De_Huellas_81giqVlenosi_m4gfmm.jpg",
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3627),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_16540h7hdell_dhnsn9.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_16540h7hdell_dhnsn9.jpg",
                             ProductoId = 1
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(5076),
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3708),
                             FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_776540h7hdell_kwtv8a.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_776540h7hdell_kwtv8a.jpg",
-                            ProductoId = 2
+                            ProductoId = 1
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2020, 7, 26, 23, 33, 57, 900, DateTimeKind.Local).AddTicks(5149),
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3820),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_566540h7hdell_yhzsr4.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_566540h7hdell_yhzsr4.jpg",
+                            ProductoId = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3905),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20ACER%20PREDATOR%20CORE%20I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-gamer-acer-predator-helios-300-i7-9750h-gtx-ti-6gb-D_NQ_NP_853948-MPE32067580368_092019-F-scaled_uldpur.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP ACER PREDATOR CORE I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-gamer-acer-predator-helios-300-i7-9750h-gtx-ti-6gb-D_NQ_NP_853948-MPE32067580368_092019-F-scaled_uldpur.jpg",
+                            ProductoId = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3916),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20ACER%20PREDATOR%20CORE%20I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-acer-predator-helios-300-i7-8va-gtx-1060-16gb-ram-D_NQ_NP_816622-MPE32377868369_092019-F-scaled_wmhgav.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/LAPTOP ACER PREDATOR CORE I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-acer-predator-helios-300-i7-8va-gtx-1060-16gb-ram-D_NQ_NP_816622-MPE32377868369_092019-F-scaled_wmhgav.jpg",
+                            ProductoId = 2
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3923),
+                            FotoPublicId = "Sistema-Ventas/Celulares/BLU%20G70/BLU_G70_Precio-BLU-G70-en-Costa-Rica_pynkr4.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816936/Sistema-Ventas/Celulares/BLU G70/BLU_G70_Precio-BLU-G70-en-Costa-Rica_pynkr4.jpg",
+                            ProductoId = 3
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3931),
+                            FotoPublicId = "Sistema-Ventas/Celulares/BLU%20G70/BLU_G70_BLU-G70-en-Costa-Rica-433x559_t05hzt.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816935/Sistema-Ventas/Celulares/BLU G70/BLU_G70_BLU-G70-en-Costa-Rica-433x559_t05hzt.jpg",
+                            ProductoId = 3
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3939),
+                            FotoPublicId = "Sistema-Ventas/Celulares/BLU%20G70/BLU_G70_Comprar-BLU-G70-en-Costa-Rica-491x1024_o0bsan.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816935/Sistema-Ventas/Celulares/BLU G70/BLU_G70_Comprar-BLU-G70-en-Costa-Rica-491x1024_o0bsan.jpg",
+                            ProductoId = 3
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4026),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Asus%20Q301L%20%E2%80%93%20Intel%20Core%20i5-4200u%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Pantalla%20Touch%20%E2%80%93%20Teclado%20Iluminado%20%E2%80%93%20Ultra%20Liviana/Laptop_Asus_Q301L_Intel_Core_i5-4200u_8GB_RAM_500GB_Pantalla_Touch_Teclado_Iluminado_Ultra_Liviana_asus1_qk5rzi.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Laptop Asus Q301L – Intel Core i5-4200u – 8GB RAM – 500GB – Pantalla Touch – Teclado Iluminado – Ultra Liviana/Laptop_Asus_Q301L_Intel_Core_i5-4200u_8GB_RAM_500GB_Pantalla_Touch_Teclado_Iluminado_Ultra_Liviana_asus1_qk5rzi.jpg",
+                            ProductoId = 4
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4037),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20G3%2015%203579%208Then%20GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_notebook-dell-g3-15-3579-156-intel-core-i7-8750h-220-ghz-8gb-ddr4-scaled_gsysxu.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL G3 15 3579 8Then GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_notebook-dell-g3-15-3579-156-intel-core-i7-8750h-220-ghz-8gb-ddr4-scaled_gsysxu.jpg",
+                            ProductoId = 5
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4047),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20G3%2015%203579%208Then%20GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_laptop-dell-g3-3579-15-i5-8300h-video-4gb-1tb-8gb-p-D_NQ_NP_621638-MPE32062793856_092019-F-scaled_zvmdzz.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL G3 15 3579 8Then GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_laptop-dell-g3-3579-15-i5-8300h-video-4gb-1tb-8gb-p-D_NQ_NP_621638-MPE32062793856_092019-F-scaled_zvmdzz.jpg",
+                            ProductoId = 5
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4056),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20G3%2015%203579%208Then%20GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_1-34-scaled_e4mqob.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL G3 15 3579 8Then GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_1-34-scaled_e4mqob.jpg",
+                            ProductoId = 5
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4134),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20Inspiron%2014-3459%20%E2%80%93%20Intel%20Core%20i5-6200U%20Sexta%20Gen%20%E2%80%93%206GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20AMD%20Radeon%20R5/Laptop_DELL_Inspiron_14-3459_Intel_Core_i5-6200U_Sexta_Gen_6GB_RAM_500GB_HDD_AMD_Radeon_R5_107607_71Tri1yZUCL_SL1500__i7j57w.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/Laptop DELL Inspiron 14-3459 – Intel Core i5-6200U Sexta Gen – 6GB RAM – 500GB HDD – AMD Radeon R5/Laptop_DELL_Inspiron_14-3459_Intel_Core_i5-6200U_Sexta_Gen_6GB_RAM_500GB_HDD_AMD_Radeon_R5_107607_71Tri1yZUCL_SL1500__i7j57w.jpg",
+                            ProductoId = 6
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4142),
+                            FotoPublicId = "Sistema-Ventas/Celulares/Google%20Pixel%204/Google_Pixel_4_51jjGHHKixL._AC_SX425__dxkxdc.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816945/Sistema-Ventas/Celulares/Google Pixel 4/Google_Pixel_4_51jjGHHKixL._AC_SX425__dxkxdc.jpg",
+                            ProductoId = 7
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4150),
+                            FotoPublicId = "Sistema-Ventas/Celulares/Google%20Pixel%204/Google_Pixel_4_149597-phones-news-this-is-the-google-pixel-4-xl-image1-ktsr2yozg6_dpm6jk.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Google Pixel 4/Google_Pixel_4_149597-phones-news-this-is-the-google-pixel-4-xl-image1-ktsr2yozg6_dpm6jk.jpg",
+                            ProductoId = 7
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4158),
+                            FotoPublicId = "Sistema-Ventas/Celulares/Google%20Pixel%204/Google_Pixel_4_1366_2000_foaiqs.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Google Pixel 4/Google_Pixel_4_1366_2000_foaiqs.jpg",
+                            ProductoId = 7
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4165),
+                            FotoPublicId = "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_GKK-Detachable-Case-for-Huawei-Honor-20-Black-10072019-01-p_few99o.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816945/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_GKK-Detachable-Case-for-Huawei-Honor-20-Black-10072019-01-p_few99o.jpg",
+                            ProductoId = 8
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4173),
+                            FotoPublicId = "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_ef6g5t8x0aioqpg_cucvyh.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_ef6g5t8x0aioqpg_cucvyh.jpg",
+                            ProductoId = 8
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4180),
                             FotoPublicId = "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg",
-                            ProductoId = 3
+                            ProductoId = 8
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4190),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20INSPIRON%2015%20SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-156-fhd-intel-core-i5-825-D_NQ_NP_967204-MPE32061439156_092019-F-scaled_eitw4k.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/LAPTOP DELL INSPIRON 15 SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-156-fhd-intel-core-i5-825-D_NQ_NP_967204-MPE32061439156_092019-F-scaled_eitw4k.jpg",
+                            ProductoId = 9
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4199),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20INSPIRON%2015%20SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-15-5570-156-core-i5-68fnp-D_NQ_NP_781655-MPE32061793687_092019-F-scaled_alicmc.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/LAPTOP DELL INSPIRON 15 SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-15-5570-156-core-i5-68fnp-D_NQ_NP_781655-MPE32061793687_092019-F-scaled_alicmc.jpg",
+                            ProductoId = 9
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4208),
+                            FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20INSPIRON%2015%20SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-3581-156-fhd-intel-core-i3-7020-D_NQ_NP_660749-MPE31598311513_072019-F-scaled_yrnlhi.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL INSPIRON 15 SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-3581-156-fhd-intel-core-i3-7020-D_NQ_NP_660749-MPE31598311513_072019-F-scaled_yrnlhi.jpg",
+                            ProductoId = 9
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4264),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_43558dell36689-1_cjqhsy.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_43558dell36689-1_cjqhsy.jpg",
+                            ProductoId = 10
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4337),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_3558dell36689_ostn27.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_3558dell36689_ostn27.jpg",
+                            ProductoId = 10
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4406),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_23558dell36689_wxdxod.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_23558dell36689_wxdxod.jpg",
+                            ProductoId = 10
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4457),
+                            FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_13558dell36689_qgimk8.jpg",
+                            FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_13558dell36689_qgimk8.jpg",
+                            ProductoId = 10
                         });
                 });
 

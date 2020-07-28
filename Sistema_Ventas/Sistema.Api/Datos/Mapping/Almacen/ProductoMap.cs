@@ -10,7 +10,7 @@
         public void Configure(EntityTypeBuilder<Producto> builder)
         {
             builder.HasIndex(p => p.Nombre)
-                .IsUnique();
+                  .IsUnique();
             builder.HasData(
                 new Producto
                 {
