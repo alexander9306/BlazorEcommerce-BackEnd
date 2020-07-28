@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Components;
 
-    public class ProductoBase : ComponentBase
+    public partial class Productos : ComponentBase
     {
         [Parameter]
         public string ProductoId { get; set; }
