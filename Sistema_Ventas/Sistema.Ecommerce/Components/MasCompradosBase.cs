@@ -17,7 +17,6 @@
 
         public List<Producto> Productos { get; set; }
 
-        public int ItemCount { get; set; }
 
         public string GetDescripcion(string descripcion)
         {
