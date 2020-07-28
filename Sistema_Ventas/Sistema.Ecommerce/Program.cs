@@ -20,15 +20,6 @@ namespace Sistema.Ecommerce
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress));
-
-            builder.Services.AddHttpClient<IAdministradorDataService, AdministradorDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress));
-            
-            builder.Services.AddHttpClient<IClienteDataService, ClienteDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress));
-
-            builder.Services.AddHttpClient<IRolDataService, RolDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress));
             
 
             await builder.Build().RunAsync();
