@@ -28,32 +28,21 @@
                 .ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<Producto>> ListarRelacionados(int productoId, int limit, DateTime? before = null)
+        {
+            var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Producto>>(
+                    await _httpClient.GetStreamAsync($"listarRelacionados/{productoId}/{limit}/{cursor}").ConfigureAwait(false),
+                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
+                .ConfigureAwait(false);
+        }
         public async Task<Producto> Mostrar(int id)
         {
             return await JsonSerializer.DeserializeAsync<Producto>(
                     await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);
         }
-
-        //public async Task<IEnumerable<Producto>> ListarPorCategoria(int categoriId, int limit, DateTime? before)
-        //{
-        //    var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
-
-        //    return await JsonSerializer.DeserializeAsync<IEnumerable<Producto>>(
-        //            await _httpClient.GetStreamAsync($"ListarPorCategoria/{categoriId}/{limit}/{cursor}").ConfigureAwait(false),
-        //            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
-        //        .ConfigureAwait(false);
-        //}
-
-        //public async Task<IEnumerable<Producto>> ListarPorMarca(string marca, int limit, DateTime? before)
-        //{
-        //    var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
-
-        //    return await JsonSerializer.DeserializeAsync<IEnumerable<Producto>>(
-        //            await _httpClient.GetStreamAsync($"ListarPorMarca/{marca}/{limit}/{cursor}").ConfigureAwait(false),
-        //            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
-        //        .ConfigureAwait(false);
-        //}
 
         public async Task<IEnumerable<Producto>> ListarPorFiltro(List<int> categoriaIds, List<int> marcaIds, int limit, DateTime? before = null)
         {

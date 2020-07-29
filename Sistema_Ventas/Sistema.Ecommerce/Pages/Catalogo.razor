@@ -1,4 +1,5 @@
 ﻿@page "/catalogo"
+@using Sistema.Ecommerce.Components
 
 
 <main class="page catalog-page">
@@ -73,7 +74,7 @@
                                     {
                                         <div class="col-12 col-md-6 col-lg-4">
                                             <div class="clean-product-item">
-                                                <div class="image"><a href="producto/@producto.Id"><img class="img-fluid d-block mx-auto" src="@PoductoHelper.GetFotoUrl(producto.Fotos.FirstOrDefault())"></a></div>
+                                                <div class="image"><a href="producto/@producto.Id"><img class="img-fluid d-block mx-auto" src="@ProductoHelper.GetFotoUrl(producto.Fotos.FirstOrDefault())"></a></div>
                                                 <div class="product-name"><a href="producto/@producto.Id">@producto.Nombre</a></div>
                                                 <div class="about">
                                                     <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
@@ -84,6 +85,8 @@
                                             </div>
                                         </div>
                                     }
+                                }else{
+                                    <Loading />
                                 }
                             </div>
                             @if (HasMoreData)

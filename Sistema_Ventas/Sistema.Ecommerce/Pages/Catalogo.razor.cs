@@ -20,13 +20,7 @@
         public IMarcaDataService MarcaDataService { get; set; }
 
         [Inject]
-        public IProductoHelper PoductoHelper { get; set; }
-
-        [Parameter]
-        public string CategoriaId { get; set; }
-
-        [Parameter]
-        public string Marca { get; set; }
+        public IProductoHelper ProductoHelper { get; set; }
 
         public bool HasMoreData;
 
@@ -36,15 +30,12 @@
 
         public List<Marca> Marcas { get; set; }
 
-        private List<int> _categoriaIds { get; set; }
+        private List<int> _categoriaIds { get; set; } = new List<int>();
 
-        private List<int> _marcaIds { get; set; }
+        private List<int> _marcaIds { get; set; } = new List<int>();
 
         protected override async Task OnInitializedAsync()
         {
-            this._marcaIds = new List<int>();
-            this._categoriaIds = new List<int>();
-
             this.Categorias = (await this.CategoriaDataService.Listar()
             .ConfigureAwait(false)).ToList();
 
@@ -109,7 +100,7 @@
                     .ConfigureAwait(false)).ToList());
         }
 
-        protected void GetPaginationInfo(List<Producto> productos, bool add = false)
+        private void GetPaginationInfo(List<Producto> productos, bool add = false)
         {
             if (productos != null && productos.Count == 10)
             {
