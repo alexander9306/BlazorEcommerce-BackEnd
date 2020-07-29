@@ -9,7 +9,7 @@ using Sistema.Api.Datos;
 namespace Sistema.Api.Migrations
 {
     [DbContext(typeof(DbContextSistema))]
-    [Migration("20200728031852_InitialCreate")]
+    [Migration("20200729014708_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,20 +51,79 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 937, DateTimeKind.Local).AddTicks(1582),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 21, DateTimeKind.Local).AddTicks(1805),
                             Descripcion = "Celulares nuevos y usados.",
                             Estado = true,
                             Nombre = "Celulares",
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 938, DateTimeKind.Local).AddTicks(1925)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 21, DateTimeKind.Local).AddTicks(9651)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 938, DateTimeKind.Local).AddTicks(2280),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 21, DateTimeKind.Local).AddTicks(9999),
                             Descripcion = "Tenemos computadoras de ultima generacion.",
                             Estado = true,
                             Nombre = "Computadoras",
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 938, DateTimeKind.Local).AddTicks(2288)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 22, DateTimeKind.Local).AddTicks(7)
+                        });
+                });
+
+            modelBuilder.Entity("Sistema.Api.Entidades.Almacen.Marca", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nombre")
+                        .IsUnique();
+
+                    b.ToTable("Marcas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 23, DateTimeKind.Local).AddTicks(4420),
+                            Nombre = "Dell"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 23, DateTimeKind.Local).AddTicks(4759),
+                            Nombre = "Acer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 23, DateTimeKind.Local).AddTicks(4768),
+                            Nombre = "BLU"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 23, DateTimeKind.Local).AddTicks(4770),
+                            Nombre = "Asus"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 23, DateTimeKind.Local).AddTicks(4771),
+                            Nombre = "Google"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 23, DateTimeKind.Local).AddTicks(4773),
+                            Nombre = "Huawei"
                         });
                 });
 
@@ -86,8 +145,8 @@ namespace Sistema.Api.Migrations
                     b.Property<bool>("Estado")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Marca")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -106,6 +165,8 @@ namespace Sistema.Api.Migrations
 
                     b.HasIndex("CategoriaId");
 
+                    b.HasIndex("MarcaId");
+
                     b.HasIndex("Nombre")
                         .IsUnique();
 
@@ -116,128 +177,128 @@ namespace Sistema.Api.Migrations
                         {
                             Id = 1,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(3709),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(7893),
                             Descripcion = "Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico",
                             Estado = true,
-                            Marca = "Dell",
+                            MarcaId = 1,
                             Nombre = "Laptop Dell Latitude E6540",
                             Precio = 30000.00m,
                             Stock = 15,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(3351)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(7501)
                         },
                         new
                         {
                             Id = 2,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4051),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8367),
                             Descripcion = "LAPTOP ACER PREDATOR CORE I7",
                             Estado = true,
-                            Marca = "Acer",
+                            MarcaId = 2,
                             Nombre = "LAPTOP ACER PREDATOR",
                             Precio = 44000.00m,
                             Stock = 5,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4044)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8359)
                         },
                         new
                         {
                             Id = 3,
                             CategoriaId = 1,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4060),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8383),
                             Estado = true,
-                            Marca = "BLU",
-                            Nombre = " BLU G70",
+                            MarcaId = 3,
+                            Nombre = "BLU G70",
                             Precio = 7000.00m,
                             Stock = 10,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4059)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8381)
                         },
                         new
                         {
                             Id = 4,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4063),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8386),
                             Descripcion = "Laptop Asus Q301L – Intel Core i5 - 4200u – 8GB RAM – 500GB – Pantalla Touch – Teclado Iluminado – Ultra Liviana",
                             Estado = true,
-                            Marca = "Asus",
+                            MarcaId = 4,
                             Nombre = "Laptop Asus Q301L",
                             Precio = 25000.00m,
                             Stock = 10,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4062)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8385)
                         },
                         new
                         {
                             Id = 5,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4066),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8389),
                             Descripcion = "LAPTOP DELL G3 15 3579 8va GENERACION",
                             Estado = true,
-                            Marca = "Dell",
+                            MarcaId = 1,
                             Nombre = "LAPTOP DELL G3 15 3579",
                             Precio = 45000.00m,
                             Stock = 15,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4065)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8388)
                         },
                         new
                         {
                             Id = 6,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4069),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8392),
                             Descripcion = "Laptop DELL Inspiron 14-3459 – Intel Core i5-6200U Sexta Gen – 6GB RAM – 500GB HDD – AMD Radeon R5",
                             Estado = true,
-                            Marca = "DELL",
+                            MarcaId = 1,
                             Nombre = "Laptop DELL Inspiron 14-3459",
                             Precio = 29000.00m,
                             Stock = 20,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4068)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8391)
                         },
                         new
                         {
                             Id = 7,
                             CategoriaId = 1,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4073),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8395),
                             Estado = true,
-                            Marca = "Google",
+                            MarcaId = 5,
                             Nombre = "Google Pixel 4",
                             Precio = 10000.00m,
                             Stock = 12,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4071)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8394)
                         },
                         new
                         {
                             Id = 8,
                             CategoriaId = 1,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4076),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8399),
                             Estado = true,
-                            Marca = "Huawei",
+                            MarcaId = 6,
                             Nombre = "Huawei Honor 20",
                             Precio = 15000.00m,
                             Stock = 14,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4075)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8397)
                         },
                         new
                         {
                             Id = 9,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4079),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8402),
                             Descripcion = "LAPTOP DELL INSPIRON 15 SILVER",
                             Estado = true,
-                            Marca = "DELL",
+                            MarcaId = 1,
                             Nombre = "LAPTOP DELL INSPIRON 15",
                             Precio = 35000.00m,
                             Stock = 10,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4078)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8401)
                         },
                         new
                         {
                             Id = 10,
                             CategoriaId = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4082),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8405),
                             Descripcion = "Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD",
                             Estado = true,
-                            Marca = "DELL",
+                            MarcaId = 1,
                             Nombre = "Laptop DELL INSPIRON 15-3558",
                             Precio = 40000.00m,
                             Stock = 16,
-                            UpdatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 940, DateTimeKind.Local).AddTicks(4081)
+                            UpdatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 24, DateTimeKind.Local).AddTicks(8404)
                         });
                 });
 
@@ -272,7 +333,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(2969),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(6202),
                             FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_6540h7hdell2_uckxvb.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_6540h7hdell2_uckxvb.jpg",
                             ProductoId = 1
@@ -280,7 +341,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3511),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(6726),
                             FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_346540h7hdell_snunj0.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_346540h7hdell_snunj0.jpg",
                             ProductoId = 1
@@ -288,7 +349,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3627),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(6828),
                             FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_16540h7hdell_dhnsn9.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_16540h7hdell_dhnsn9.jpg",
                             ProductoId = 1
@@ -296,7 +357,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3708),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(6991),
                             FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_776540h7hdell_kwtv8a.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_776540h7hdell_kwtv8a.jpg",
                             ProductoId = 1
@@ -304,7 +365,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3820),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7070),
                             FotoPublicId = "Sistema-Ventas/Laptops/Dell%20Latitude%20E6540%20%E2%80%93%20Full%20HD%20%E2%80%93%20Core%20i5%204th%20Gen%20%E2%80%93%2016GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Teclado%20Num%C3%A9rico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Num%C3%A9rico_566540h7hdell_yhzsr4.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Dell Latitude E6540 – Full HD – Core i5 4th Gen – 16GB RAM – 500GB – Teclado Numérico/Dell_Latitude_E6540_Full_HD_Core_i5_4th_Gen_16GB_RAM_500GB_Teclado_Numérico_566540h7hdell_yhzsr4.jpg",
                             ProductoId = 1
@@ -312,7 +373,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3905),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7157),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20ACER%20PREDATOR%20CORE%20I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-gamer-acer-predator-helios-300-i7-9750h-gtx-ti-6gb-D_NQ_NP_853948-MPE32067580368_092019-F-scaled_uldpur.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP ACER PREDATOR CORE I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-gamer-acer-predator-helios-300-i7-9750h-gtx-ti-6gb-D_NQ_NP_853948-MPE32067580368_092019-F-scaled_uldpur.jpg",
                             ProductoId = 2
@@ -320,7 +381,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3916),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7169),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20ACER%20PREDATOR%20CORE%20I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-acer-predator-helios-300-i7-8va-gtx-1060-16gb-ram-D_NQ_NP_816622-MPE32377868369_092019-F-scaled_wmhgav.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/LAPTOP ACER PREDATOR CORE I7/LAPTOP_ACER_PREDATOR_CORE_I7_laptop-acer-predator-helios-300-i7-8va-gtx-1060-16gb-ram-D_NQ_NP_816622-MPE32377868369_092019-F-scaled_wmhgav.jpg",
                             ProductoId = 2
@@ -328,7 +389,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3923),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7177),
                             FotoPublicId = "Sistema-Ventas/Celulares/BLU%20G70/BLU_G70_Precio-BLU-G70-en-Costa-Rica_pynkr4.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816936/Sistema-Ventas/Celulares/BLU G70/BLU_G70_Precio-BLU-G70-en-Costa-Rica_pynkr4.jpg",
                             ProductoId = 3
@@ -336,7 +397,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3931),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7186),
                             FotoPublicId = "Sistema-Ventas/Celulares/BLU%20G70/BLU_G70_BLU-G70-en-Costa-Rica-433x559_t05hzt.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816935/Sistema-Ventas/Celulares/BLU G70/BLU_G70_BLU-G70-en-Costa-Rica-433x559_t05hzt.jpg",
                             ProductoId = 3
@@ -344,7 +405,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(3939),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7193),
                             FotoPublicId = "Sistema-Ventas/Celulares/BLU%20G70/BLU_G70_Comprar-BLU-G70-en-Costa-Rica-491x1024_o0bsan.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816935/Sistema-Ventas/Celulares/BLU G70/BLU_G70_Comprar-BLU-G70-en-Costa-Rica-491x1024_o0bsan.jpg",
                             ProductoId = 3
@@ -352,7 +413,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4026),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7260),
                             FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Asus%20Q301L%20%E2%80%93%20Intel%20Core%20i5-4200u%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20%E2%80%93%20Pantalla%20Touch%20%E2%80%93%20Teclado%20Iluminado%20%E2%80%93%20Ultra%20Liviana/Laptop_Asus_Q301L_Intel_Core_i5-4200u_8GB_RAM_500GB_Pantalla_Touch_Teclado_Iluminado_Ultra_Liviana_asus1_qk5rzi.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816981/Sistema-Ventas/Laptops/Laptop Asus Q301L – Intel Core i5-4200u – 8GB RAM – 500GB – Pantalla Touch – Teclado Iluminado – Ultra Liviana/Laptop_Asus_Q301L_Intel_Core_i5-4200u_8GB_RAM_500GB_Pantalla_Touch_Teclado_Iluminado_Ultra_Liviana_asus1_qk5rzi.jpg",
                             ProductoId = 4
@@ -360,7 +421,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4037),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7271),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20G3%2015%203579%208Then%20GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_notebook-dell-g3-15-3579-156-intel-core-i7-8750h-220-ghz-8gb-ddr4-scaled_gsysxu.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL G3 15 3579 8Then GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_notebook-dell-g3-15-3579-156-intel-core-i7-8750h-220-ghz-8gb-ddr4-scaled_gsysxu.jpg",
                             ProductoId = 5
@@ -368,7 +429,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4047),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7281),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20G3%2015%203579%208Then%20GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_laptop-dell-g3-3579-15-i5-8300h-video-4gb-1tb-8gb-p-D_NQ_NP_621638-MPE32062793856_092019-F-scaled_zvmdzz.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL G3 15 3579 8Then GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_laptop-dell-g3-3579-15-i5-8300h-video-4gb-1tb-8gb-p-D_NQ_NP_621638-MPE32062793856_092019-F-scaled_zvmdzz.jpg",
                             ProductoId = 5
@@ -376,7 +437,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4056),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7312),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20G3%2015%203579%208Then%20GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_1-34-scaled_e4mqob.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL G3 15 3579 8Then GENERATION/LAPTOP_DELL_G3_15_3579_8Then_GENERATION_1-34-scaled_e4mqob.jpg",
                             ProductoId = 5
@@ -384,7 +445,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4134),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7368),
                             FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20Inspiron%2014-3459%20%E2%80%93%20Intel%20Core%20i5-6200U%20Sexta%20Gen%20%E2%80%93%206GB%20RAM%20%E2%80%93%20500GB%20HDD%20%E2%80%93%20AMD%20Radeon%20R5/Laptop_DELL_Inspiron_14-3459_Intel_Core_i5-6200U_Sexta_Gen_6GB_RAM_500GB_HDD_AMD_Radeon_R5_107607_71Tri1yZUCL_SL1500__i7j57w.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/Laptop DELL Inspiron 14-3459 – Intel Core i5-6200U Sexta Gen – 6GB RAM – 500GB HDD – AMD Radeon R5/Laptop_DELL_Inspiron_14-3459_Intel_Core_i5-6200U_Sexta_Gen_6GB_RAM_500GB_HDD_AMD_Radeon_R5_107607_71Tri1yZUCL_SL1500__i7j57w.jpg",
                             ProductoId = 6
@@ -392,7 +453,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4142),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7377),
                             FotoPublicId = "Sistema-Ventas/Celulares/Google%20Pixel%204/Google_Pixel_4_51jjGHHKixL._AC_SX425__dxkxdc.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816945/Sistema-Ventas/Celulares/Google Pixel 4/Google_Pixel_4_51jjGHHKixL._AC_SX425__dxkxdc.jpg",
                             ProductoId = 7
@@ -400,7 +461,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4150),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7385),
                             FotoPublicId = "Sistema-Ventas/Celulares/Google%20Pixel%204/Google_Pixel_4_149597-phones-news-this-is-the-google-pixel-4-xl-image1-ktsr2yozg6_dpm6jk.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Google Pixel 4/Google_Pixel_4_149597-phones-news-this-is-the-google-pixel-4-xl-image1-ktsr2yozg6_dpm6jk.jpg",
                             ProductoId = 7
@@ -408,7 +469,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4158),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7392),
                             FotoPublicId = "Sistema-Ventas/Celulares/Google%20Pixel%204/Google_Pixel_4_1366_2000_foaiqs.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Google Pixel 4/Google_Pixel_4_1366_2000_foaiqs.jpg",
                             ProductoId = 7
@@ -416,7 +477,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4165),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7400),
                             FotoPublicId = "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_GKK-Detachable-Case-for-Huawei-Honor-20-Black-10072019-01-p_few99o.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816945/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_GKK-Detachable-Case-for-Huawei-Honor-20-Black-10072019-01-p_few99o.jpg",
                             ProductoId = 8
@@ -424,7 +485,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4173),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7407),
                             FotoPublicId = "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_ef6g5t8x0aioqpg_cucvyh.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_ef6g5t8x0aioqpg_cucvyh.jpg",
                             ProductoId = 8
@@ -432,7 +493,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4180),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7415),
                             FotoPublicId = "Sistema-Ventas/Celulares/Huawei%20Honor%2020/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816944/Sistema-Ventas/Celulares/Huawei Honor 20/Huawei_Honor_20_funda_de_silicona_huawei_honor_20_02_transparente_ad_l_uyu1kx.jpg",
                             ProductoId = 8
@@ -440,7 +501,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4190),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7424),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20INSPIRON%2015%20SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-156-fhd-intel-core-i5-825-D_NQ_NP_967204-MPE32061439156_092019-F-scaled_eitw4k.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/LAPTOP DELL INSPIRON 15 SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-156-fhd-intel-core-i5-825-D_NQ_NP_967204-MPE32061439156_092019-F-scaled_eitw4k.jpg",
                             ProductoId = 9
@@ -448,7 +509,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4199),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7434),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20INSPIRON%2015%20SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-15-5570-156-core-i5-68fnp-D_NQ_NP_781655-MPE32061793687_092019-F-scaled_alicmc.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/LAPTOP DELL INSPIRON 15 SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-5000-15-5570-156-core-i5-68fnp-D_NQ_NP_781655-MPE32061793687_092019-F-scaled_alicmc.jpg",
                             ProductoId = 9
@@ -456,7 +517,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4208),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7443),
                             FotoPublicId = "Sistema-Ventas/Laptops/LAPTOP%20DELL%20INSPIRON%2015%20SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-3581-156-fhd-intel-core-i3-7020-D_NQ_NP_660749-MPE31598311513_072019-F-scaled_yrnlhi.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816982/Sistema-Ventas/Laptops/LAPTOP DELL INSPIRON 15 SILVER/LAPTOP_DELL_INSPIRON_15_SILVER_notebook-dell-inspiron-15-3581-156-fhd-intel-core-i3-7020-D_NQ_NP_660749-MPE31598311513_072019-F-scaled_yrnlhi.jpg",
                             ProductoId = 9
@@ -464,7 +525,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4264),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7545),
                             FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_43558dell36689-1_cjqhsy.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_43558dell36689-1_cjqhsy.jpg",
                             ProductoId = 10
@@ -472,7 +533,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4337),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7618),
                             FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_3558dell36689_ostn27.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_3558dell36689_ostn27.jpg",
                             ProductoId = 10
@@ -480,7 +541,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 27,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4406),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7668),
                             FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_23558dell36689_wxdxod.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_23558dell36689_wxdxod.jpg",
                             ProductoId = 10
@@ -488,7 +549,7 @@ namespace Sistema.Api.Migrations
                         new
                         {
                             Id = 28,
-                            CreatedAt = new DateTime(2020, 7, 27, 23, 18, 51, 943, DateTimeKind.Local).AddTicks(4457),
+                            CreatedAt = new DateTime(2020, 7, 28, 21, 47, 8, 27, DateTimeKind.Local).AddTicks(7736),
                             FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_13558dell36689_qgimk8.jpg",
                             FotoUrl = "https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generación_4GB_RAM_1TB_HDD_13558dell36689_qgimk8.jpg",
                             ProductoId = 10
@@ -762,6 +823,12 @@ namespace Sistema.Api.Migrations
                     b.HasOne("Sistema.Api.Entidades.Almacen.Categoria", "Categoria")
                         .WithMany()
                         .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Sistema.Api.Entidades.Almacen.Marca", "Marca")
+                        .WithMany("Productos")
+                        .HasForeignKey("MarcaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

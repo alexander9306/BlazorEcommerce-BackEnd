@@ -15,7 +15,7 @@
 
         public bool Estado { get; set; }
 
-        public string? Marca { get; set; }
+        public int MarcaId { get; set; }
 
         public int Stock { get; set; }
 
@@ -26,6 +26,8 @@
         public DateTime UpdatedAt { get; set; }
 
         public Categoria Categoria { get; set; }
+
+        public Marca Marca { get; set; }
 
         public ICollection<ProductoFoto> Fotos { get; set; }
     }

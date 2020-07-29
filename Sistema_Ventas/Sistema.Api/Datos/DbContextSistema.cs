@@ -11,6 +11,8 @@
     {
         public DbSet<Categoria> Categorias { get; set; }
 
+        public DbSet<Marca> Marcas { get; set; }
+
         public DbSet<Producto> Productos { get; set; }
 
         public DbSet<ProductoFoto> ProductoFotos { get; set; }
@@ -39,6 +41,7 @@
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfiguration(new CategoriaMap());
+            modelBuilder.ApplyConfiguration(new MarcaMap());
             modelBuilder.ApplyConfiguration(new ProductoMap());
             modelBuilder.ApplyConfiguration(new AdministradorMap());
             modelBuilder.ApplyConfiguration(new ClienteMap());
