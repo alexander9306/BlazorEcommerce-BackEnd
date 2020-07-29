@@ -18,7 +18,7 @@
             var fileSize = this._maxFileSize / 1024 / 1024;
             var size = this._maxFileSize > 1000000 ? $"{fileSize} MB" : $"{fileSize} B";
 
-            return string.Format(CultureInfo.CurrentCulture, this.ErrorMessageString, name, size);
+            return string.Format(CultureInfo.InvariantCulture, this.ErrorMessageString, name, size);
         }
 
         public override bool IsValid(object value)
