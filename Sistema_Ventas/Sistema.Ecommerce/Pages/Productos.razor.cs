@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace Sistema.Ecommerce.Pages
+﻿namespace Sistema.Ecommerce.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Microsoft.JSInterop;
     using Sistema.Ecommerce.Helpers;
     using Sistema.Ecommerce.Services;
     using Sistema.Shared.Entidades.Almacen;
@@ -23,9 +21,6 @@ namespace Sistema.Ecommerce.Pages
         public IProductoDataService ProductoDataService { get; set; }
 
         [Inject]
-        public IJSRuntime JSRuntime { get; set; }
-
-        [Inject]
         public IProductoHelper ProductoHelper { get; set; }
 
         public Producto Producto { get; set; }
@@ -33,6 +28,16 @@ namespace Sistema.Ecommerce.Pages
         public List<Producto> RelProductos { get; set; }
 
         protected override async Task OnInitializedAsync()
+        {
+            await GetProducto().ConfigureAwait(false);
+        }
+
+        protected async void AgregarCarrito()
+        {
+
+        }
+
+        private async Task GetProducto()
         {
             try
             {
@@ -63,12 +68,9 @@ namespace Sistema.Ecommerce.Pages
             }
         }
 
-        //protected override async Task OnAfterRenderAsync(bool firstRender)
-        //{
-        //    if (firstRender)
-        //    {
-        //        await JSRuntime.InvokeVoidAsync("LoadProductsGallery").ConfigureAwait(false);
-        //    }
-        //}
+        protected override async Task OnParametersSetAsync()
+        {
+            await GetProducto().ConfigureAwait(false);
+        }
     }
 }

@@ -24,7 +24,7 @@
                             
                             @foreach (var foto in Producto.Fotos)
                             {
-                                <a data-fancybox="gallery" href="@ProductoHelper.GetFotoUrl(foto, 580, 580)"><img src="@ProductoHelper.GetFotoUrl(foto, 230, 230)"></a>
+                                <a data-fancybox="gallery" href="@ProductoHelper.GetFotoUrl(foto, 750, 750)"><img src="@ProductoHelper.GetFotoUrl(foto, 180, 180)"></a>
                             }
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                             {
                                 <div class="col-sm-6 col-lg-4">
                                     <div class="clean-related-item">
-                                        <div class="image"><a href="producto/@producto.Id"><img class="img-fluid d-block mx-auto" src="@ProductoHelper.GetFotoUrl(producto.Fotos.FirstOrDefault(), 160, 160)"></a></div>
+                                        <div class="image"><a href="producto/@producto.Id"><img class="img-fluid d-block mx-auto" src="@ProductoHelper.GetFotoUrl(producto.Fotos.FirstOrDefault(), 180, 180)"></a></div>
                                         <div class="related-name">
                                             <a href="producto/@producto.Id">@producto.Nombre</a>
                                             <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
