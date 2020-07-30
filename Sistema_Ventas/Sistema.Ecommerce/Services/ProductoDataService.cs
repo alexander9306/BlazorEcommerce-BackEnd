@@ -37,6 +37,7 @@
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);
         }
+
         public async Task<Producto> Mostrar(int id)
         {
             return await JsonSerializer.DeserializeAsync<Producto>(

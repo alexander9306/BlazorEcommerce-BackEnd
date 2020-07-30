@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
-
-namespace Sistema.Api.Controllers
+﻿namespace Sistema.Api.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +6,7 @@ namespace Sistema.Api.Controllers
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
@@ -69,17 +68,25 @@ namespace Sistema.Api.Controllers
                  }));
         }
 
-        // GET: api/Productos/ListarPorCategoria/categoriaid/limit/before
-        [HttpGet("[action]/{categoriaId}/{limit}/{before}")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorCategoria(int categoriaId, int limit, string before)
+        // GET: api/Productos/Listar/limit/before
+        [HttpGet("[action]/{productoId}/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarRelacionados(int productoId,int limit, string before)
         {
-            var hasCursor = DateTime.TryParse(before, out var cursor);
+            var producto = await this._context.Productos.FindAsync(productoId).ConfigureAwait(false);
+
+            if (producto == null)
+            {
+                return this.NotFound();
+            }
+
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
 
             var productos = await this._context.Productos
                 .Include(p => p.Categoria)
                 .Include(p => p.Marca)
                 .OrderByDescending(p => p.UpdatedAt)
-                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0 && p.CategoriaId == categoriaId)
+                .Where(p => p.CategoriaId == producto.CategoriaId)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
                 .Take(limit)
                 .AsNoTracking()
                 .ToListAsync().ConfigureAwait(false);
@@ -113,51 +120,7 @@ namespace Sistema.Api.Controllers
             }));
         }
 
-        // GET: api/Productos/ListarPorCategoria/marca/limit/before
-        [HttpGet("[action]/{marca}/{limit}/{before}")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorMarca(int marca, int limit, string before)
-        {
-            var hasCursor = DateTime.TryParse(before, out var cursor);
-
-            var productos = await this._context.Productos
-                .Include(p => p.Categoria)
-                .Include(p => p.Marca)
-                .OrderByDescending(p => p.UpdatedAt)
-                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0 && p.MarcaId == marca)
-                .Take(limit)
-                .AsNoTracking()
-                .ToListAsync().ConfigureAwait(false);
-
-            var fotos = await this._context.ProductoFotos
-                .Where(f => productos.Select(p => p.Id).Contains(f.ProductoId))
-                .AsNoTracking()
-                .ToListAsync()
-                .ConfigureAwait(false);
-
-            return this.Ok(productos.Select(p => new ProductoViewModel
-            {
-                Id = p.Id,
-                Nombre = p.Nombre,
-                Categoria = p.Categoria.Nombre,
-                Precio = p.Precio,
-                Estado = p.Estado,
-                Marca = p.Marca.Nombre,
-                Stock = p.Stock,
-                Descripcion = p.Descripcion,
-                CreatedAt = p.CreatedAt,
-                UpdatedAt = p.UpdatedAt,
-                Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
-                {
-                    ProductoId = f.ProductoId,
-                    CreatedAt = f.CreatedAt,
-                    IsPrincipal = f.IsPrincipal,
-                    FotoUrl = f.FotoUrl,
-                    FotoPublicId = f.FotoPublicId,
-                }),
-            }));
-        }
-
-        // GET: api/Productos/ListarPorCategoria/limit/before/filtro
+        // GET: api/Productos/ListarPorFiltro/limit/before/filtro
         [HttpGet("[action]/{limit}/{before}/filtro")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorFiltro(
             [FromQuery(Name = "categoriaId")] List<int> categoriaIds, [FromQuery(Name = "marcaId")] List<int> marcaIds,
