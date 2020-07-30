@@ -55,10 +55,10 @@ namespace Sistema.Api.Controllers
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString(CultureInfo.InvariantCulture)),
                 new Claim(ClaimTypes.Email, usuario.Email),
                 new Claim(ClaimTypes.Role, usuario.Rol.Nombre),
-                new Claim("Id", usuario.Id.ToString(CultureInfo.CurrentCulture)),
+                new Claim("Id", usuario.Id.ToString(CultureInfo.InvariantCulture)),
                 new Claim("Rol", usuario.Rol.Nombre ),
                 new Claim("Username", usuario.Username),
             };

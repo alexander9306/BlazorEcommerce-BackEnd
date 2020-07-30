@@ -58,16 +58,16 @@
             };
         }
 
-        // PUT: api/Carritos/Agregar/id
-        [HttpPost("[action]/{id}")]
-        public async Task<IActionResult> Agregar(int id, [FromBody] ActualizarDetalleViewModel model)
+        // POST: api/Carritos/Agregar/
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Agregar([FromBody] ActualizarDetalleViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.BadRequest(this.ModelState);
             }
 
-            if (model == null || id != model.ProductoId)
+            if (model == null)
             {
                 return this.BadRequest();
             }
@@ -141,7 +141,7 @@
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!this.CarritoExists(id))
+                if (!this.CarritoExists(carrito.Id))
                 {
                     return this.NotFound();
                 }

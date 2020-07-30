@@ -2,9 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
@@ -26,10 +28,11 @@
         [HttpGet("[action]/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit, string before)
         {
-            var hasCursor = DateTime.TryParse(before, out var cursor);
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind,  out var cursor);
 
-            var productos = await this._context.Productos.
-                 Include(p => p.Categoria)
+            var productos = await this._context.Productos
+                .Include(p => p.Categoria)
+                .Include(p => p.Marca)
                  .OrderByDescending(p => p.UpdatedAt)
                  .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
                  .Take(limit)
@@ -49,7 +52,7 @@
                      Categoria = p.Categoria.Nombre,
                      Precio = p.Precio,
                      Estado = p.Estado,
-                     Marca = p.Marca,
+                     Marca = p.Marca.Nombre,
                      Stock = p.Stock,
                      Descripcion = p.Descripcion,
                      CreatedAt = p.CreatedAt,
@@ -65,16 +68,25 @@
                  }));
         }
 
-        // GET: api/Productos/ListarPorCategoria/categoriaid/limit/before
-        [HttpGet("[action]/{categoriaId}/{limit}/{before}")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorCategoria(int categoriaId, int limit, string before)
+        // GET: api/Productos/Listar/limit/before
+        [HttpGet("[action]/{productoId}/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarRelacionados(int productoId,int limit, string before)
         {
-            var hasCursor = DateTime.TryParse(before, out var cursor);
+            var producto = await this._context.Productos.FindAsync(productoId).ConfigureAwait(false);
 
-            var productos = await this._context.Productos.
-                Include(p => p.Categoria)
+            if (producto == null)
+            {
+                return this.NotFound();
+            }
+
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
+
+            var productos = await this._context.Productos
+                .Include(p => p.Categoria)
+                .Include(p => p.Marca)
                 .OrderByDescending(p => p.UpdatedAt)
-                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0 && p.CategoriaId == categoriaId)
+                .Where(p => p.CategoriaId == producto.CategoriaId)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
                 .Take(limit)
                 .AsNoTracking()
                 .ToListAsync().ConfigureAwait(false);
@@ -92,7 +104,7 @@
                 Categoria = p.Categoria.Nombre,
                 Precio = p.Precio,
                 Estado = p.Estado,
-                Marca = p.Marca,
+                Marca = p.Marca.Nombre,
                 Stock = p.Stock,
                 Descripcion = p.Descripcion,
                 CreatedAt = p.CreatedAt,
@@ -108,16 +120,22 @@
             }));
         }
 
-        // GET: api/Productos/ListarPorCategoria/marca/limit/before
-        [HttpGet("[action]/{marca}/{limit}/{before}")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorMarca(string marca, int limit, string before)
+        // GET: api/Productos/ListarPorFiltro/limit/before/filtro
+        [HttpGet("[action]/{limit}/{before}/filtro")]
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarPorFiltro(
+            [FromQuery(Name = "categoriaId")] List<int> categoriaIds, [FromQuery(Name = "marcaId")] List<int> marcaIds,
+            int limit, string before)
         {
+
             var hasCursor = DateTime.TryParse(before, out var cursor);
 
-            var productos = await this._context.Productos.
-                Include(p => p.Categoria)
+            var productos = await this._context.Productos
+                .Include(p => p.Categoria)
+                .Include(p => p.Marca)
                 .OrderByDescending(p => p.UpdatedAt)
-                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0 && p.Marca == marca)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
+                .Where(p => categoriaIds.Count > 0 ? categoriaIds.Contains(p.CategoriaId) : p.Id > 0)
+                .Where(p => marcaIds.Count > 0 ? marcaIds.Contains(p.MarcaId) : p.Id > 0)
                 .Take(limit)
                 .AsNoTracking()
                 .ToListAsync().ConfigureAwait(false);
@@ -135,7 +153,7 @@
                 Categoria = p.Categoria.Nombre,
                 Precio = p.Precio,
                 Estado = p.Estado,
-                Marca = p.Marca,
+                Marca = p.Marca.Nombre,
                 Stock = p.Stock,
                 Descripcion = p.Descripcion,
                 CreatedAt = p.CreatedAt,
@@ -157,6 +175,7 @@
         {
             var producto = await this._context.Productos
                 .Include(p => p.Categoria)
+                .Include(p => p.Marca)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
@@ -178,7 +197,7 @@
                 Categoria = producto.Categoria.Nombre,
                 Precio = producto.Precio,
                 Estado = producto.Estado,
-                Marca = producto.Marca,
+                Marca = producto.Marca.Nombre,
                 Stock = producto.Stock,
                 Descripcion = producto.Descripcion,
                 CreatedAt = producto.CreatedAt,
@@ -208,6 +227,28 @@
                 return this.BadRequest();
             }
 
+            var fecha = DateTime.Now;
+
+            var marca = await this._context.Marcas
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Nombre == model.Marca).ConfigureAwait(false) ?? new Marca();
+
+            if (marca.Id == 0)
+            {
+                marca.Nombre = model.Nombre;
+                marca.CreatedAt = fecha;
+                await this._context.Marcas.AddAsync(marca).ConfigureAwait(false);
+
+                try
+                {
+                    await this._context.SaveChangesAsync().ConfigureAwait(false);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return this.BadRequest("Hubo un error al guardar sus datos.");
+                }
+            }
+
             var producto = new Producto
             {
                 Id = model.Id,
@@ -215,10 +256,10 @@
                 Nombre = model.Nombre,
                 Descripcion = model.Descripcion,
                 Precio = model.Precio,
-                Marca = model.Marca,
+                MarcaId = marca.Id,
                 Stock = model.Stock,
                 Estado = true,
-                UpdatedAt = DateTime.Now,
+                UpdatedAt = fecha,
             };
 
             this._context.Entry(producto).State = EntityState.Modified;
@@ -256,13 +297,33 @@
 
             var fecha = DateTime.Now;
 
+            var marca = await this._context.Marcas
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Nombre == model.Marca).ConfigureAwait(false) ?? new Marca();
+
+            if (marca.Id == 0)
+            {
+                marca.Nombre = model.Nombre;
+                marca.CreatedAt = fecha;
+                await this._context.Marcas.AddAsync(marca).ConfigureAwait(false);
+
+                try
+                {
+                    await this._context.SaveChangesAsync().ConfigureAwait(false);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    return this.BadRequest("Hubo un error al guardar sus datos.");
+                }
+            }
+
             var producto = new Producto
             {
                 Nombre = model.Nombre,
                 CategoriaId = model.CategoriaId,
                 Descripcion = model.Descripcion,
                 Precio = model.Precio,
-                Marca = model.Marca,
+                MarcaId = marca.Id,
                 Stock = model.Stock,
                 CreatedAt = fecha,
                 UpdatedAt = fecha,
@@ -285,7 +346,7 @@
                 Nombre = producto.Nombre,
                 Precio = producto.Precio,
                 Estado = producto.Estado,
-                Marca = producto.Marca,
+                Marca = marca.Nombre,
                 Stock = producto.Stock,
                 Descripcion = producto.Descripcion,
                 CreatedAt = producto.CreatedAt,

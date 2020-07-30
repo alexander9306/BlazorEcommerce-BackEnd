@@ -1,10 +1,16 @@
+@using Sistema.Ecommerce.Components
+
 <Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
+            
+            <ErrorMessage Message="No se encontro contenido."/>
+
+            <h1>404 Not Found</h1>
+            <p>No Hay contenido en esta dire.</p>
         </LayoutView>
     </NotFound>
 </Router>

@@ -1,7 +1,6 @@
 namespace Sistema.Ecommerce
 {
     using System;
-    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
@@ -15,13 +14,16 @@ namespace Sistema.Ecommerce
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            var baseAddress = "https://localhost:44303/api/";
+            var baseAddress = "https://localhost:44303/api";
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress + "productos"));
+                client.BaseAddress = new Uri(baseAddress + "/productos/"));
 
             builder.Services.AddHttpClient<ICategoriaDataService, CategoriaDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress + "categorias"));
+                client.BaseAddress = new Uri(baseAddress + "/categorias/"));
+
+            builder.Services.AddHttpClient<IMarcaDataService, MarcaDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/marcas/"));
 
             builder.Services.AddSingleton<IProductoHelper, ProductoHelper>();
 

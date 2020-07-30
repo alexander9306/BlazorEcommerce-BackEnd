@@ -8,7 +8,7 @@
     using Sistema.Ecommerce.Services;
     using Sistema.Shared.Entidades.Almacen;
 
-    public partial class Catalogo : ComponentBase
+    public partial class Catalogo
     {
         [Inject]
         public IProductoDataService ProductoDataService { get; set; }
@@ -17,13 +17,10 @@
         public ICategoriaDataService CategoriaDataService { get; set; }
 
         [Inject]
-        public IProductoHelper PoductoHelper { get; set; }
+        public IMarcaDataService MarcaDataService { get; set; }
 
-        [Parameter]
-        public string CategoriaId { get; set; }
-
-        [Parameter]
-        public string Marca { get; set; }
+        [Inject]
+        public IProductoHelper ProductoHelper { get; set; }
 
         public bool HasMoreData;
 
@@ -31,46 +28,34 @@
 
         public List<Categoria> Categorias { get; set; }
 
+        public List<Marca> Marcas { get; set; }
+
+        private List<int> _categoriaIds { get; set; } = new List<int>();
+
+        private List<int> _marcaIds { get; set; } = new List<int>();
+
         protected override async Task OnInitializedAsync()
         {
             this.Categorias = (await this.CategoriaDataService.Listar()
             .ConfigureAwait(false)).ToList();
 
-            if (int.TryParse(this.CategoriaId, out var categoriaId))
-            {
-                this.GetPaginationInfo(
-                    (await this.ProductoDataService.ListarPorCategoria(categoriaId, 10, null)
-                    .ConfigureAwait(false)).ToList(), false);
-            }
-            else if (!string.IsNullOrEmpty(this.Marca))
-            {
-                this.GetPaginationInfo(
-                    (await this.ProductoDataService.ListarPorMarca(this.Marca, 10, null)
-                    .ConfigureAwait(false)).ToList(), false);
-            }
-            else
-            {
-                this.GetPaginationInfo(
-                    (await this.ProductoDataService.Listar(10, null)
-                    .ConfigureAwait(false)).ToList(), false);
-            }
+            this.Marcas = (await this.MarcaDataService.Listar()
+                .ConfigureAwait(false)).ToList();
+
+            this.GetPaginationInfo(
+                (await this.ProductoDataService.Listar(10)
+                    .ConfigureAwait(false)).ToList());
         }
 
-        public async void GetMoreData()
+        protected async void GetMoreData()
         {
-            var before = Productos[^1].UpdatedAt;
+            var before = this.Productos[^1].UpdatedAt;
 
-            if (int.TryParse(this.CategoriaId, out var categoriaId))
+            if (this._marcaIds.Count > 0 || this._categoriaIds.Count > 0)
             {
                 this.GetPaginationInfo(
-                    (await this.ProductoDataService.ListarPorCategoria(categoriaId, 10, before)
-                    .ConfigureAwait(false)).ToList(), true);
-            }
-            else if (!string.IsNullOrEmpty(this.Marca))
-            {
-                this.GetPaginationInfo(
-                    (await this.ProductoDataService.ListarPorMarca(this.Marca, 10, before)
-                    .ConfigureAwait(false)).ToList(), true);
+                    (await this.ProductoDataService.ListarPorFiltro(this._categoriaIds, this._marcaIds, 10, before)
+                        .ConfigureAwait(false)).ToList(), true);
             }
             else
             {
@@ -80,13 +65,48 @@
             }
         }
 
-        private void GetPaginationInfo(List<Producto> productos, bool? add)
+        protected void FiltrarCategorias(int cateoriaId, object checkedValue)
         {
-            if (productos.Count == 10)
+            if ((bool)checkedValue)
+            {
+                this._categoriaIds.Add(cateoriaId);
+            }
+            else
+            {
+                this._categoriaIds.Remove(cateoriaId);
+            }
+
+            this.BuscarFiltro();
+        }
+
+        protected void FiltrarMarcas(int marcaId, object checkedValue)
+        {
+            if ((bool)checkedValue)
+            {
+                this._marcaIds.Add(marcaId);
+            }
+            else
+            {
+                this._marcaIds.Remove(marcaId);
+            }
+
+            this.BuscarFiltro();
+        }
+
+        private async void BuscarFiltro()
+        {
+            this.GetPaginationInfo(
+                (await this.ProductoDataService.ListarPorFiltro(this._categoriaIds, this._marcaIds, 10)
+                    .ConfigureAwait(false)).ToList());
+        }
+
+        private void GetPaginationInfo(List<Producto> productos, bool add = false)
+        {
+            if (productos != null && productos.Count == 10)
             {
                 this.HasMoreData = true;
                 productos.RemoveAt(productos.Count - 1);
-                if (add ?? false)
+                if (add)
                 {
                     this.Productos.AddRange(productos);
                 }
@@ -98,7 +118,7 @@
             else
             {
                 this.HasMoreData = false;
-                if (add ?? false)
+                if (add)
                 {
                     this.Productos.AddRange(productos);
                 }
@@ -107,6 +127,8 @@
                     this.Productos = productos;
                 }
             }
+
+            this.StateHasChanged();
         }
     }
 }

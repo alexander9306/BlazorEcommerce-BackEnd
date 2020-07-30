@@ -13,17 +13,17 @@
 
         private readonly Cloudinary _cloudinary;
 
-        public string GetFotoUrl(ProductoFoto? foto)
+        public string GetFotoUrl(ProductoFoto? foto, int width = 338, int height = 250)
         {
 
             if (foto == null)
             {
                 return this._cloudinary.Api.UrlImgUp.Transform(
-                    new Transformation().Width(338).Height(250)).BuildUrl("112815953-no-image-available-icon-flat-vector_a5tdo9.jpg");
+                    new Transformation().Width(width).Height(height)).BuildUrl("112815953-no-image-available-icon-flat-vector_a5tdo9.jpg");
             }
 
             return this._cloudinary.Api.UrlImgUp.Transform(
-                new Transformation().Width(338).Height(250)).BuildUrl(foto.FotoPublicId);
+                new Transformation().Width(width).Height(height)).BuildUrl(foto.FotoPublicId);
         }
 
         public string GetDescripcion(string descripcion)
