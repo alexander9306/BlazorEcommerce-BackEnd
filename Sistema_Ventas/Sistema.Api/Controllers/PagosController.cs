@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
@@ -21,12 +22,16 @@
             this._context = context;
         }
 
-        // GET: api/Pagos/Listar
-        [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<PagoViewModel>>> Listar()
+        // GET: api/Pagos/Listar/limit/before
+        [HttpGet("[action]/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<PagoViewModel>>> Listar(int limit, string before)
         {
-            var pagos = await this._context.Pagos.
-                Include(pago => pago.OrdenId)
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
+
+            var pagos = await this._context.Pagos
+                .Include(p => p.Orden)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
+                .Take(limit)
                 .AsNoTracking()
                 .ToListAsync().ConfigureAwait(false);
 
@@ -37,16 +42,32 @@
                 Monto = pago.Monto,
                 Estado = pago.Estado,
                 CreatedAt = pago.CreatedAt,
+                UpdatedAt = pago.UpdatedAt,
             }));
         }
 
-        // GET: api/Pagos/ListarPorOrden/OrdenId
-        [HttpGet("[action]/{OrdenId}")]
-        public async Task<ActionResult<IEnumerable<Pago>>> ListarPorOrden(int ordenId)
+        // GET: api/Pagos/ListarPorOrden/OrdenId/limit/before
+        [HttpGet("[action]/{OrdenId}/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<Pago>>> ListarPorOrden(int ordenId, int limit, string before)
         {
-            var pagos = await this._context.Pagos.Where(a => a.OrdenId == ordenId)
-                .AsNoTracking().ToListAsync()
+            var pago = await this._context.Pedidos
+                .FindAsync(ordenId)
                 .ConfigureAwait(false);
+
+            if (pago == null)
+            {
+                return this.NotFound();
+            }
+
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
+
+            var pagos = await this._context.Pagos
+                .Include(p => p.Orden)
+                .Where(p => p.OrdenId == pago.OrdenId)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
+                .Take(limit)
+                .AsNoTracking()
+                .ToListAsync().ConfigureAwait(false);
 
             return this.Ok(pagos.Select(pago => new PagoViewModel
             {
@@ -55,6 +76,7 @@
                 Monto = pago.Monto,
                 Estado = pago.Estado,
                 CreatedAt = pago.CreatedAt,
+                UpdatedAt = pago.UpdatedAt,
             }));
         }
 
@@ -63,7 +85,7 @@
         public async Task<ActionResult<PagoViewModel>> Mostrar(int id)
         {
             var pago = await this._context.Pagos
-                .Include(p => p.OrdenId)
+                .Include(p => p.Orden)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
@@ -79,6 +101,7 @@
                 Monto = pago.Monto,
                 Estado = pago.Estado,
                 CreatedAt = pago.CreatedAt,
+                UpdatedAt = pago.UpdatedAt,
             };
         }
 
@@ -103,6 +126,7 @@
                 OrdenId = model.OrdenId,
                 Monto = model.Monto,
                 CreatedAt = fecha,
+                UpdatedAt = fecha,
             };
 
             await this._context.Pagos.AddAsync(pago).ConfigureAwait(false);
@@ -123,6 +147,7 @@
                 Monto = pago.Monto,
                 Estado = pago.Estado,
                 CreatedAt = pago.CreatedAt,
+                UpdatedAt = pago.UpdatedAt,
             };
 
             return this.CreatedAtAction("Mostrar", new { id = pago.Id }, pagoModel);

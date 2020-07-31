@@ -31,8 +31,8 @@
             var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind,  out var cursor);
 
             var productos = await this._context.Productos
-                .Include(p => p.Categoria)
-                .Include(p => p.Marca)
+                 .Include(p => p.Categoria)
+                 .Include(p => p.Marca)
                  .OrderByDescending(p => p.UpdatedAt)
                  .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
                  .Take(limit)
@@ -70,7 +70,7 @@
 
         // GET: api/Productos/Listar/limit/before
         [HttpGet("[action]/{productoId}/{limit}/{before}")]
-        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarRelacionados(int productoId,int limit, string before)
+        public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarRelacionados(int productoId, int limit, string before)
         {
             var producto = await this._context.Productos.FindAsync(productoId).ConfigureAwait(false);
 

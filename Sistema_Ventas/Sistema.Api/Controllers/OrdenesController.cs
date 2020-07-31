@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Hosting;
@@ -24,17 +25,22 @@
             this._hostingEnvironment = hostingEnvironment;
         }
 
-        // GET: api/Ordenes/Listar
-        [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<OrdenViewModel>>> Listar()
+        // GET: api/Ordenes/Listar/limit/before
+        [HttpGet("[action]/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<OrdenViewModel>>> Listar(int limit, string before)
         {
-             var ordenes = await this._context.Ordenes.
-                 Include(orden => orden.ClienteId)
-                 .AsNoTracking()
-                 .ToListAsync().ConfigureAwait(false);
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
 
-             return this.Ok(ordenes.Select(orden => new OrdenViewModel
-             {
+            var ordenes = await this._context.Ordenes
+                .Include(o => o.Pedido)
+                .Include(o => o.Pago)
+                .Where(o => hasCursor ? o.UpdatedAt < cursor : o.Id > 0)
+                .Take(limit)
+                .AsNoTracking()
+                .ToListAsync().ConfigureAwait(false);
+
+            return this.Ok(ordenes.Select(orden => new OrdenViewModel
+            {
                      Id = orden.Id,
                      ClienteId = orden.ClienteId,
                      CarritoId = orden.CarritoId,
@@ -45,29 +51,43 @@
                      Telefono = orden.Telefono,
                      CreatedAt = orden.CreatedAt,
                      UpdatedAt = orden.UpdatedAt,
-             }));
+            }));
         }
 
-        // GET: api/Ordenes/ListarPorCliente/ClienteId
-        [HttpGet("[action]/{ClienteId}")]
-        public async Task<ActionResult<IEnumerable<Orden>>> ListarPorCliente(int clienteId)
+        // GET: api/Ordenes/Listar/limit/before
+        [HttpGet("[action]/{ClienteId}/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<Orden>>> ListarPorCliente(int clienteId, int limit, string before)
         {
-            var ordenes = await this._context.Ordenes.Where(a => a.ClienteId == clienteId)
-                .AsNoTracking().ToListAsync()
-                .ConfigureAwait(false);
+            var orden = await this._context.Ordenes.FindAsync(clienteId).ConfigureAwait(false);
 
-            return this.Ok(ordenes.Select(orden => new OrdenViewModel
+            if (orden == null)
             {
-                Id = orden.Id,
-                ClienteId = orden.ClienteId,
-                CarritoId = orden.CarritoId,
-                Latitud = orden.Latitud,
-                Longitud = orden.Longitud,
-                Email = orden.Email,
-                Direccion = orden.Direccion,
-                Telefono = orden.Telefono,
-                CreatedAt = orden.CreatedAt,
-                UpdatedAt = orden.UpdatedAt,
+                return this.NotFound();
+            }
+
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
+
+            var ordenes = await this._context.Ordenes
+                .Include(o => o.Pedido)
+                .Include(o => o.Pago)
+                .Where(o => o.CarritoId == orden.CarritoId)
+                .Where(o => hasCursor ? o.UpdatedAt < cursor : o.Id > 0)
+                .Take(limit)
+                .AsNoTracking()
+                .ToListAsync().ConfigureAwait(false);
+
+            return this.Ok(ordenes.Select(o => new OrdenViewModel
+            {
+                Id = o.Id,
+                ClienteId = o.ClienteId,
+                CarritoId = o.CarritoId,
+                Latitud = o.Latitud,
+                Longitud = o.Longitud,
+                Email = o.Email,
+                Direccion = o.Direccion,
+                Telefono = o.Telefono,
+                CreatedAt = o.CreatedAt,
+                UpdatedAt = o.UpdatedAt,
             }));
         }
 
@@ -76,7 +96,8 @@
         public async Task<ActionResult<OrdenViewModel>> Mostrar(int id)
         {
             var orden = await this._context.Ordenes
-                .Include(o => o.CarritoId)
+                .Include(o => o.Pedido)
+                .Include(o => o.Pago)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(o => o.Id == id).ConfigureAwait(false);
 

@@ -8,6 +8,8 @@
 
         public DateTime CreatedAt { get; set; }
 
+        public DateTime UpdatedAt { get; set; }
+
         public int OrdenId { get; set; }
 
         public decimal Monto { get; set; }
