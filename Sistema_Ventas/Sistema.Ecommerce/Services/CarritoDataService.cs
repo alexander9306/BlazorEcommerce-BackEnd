@@ -40,7 +40,7 @@ namespace Sistema.Ecommerce.Services
             var response = await this._httpClient.PostAsync("agregar", carritoJson).ConfigureAwait(false);
 
             //var cookie = response.Headers.SingleOrDefault(header => header.Key == "Set-Cookie");
-            var cookie = response.Headers.GetValues("Set-Cookie");
+            //var cookie = response.Headers.GetValues("Set-Cookie");
             //if(
             //Console.WriteLine("imprimiendo cookie");
             //foreach (var cook in cookie.ToList())
