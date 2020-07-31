@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
+    using Microsoft.JSInterop;
     using Sistema.Ecommerce.Helpers;
     using Sistema.Ecommerce.Services;
     using Sistema.Shared.Entidades.Almacen;
@@ -17,8 +18,18 @@
 
         protected string errorMessage { get; set; }
 
+        protected string CarritoToastMessage { get; set; }
+
+        protected string CarritoToastTitle { get; set; }
+
+        [Inject] 
+        protected IJSRuntime JSRuntime { get; set; }
+
         [Inject]
         public IProductoDataService ProductoDataService { get; set; }
+
+        [Inject]
+        public ICarritoDataService CarritoDataService { get; set; }
 
         [Inject]
         public IProductoHelper ProductoHelper { get; set; }
@@ -34,6 +45,26 @@
 
         protected async void AgregarCarrito()
         {
+            var resultado = await this.CarritoDataService.Agregar(this.Producto.Id, 1).ConfigureAwait(false);
+
+            if (resultado)
+            {
+                this.CarritoToastMessage = "Agregado satisfactoriamente";
+                this.CarritoToastTitle = "Bien";
+            }
+            else
+            {
+                this.CarritoToastMessage = "Hubo un problema para agregar al carrito";
+                this.CarritoToastTitle = "Error";
+            }
+
+            await this.MostrarToast().ConfigureAwait(false);
+        }
+
+        private async Task MostrarToast()
+        {
+            this.StateHasChanged();
+            await this.JSRuntime.InvokeVoidAsync("CarritoToaster").ConfigureAwait(false);
 
         }
 

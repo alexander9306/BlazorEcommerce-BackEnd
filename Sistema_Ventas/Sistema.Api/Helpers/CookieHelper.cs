@@ -26,7 +26,7 @@
         /// <param name="key">key (unique indentifier).</param>
         /// <param name="value">value to store in cookie object.</param>
         /// <param name="expireTime">expiration time in minutes.</param>
-        public void Set(string key, string value, int? expireTime)
+        public void Set(string key, string value, int? expireTime = 10)
         {
             CookieOptions option = new CookieOptions();
 
@@ -61,10 +61,24 @@
         }
 
         /// <summary>
+        /// Get the key.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        public string? GetFromResponse(string key)
+        {
+            return this.Response.Cookies.ToString();
+        }
+
+        /// <summary>
         /// Get User id from header-token.
         /// </summary>
         public int? GetUserId()
         {
+            if (this.User == null)
+            {
+                return null;
+            }
+
             return int.Parse(this.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
