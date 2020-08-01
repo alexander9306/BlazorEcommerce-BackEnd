@@ -65,12 +65,13 @@ namespace Sistema.Api.Controllers
             };
 
             return this.Ok(
-                new { token = this._tokenHelper.GenerarToken(claims) }
+                new { token = this._tokenHelper.GenerarToken(claims, 60 * 24 * 5) }
             );
         }
 
         // GET: api/Clientes/Listar
-        [Authorize(Roles = "Administrador, Organizador")]
+        //[Authorize(Roles = "Administrador, Organizador")]
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<ClienteViewModel>>> Listar()
         {
@@ -90,6 +91,7 @@ namespace Sistema.Api.Controllers
             );
         }
 
+        [Authorize(Roles = "Cliente")]
         // GET: api/Clientes/Mostrar/id
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<ClienteViewModel>> Mostrar(int id)
@@ -113,7 +115,7 @@ namespace Sistema.Api.Controllers
 
         // PUT: api/Clientes/Actualizar/id
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -128,7 +130,6 @@ namespace Sistema.Api.Controllers
             var cliente = new Cliente
             {
                 Id = model.Id,
-                Email = model.Email,
                 UpdatedAt = DateTime.Now,
             };
 
@@ -160,7 +161,7 @@ namespace Sistema.Api.Controllers
         // POST: api/Clientes/Crear
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<ClienteViewModel>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<ClienteViewModel>> Crear([FromBody] CrearViewModel model)
         {
             if (model == null)
             {
@@ -177,7 +178,6 @@ namespace Sistema.Api.Controllers
 
             var cliente = new Cliente
             {
-                Id = model.Id,
                 Email = model.Email,
                 PasswordHash = passwordHash,
                 FechaNac = fecha,
