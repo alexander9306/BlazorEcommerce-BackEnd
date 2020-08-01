@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
@@ -21,12 +22,16 @@
             this._context = context;
         }
 
-        // GET: api/Pedidos/Listar
-        [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<PedidoViewModel>>> Listar()
+        // GET: api/Pedidos/Listar/limit/before
+        [HttpGet("[action]/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<PedidoViewModel>>> Listar(int limit, string before)
         {
-            var pedidos = await this._context.Pedidos.
-                Include(pedido => pedido.OrdenId)
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
+
+            var pedidos = await this._context.Pedidos
+                .Include(p => p.Orden)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
+                .Take(limit)
                 .AsNoTracking()
                 .ToListAsync().ConfigureAwait(false);
 
@@ -36,16 +41,32 @@
                 OrdenId = pedido.OrdenId,
                 Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
+                UpdatedAt = pedido.UpdatedAt,
             }));
         }
 
-        // GET: api/Pedidos/ListarPorOrden/OrdenId
-        [HttpGet("[action]/{OrdenId}")]
-        public async Task<ActionResult<IEnumerable<Pedido>>> ListarPorOrden(int ordenId)
+        // GET: api/Pedidos/ListarPorOrden/limit/before
+        [HttpGet("[action]/{OrdenId}/{limit}/{before}")]
+        public async Task<ActionResult<IEnumerable<Pedido>>> ListarPorOrden(int ordenId, int limit, string before)
         {
-            var pedidos = await this._context.Pedidos.Where(a => a.OrdenId == ordenId)
-                .AsNoTracking().ToListAsync()
+            var pedido = await this._context.Pedidos
+                .FindAsync(ordenId)
                 .ConfigureAwait(false);
+
+            if (pedido == null)
+            {
+                return this.NotFound();
+            }
+
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
+
+            var pedidos = await this._context.Pedidos
+                .Include(p => p.Orden)
+                .Where(p => p.OrdenId == pedido.OrdenId)
+                .Where(p => hasCursor ? p.UpdatedAt < cursor : p.Id > 0)
+                .Take(limit)
+                .AsNoTracking()
+                .ToListAsync().ConfigureAwait(false);
 
             return this.Ok(pedidos.Select(pedido => new PedidoViewModel
             {
@@ -53,6 +74,7 @@
                 OrdenId = pedido.OrdenId,
                 Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
+                UpdatedAt = pedido.UpdatedAt,
             }));
         }
 
@@ -61,7 +83,7 @@
         public async Task<ActionResult<PedidoViewModel>> Mostrar(int id)
         {
             var pedido = await this._context.Pedidos
-                .Include(p => p.OrdenId)
+                .Include(p => p.Orden)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id).ConfigureAwait(false);
 
@@ -76,6 +98,7 @@
                 OrdenId = pedido.OrdenId,
                 Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
+                UpdatedAt = pedido.UpdatedAt,
             };
         }
 
@@ -99,6 +122,7 @@
             {
                 OrdenId = model.OrdenId,
                 CreatedAt = fecha,
+                UpdatedAt = fecha,
             };
 
             await this._context.Pedidos.AddAsync(pedido).ConfigureAwait(false);
@@ -118,6 +142,7 @@
                 OrdenId = pedido.OrdenId,
                 Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
+                UpdatedAt = pedido.UpdatedAt,
             };
 
             return this.CreatedAtAction("Mostrar", new { id = pedido.Id }, pedidoModel);
