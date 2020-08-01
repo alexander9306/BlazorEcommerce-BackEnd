@@ -18,6 +18,7 @@
     {
         private readonly DbContextSistema _context;
         private readonly CookieHelper _cookieHelper;
+        private string _guid;
 
         public CarritosController(DbContextSistema context, IHttpContextAccessor httpContextAccessor)
         {
@@ -49,7 +50,8 @@
             return new CarritoViewModel
             {
                 Id = carrito.Id,
-                Cliente = carrito.Cliente.Email,
+                Cliente = carrito.Cliente?.Email ?? null,
+                Estado = carrito.Estado,
                 ClienteId = carrito.ClienteId,
                 Total = detalleViewModels.Sum(d => d.Total),
                 CreatedAt = carrito.CreatedAt,
@@ -74,7 +76,7 @@
 
             var carrito = await this.VerificarCarrito(false).ConfigureAwait(false);
             var userId = this._cookieHelper.GetUserId();
-            var guId = this._cookieHelper.Get("UID");
+            var guId = this._cookieHelper.Get("UID") ?? this._guid;
             var fecha = DateTime.Now;
 
             if (carrito == null)
@@ -110,7 +112,7 @@
                     return this.BadRequest("Hubo un error al guardar sus datos.");
                 }
 
-                return this.CreatedAtAction("Mostrar", new { id = carrito.Id }, carrito);
+                return this.NoContent();
             }
 
             carrito.ClienteId = userId;
@@ -159,6 +161,9 @@
 
             if (string.IsNullOrEmpty(guId) && userId == null)
             {
+                var guid = Guid.NewGuid().ToString();
+                this._cookieHelper.Set("UID", guid, 7 * 24 * 60);
+                this._guid = guid;
                 return null;
             }
 

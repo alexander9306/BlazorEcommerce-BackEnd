@@ -8,8 +8,8 @@
     {
         Task<Carrito> Mostrar();
 
-        Task<Carrito> Agregar(int productoId, int cantidad);
+        Task<bool> Agregar(int productoId, int cantidad);
 
-        Task<Carrito> Remover(int productoId);
+        Task<bool> Remover(int productoId);
     }
 }

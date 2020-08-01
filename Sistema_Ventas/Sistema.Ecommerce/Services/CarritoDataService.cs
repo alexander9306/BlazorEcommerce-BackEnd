@@ -1,14 +1,20 @@
-﻿namespace Sistema.Ecommerce.Services
+﻿using System;
+using System.Linq;
+
+namespace Sistema.Ecommerce.Services
 {
     using System.Net;
     using System.Net.Http;
     using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using Microsoft.JSInterop;
     using Sistema.Shared.Entidades.Ordenes;
 
     public class CarritoDataService : ICarritoDataService
     {
+        private IJSRuntime JSRuntime;
+
         private readonly HttpClient _httpClient;
 
         public CarritoDataService(HttpClient httpClient)
@@ -24,21 +30,35 @@
                 .ConfigureAwait(false);
         }
 
-        public async Task<Carrito> Agregar(int productoId, int cantidad)
+        public async Task<bool> Agregar(int productoId, int cantidad)
         {
             var carritoJson =
-                new StringContent(JsonSerializer.Serialize((ProductoId: productoId, Cantidad: cantidad)), Encoding.UTF8, "application/json");
+#pragma warning disable CA2000 // Dispose objects before losing scope
+                new StringContent(JsonSerializer.Serialize(new { ProductoId = productoId, Cantidad = cantidad }), Encoding.UTF8, "application/json");
+#pragma warning restore CA2000 // Dispose objects before losing scope
 
             var response = await this._httpClient.PostAsync("agregar", carritoJson).ConfigureAwait(false);
 
-            if (response != null && response.StatusCode == HttpStatusCode.Created)
-            {
+            //var cookie = response.Headers.SingleOrDefault(header => header.Key == "Set-Cookie");
+            //var cookie = response.Headers.GetValues("Set-Cookie");
+            //if(
+            //Console.WriteLine("imprimiendo cookie");
+            //foreach (var cook in cookie.ToList())
+            //{
+            //    Console.WriteLine(cook);
+            //}
 
+
+            ////var test = await JSRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", name, value, days);
+            if (response.StatusCode == HttpStatusCode.NoContent)
+            {
+                return true;
             }
-            throw new System.NotImplementedException();
+
+            return false;
         }
 
-        Task<Carrito> ICarritoDataService.Remover(int productoId)
+        Task<bool> ICarritoDataService.Remover(int productoId)
         {
             throw new System.NotImplementedException();
         }

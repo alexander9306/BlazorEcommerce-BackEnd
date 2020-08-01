@@ -25,18 +25,12 @@ namespace Sistema.Ecommerce
             builder.Services.AddHttpClient<IMarcaDataService, MarcaDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/marcas/"));
 
-            builder.Services.AddHttpClient<IOrdenDataService, OrdenDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress + "/ordenes/"));
-
-            builder.Services.AddHttpClient<IPedidoDataService, PedidoDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress + "/pedidos/"));
-
-            builder.Services.AddHttpClient<IPagoDataService, PagoDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress + "/pagos/"));
+            builder.Services.AddHttpClient<ICarritoDataService, CarritoDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/carritos/"));
 
             builder.Services.AddSingleton<IProductoHelper, ProductoHelper>();
 
-            await builder.Build().RunAsync();
+            await builder.Build().RunAsync().ConfigureAwait(false);
         }
     }
 }
