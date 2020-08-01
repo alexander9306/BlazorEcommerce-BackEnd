@@ -18,7 +18,7 @@
     {
         private readonly DbContextSistema _context;
         private readonly CookieHelper _cookieHelper;
-        private string _guid;
+        private string? _guid;
 
         public CarritosController(DbContextSistema context, IHttpContextAccessor httpContextAccessor)
         {
@@ -42,6 +42,8 @@
             {
                 ProductoId = d.ProductoId,
                 Producto = d.Producto.Nombre,
+                Marca = d.Producto.Marca.Nombre,
+                FotoPublicId = d.Producto.Fotos.FirstOrDefault()?.FotoPublicId ?? string.Empty,
                 Total = d.Producto.Precio * d.Cantidad,
                 Precio = d.Producto.Precio,
                 Cantidad = d.Cantidad,
@@ -124,7 +126,7 @@
                 {
                     if (detalle.ProductoId == model.ProductoId)
                     {
-                        detalle.Cantidad = model.Cantidad;
+                        detalle.Cantidad += model.Cantidad;
                     }
                 }
             }
@@ -157,13 +159,13 @@
         private async Task<Carrito?> VerificarCarrito(bool? asNoTracking)
         {
             var userId = this._cookieHelper.GetUserId();
-            var guId = this._cookieHelper.Get("UID");
+            var guId = this._cookieHelper.Get("UID") ?? this._cookieHelper.GetRequestIP();
 
             if (string.IsNullOrEmpty(guId) && userId == null)
             {
-                var guid = Guid.NewGuid().ToString();
-                this._cookieHelper.Set("UID", guid, 7 * 24 * 60);
-                this._guid = guid;
+                //var guid = Guid.NewGuid().ToString();
+                var hostIp = this._cookieHelper.GetRequestIP();
+                this._guid = hostIp;
                 return null;
             }
 
@@ -171,7 +173,11 @@
             {
                 return await this._context.Carritos
                     .Include(c => c.Detalles)
+                     .ThenInclude(d => d.Producto)
+                        .ThenInclude(p => p.Fotos)
+                    .Include(c => c.Detalles)
                     .ThenInclude(d => d.Producto)
+                    .ThenInclude(p => p.Marca)
                     .Include(c => c.Cliente)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(c =>
@@ -181,7 +187,10 @@
 
             return await this._context.Carritos
                 .Include(c => c.Detalles)
-                .ThenInclude(d => d.Producto)
+                    .ThenInclude(d => d.Producto)
+                //.Include(c => c.Detalles)
+                //.ThenInclude(d => d.Producto)
+                //.ThenInclude(p => p.Marca)
                 .Include(c => c.Cliente)
                 .FirstOrDefaultAsync(c =>
                     (userId != null) ? c.Estado && c.ClienteId == userId : c.Estado && c.ClienteGuid == guId)

@@ -39,17 +39,6 @@ namespace Sistema.Ecommerce.Services
 
             var response = await this._httpClient.PostAsync("agregar", carritoJson).ConfigureAwait(false);
 
-            //var cookie = response.Headers.SingleOrDefault(header => header.Key == "Set-Cookie");
-            //var cookie = response.Headers.GetValues("Set-Cookie");
-            //if(
-            //Console.WriteLine("imprimiendo cookie");
-            //foreach (var cook in cookie.ToList())
-            //{
-            //    Console.WriteLine(cook);
-            //}
-
-
-            ////var test = await JSRuntime.InvokeAsync<string>("blazorExtensions.WriteCookie", name, value, days);
             if (response.StatusCode == HttpStatusCode.NoContent)
             {
                 return true;

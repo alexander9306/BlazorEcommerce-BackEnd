@@ -42,6 +42,7 @@
             this.Response.Cookies.Append(key, value, option);
         }
 
+
         /// <summary>
         /// Delete the key.
         /// </summary>
@@ -58,6 +59,16 @@
         public string? Get(string key)
         {
             return this.Request.Cookies[key];
+        }
+
+        /// <summary>
+        /// Get the key.
+        /// </summary>
+        /// <param name="key">Key.</param>
+        public string? GetRequestIP()
+        {
+            var header = this.Request.Host;
+            return header.Value.ToString();
         }
 
         /// <summary>

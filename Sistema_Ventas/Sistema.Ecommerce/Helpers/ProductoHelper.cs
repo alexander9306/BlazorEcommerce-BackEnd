@@ -1,5 +1,6 @@
 ﻿namespace Sistema.Ecommerce.Helpers
 {
+    using System;
     using CloudinaryDotNet;
     using Sistema.Shared.Entidades.Almacen;
 
@@ -13,17 +14,30 @@
 
         private readonly Cloudinary _cloudinary;
 
-        public string GetFotoUrl(ProductoFoto? foto, int width = 338, int height = 250)
+        public Uri GetFotoUrl(ProductoFoto? foto, int width = 338, int height = 250)
         {
 
             if (foto == null)
             {
-                return this._cloudinary.Api.UrlImgUp.Transform(
-                    new Transformation().Width(width).Height(height)).BuildUrl("112815953-no-image-available-icon-flat-vector_a5tdo9.jpg");
+                return new Uri(this._cloudinary.Api.UrlImgUp.Transform(
+                    new Transformation().Width(width).Height(height)).BuildUrl("112815953-no-image-available-icon-flat-vector_a5tdo9.jpg"));
             }
 
-            return this._cloudinary.Api.UrlImgUp.Transform(
-                new Transformation().Width(width).Height(height)).BuildUrl(foto.FotoPublicId);
+            return new Uri(this._cloudinary.Api.UrlImgUp.Transform(
+                new Transformation().Width(width).Height(height)).BuildUrl(foto.FotoPublicId));
+        }
+
+        public Uri GetFotoUrl(string? fotoPublicId, int width = 338, int height = 250)
+        {
+
+            if (string.IsNullOrEmpty(fotoPublicId))
+            {
+                return new Uri(this._cloudinary.Api.UrlImgUp.Transform(
+                    new Transformation().Width(width).Height(height)).BuildUrl("112815953-no-image-available-icon-flat-vector_a5tdo9.jpg"));
+            }
+
+            return new Uri(this._cloudinary.Api.UrlImgUp.Transform(
+                new Transformation().Width(width).Height(height)).BuildUrl(fotoPublicId));
         }
 
         public string GetDescripcion(string descripcion)

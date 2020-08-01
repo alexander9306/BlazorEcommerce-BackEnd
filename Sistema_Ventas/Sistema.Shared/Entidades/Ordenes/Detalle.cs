@@ -6,6 +6,10 @@
 
         public string Producto { get; set; }
 
+        public string FotoPublicId { get; set; }
+
+        public string Marca { get; set; }
+
         public decimal Total { get; set; }
 
         public decimal Precio { get; set; }
