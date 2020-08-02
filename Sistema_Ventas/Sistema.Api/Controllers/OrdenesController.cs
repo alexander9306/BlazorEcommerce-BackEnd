@@ -17,12 +17,10 @@
     public class OrdenesController : ControllerBase
     {
         private readonly DbContextSistema _context;
-        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public OrdenesController(DbContextSistema context, IWebHostEnvironment hostingEnvironment)
+        public OrdenesController(DbContextSistema context)
         {
             this._context = context;
-            this._hostingEnvironment = hostingEnvironment;
         }
 
         // GET: api/Ordenes/Listar/limit/before
@@ -123,7 +121,7 @@
 
         // PUT: api/Ordenes/Actualizar/id
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -169,7 +167,7 @@
 
         // POST: api/Ordenes/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<OrdenViewModel>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<OrdenViewModel>> Crear([FromBody] CrearViewModel model)
         {
             if (model == null)
             {
