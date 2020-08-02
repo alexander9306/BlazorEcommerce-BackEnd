@@ -13,7 +13,7 @@
 
         private ClienteLogin Cliente = new ClienteLogin();
         private bool ShowErrors;
-        private string Error = string.Empty;
+        private string Error;
 
         private async Task HandleLogin()
         {
@@ -24,7 +24,6 @@
 
             if (result)
             {
-                this.StateHasChanged();
                 this.NavigationManager.NavigateTo("#", true);
             }
             else

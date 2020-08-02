@@ -1,4 +1,5 @@
 ﻿@page "/signup"
+@using Sistema.Ecommerce.Components
 
 <main class="page registration-page">
     <section class="clean-block clean-form dark">
@@ -24,11 +25,9 @@
                     <InputText Class="form-control item" type="password" Id="password-1" @bind-Value="Cliente.MatchPassword" />
                     <ValidationMessage For="@(() => Cliente.MatchPassword)" />
                 </div>
-                @if (ShowErrors)
+                @if (Alert != null)
                 {
-                    <div class="alert alert-danger" role="alert">
-                        <p>@Error</p>
-                    </div>
+                    <ShowAlert Message="@Alert.Message" Type="@Alert.Type"/>
                 }
                 <button class="btn btn-primary btn-block" type="submit">Sign Up</button>
             </EditForm>

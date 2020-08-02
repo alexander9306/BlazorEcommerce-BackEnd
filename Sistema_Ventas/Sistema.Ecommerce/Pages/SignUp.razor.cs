@@ -12,25 +12,40 @@
         [Inject] private NavigationManager NavigationManager { get; set; }
 
         private ClienteRegister Cliente = new ClienteRegister();
-        private bool ShowErrors;
-        private string Error = string.Empty;
+
+        public Alert Alert { get; set; }
 
         private async Task HandleRegistration()
         {
-            this.ShowErrors = false;
-
             var result = await this.LoginDataService.Registrar(this.Cliente)
                 .ConfigureAwait(false);
 
             if (result)
             {
+                this.Alert = new Alert
+                {
+                    Type = "info",
+                };
+
+                this.StateHasChanged();
+                await Task.Delay(2000).ConfigureAwait(true);
+
                 this.NavigationManager.NavigateTo("/login");
             }
             else
             {
-                this.Error = "Hubo un problema con su solicitud.";
-                this.ShowErrors = true;
+                this.Alert = new Alert
+                {
+                    Type = "danger",
+                };
             }
         }
+    }
+
+    public class Alert
+    {
+        public string Type { get; set; }
+
+        public string Message { get => (this.Type == "danger") ? "Hubo un problema con su solicitud." : "Usuario creado de forma correcta."; }
     }
 }

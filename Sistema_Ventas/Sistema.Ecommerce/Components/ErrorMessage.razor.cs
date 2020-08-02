@@ -1,10 +1,9 @@
-namespace Sistema.Ecommerce.Components
+﻿namespace Sistema.Ecommerce.Components
 {
     using Microsoft.AspNetCore.Components;
 
     public partial class ErrorMessage
     {
-        [Parameter]
-        public string Message { get; set; }
+     [Parameter] public string Message { get; set; }
     }
 }
