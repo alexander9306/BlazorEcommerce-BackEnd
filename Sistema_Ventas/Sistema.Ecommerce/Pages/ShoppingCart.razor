@@ -8,7 +8,11 @@
                     <h2 class="text-info">Carrito<br></h2>
                     <p>Ya casi finalizas con tu compra!<br></p>
                 </div>
-                @if (Carrito != null)
+                @if (ShowMessage)
+                {
+                    <ShowAlert Message="No existen articulos en el carrito." />
+                }
+                else if (Carrito != null)
                 {
                     <div class="content">
                         <div class="row no-gutters">

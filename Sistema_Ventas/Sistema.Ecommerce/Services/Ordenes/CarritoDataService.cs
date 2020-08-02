@@ -1,30 +1,42 @@
-﻿namespace Sistema.Ecommerce.Services.Ordenes
+﻿using System;
+using System.Net.Http.Headers;
+
+namespace Sistema.Ecommerce.Services.Ordenes
 {
     using System.Net;
     using System.Net.Http;
     using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
-    using Microsoft.JSInterop;
+    using Blazored.LocalStorage;
     using Sistema.Shared.Entidades.Ordenes;
 
     public class CarritoDataService : ICarritoDataService
     {
-        private IJSRuntime JSRuntime;
-
         private readonly HttpClient _httpClient;
+        private readonly ILocalStorageService _localStorage;
 
-        public CarritoDataService(HttpClient httpClient)
+        public CarritoDataService(HttpClient httpClient,
+            ILocalStorageService localStorage)
         {
             this._httpClient = httpClient;
+            this._localStorage = localStorage;
         }
 
         public async Task<Carrito> Mostrar()
         {
-            return await JsonSerializer.DeserializeAsync<Carrito>(
-                    await this._httpClient.GetStreamAsync($"mostrar").ConfigureAwait(false),
-                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
-                .ConfigureAwait(false);
+            await this.AgregarToken().ConfigureAwait(false);
+            try
+            {
+                return await JsonSerializer.DeserializeAsync<Carrito>(
+                        await this._httpClient.GetStreamAsync($"mostrar").ConfigureAwait(false),
+                        new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
+                    .ConfigureAwait(false);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<bool> Agregar(int productoId, int cantidad)
@@ -34,6 +46,8 @@
                 new StringContent(JsonSerializer.Serialize(new { ProductoId = productoId, Cantidad = cantidad }), Encoding.UTF8, "application/json");
 #pragma warning restore CA2000 // Dispose objects before losing scope
 
+            await this.AgregarToken().ConfigureAwait(false);
+
             var response = await this._httpClient.PostAsync("agregar", carritoJson).ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.NoContent)
@@ -42,6 +56,16 @@
             }
 
             return false;
+        }
+
+        private async Task AgregarToken()
+        {
+            var token = await this._localStorage.GetItemAsync<string>("authToken").ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
         }
 
         Task<bool> ICarritoDataService.Remover(int productoId)

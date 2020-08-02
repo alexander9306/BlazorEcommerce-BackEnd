@@ -23,15 +23,13 @@ namespace Sistema.Ecommerce
 
             // Authorization Services //
             builder.Services.AddAuthorizationCore();
-
-            // Http Client Providers //
             builder.Services.AddHttpClient<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 
+            // Http Client Providers //
             builder.Services.AddHttpClient<ILoginDataService, LoginDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/clientes/"));
 
             builder.Services.AddBlazoredLocalStorage();
-
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/productos/"));

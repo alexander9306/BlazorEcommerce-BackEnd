@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sistema.Ecommerce.Services.Usuario
+﻿namespace Sistema.Ecommerce.Services.Usuario
 {
     using System.Net;
     using System.Net.Http;
@@ -51,7 +49,7 @@ namespace Sistema.Ecommerce.Services.Usuario
 
             await this._localStorage.SetItemAsync("authToken", loginResult.Token).ConfigureAwait(false);
             ((ApiAuthenticationStateProvider)this._authenticationStateProvider).MarkUserAsAuthenticated(model.Email);
-            this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResult.Token);
+            this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginResult.Token);
 
             return true;
         }

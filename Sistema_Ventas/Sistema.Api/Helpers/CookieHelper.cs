@@ -85,7 +85,7 @@
         /// </summary>
         public int? GetUserId()
         {
-            if (this.User == null)
+            if (this.User == null || !this.User.Identity.IsAuthenticated)
             {
                 return null;
             }
@@ -96,7 +96,7 @@
         /// <summary>
         /// Get the Header of the key.
         /// </summary>
-        /// <param name="key">Key.</param>
+        /// <param name="key">Key.</param>  
         public string? GetHeader(string key)
         {
             return this.Request.Headers.FirstOrDefault(x => x.Key == key).Value.FirstOrDefault();

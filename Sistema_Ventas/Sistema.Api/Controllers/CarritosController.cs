@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@
     using Sistema.Api.Models.Ordenes.Carrito;
     using Sistema.Api.Models.Ordenes.Carrito.Detalle;
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CarritosController : ControllerBase
@@ -19,18 +21,19 @@
         private readonly DbContextSistema _context;
         private readonly CookieHelper _cookieHelper;
         private string? _guid;
+        private int? _userId;
 
         public CarritosController(DbContextSistema context, IHttpContextAccessor httpContextAccessor)
         {
             this._context = context;
-            this._cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, this.User);
+            this._cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, httpContextAccessor.HttpContext.User);
         }
 
         // GET: api/Carritos/Mostrar
+        [AllowAnonymous]
         [HttpGet("[action]")]
         public async Task<ActionResult<CarritoViewModel>> Mostrar()
         {
-
             var carrito = await this.VerificarCarrito(true).ConfigureAwait(false);
 
             if (carrito == null)
@@ -63,6 +66,7 @@
         }
 
         // POST: api/Carritos/Agregar/
+        [AllowAnonymous]
         [HttpPost("[action]")]
         public async Task<IActionResult> Agregar([FromBody] ActualizarDetalleViewModel model)
         {
@@ -77,8 +81,9 @@
             }
 
             var carrito = await this.VerificarCarrito(false).ConfigureAwait(false);
-            var userId = this._cookieHelper.GetUserId();
-            var guId = this._cookieHelper.Get("UID") ?? this._guid;
+            var userId = this._userId;
+            var guId = this._guid;
+
             var fecha = DateTime.Now;
 
             if (carrito == null)
@@ -158,16 +163,8 @@
 
         private async Task<Carrito?> VerificarCarrito(bool? asNoTracking)
         {
-            var userId = this._cookieHelper.GetUserId();
-            var guId = this._cookieHelper.Get("UID") ?? this._cookieHelper.GetRequestIP();
-
-            if (string.IsNullOrEmpty(guId) && userId == null)
-            {
-                //var guid = Guid.NewGuid().ToString();
-                var hostIp = this._cookieHelper.GetRequestIP();
-                this._guid = hostIp;
-                return null;
-            }
+            this._userId = this._cookieHelper.GetUserId();
+            this._guid = this._cookieHelper.Get("UID") ?? this._cookieHelper.GetRequestIP();
 
             if (asNoTracking == true)
             {
@@ -181,19 +178,16 @@
                     .Include(c => c.Cliente)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(c =>
-                        (userId != null) ? c.Estado && c.ClienteId == userId : c.Estado && c.ClienteGuid == guId)
+                        (this._userId != null) ? c.Estado && c.ClienteId == this._userId : c.Estado && c.ClienteGuid == this._guid)
                     .ConfigureAwait(false);
             }
 
             return await this._context.Carritos
                 .Include(c => c.Detalles)
                     .ThenInclude(d => d.Producto)
-                //.Include(c => c.Detalles)
-                //.ThenInclude(d => d.Producto)
-                //.ThenInclude(p => p.Marca)
                 .Include(c => c.Cliente)
                 .FirstOrDefaultAsync(c =>
-                    (userId != null) ? c.Estado && c.ClienteId == userId : c.Estado && c.ClienteGuid == guId)
+                    (this._userId != null) ? c.Estado && c.ClienteId == this._userId : c.Estado && c.ClienteGuid == this._guid)
                 .ConfigureAwait(false);
         }
 

@@ -17,10 +17,17 @@
         [Inject]
         public IProductoHelper ProductoHelper { get; set; }
 
+        protected bool ShowMessage;
+
         protected override async Task OnInitializedAsync()
         {
             this.Carrito = await this.CarritoDataService.Mostrar()
                 .ConfigureAwait(false);
+
+            if (this.Carrito == null)
+            {
+                this.ShowMessage = true;
+            }
         }
     }
 }
