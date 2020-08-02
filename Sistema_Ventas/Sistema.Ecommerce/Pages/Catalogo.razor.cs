@@ -5,22 +5,18 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services;
+    using Sistema.Ecommerce.Services.Almacen;
     using Sistema.Shared.Entidades.Almacen;
 
     public partial class Catalogo
     {
-        [Inject]
-        public IProductoDataService ProductoDataService { get; set; }
+        [Inject] public IProductoDataService ProductoDataService { get; set; }
 
-        [Inject]
-        public ICategoriaDataService CategoriaDataService { get; set; }
+        [Inject] public ICategoriaDataService CategoriaDataService { get; set; }
 
-        [Inject]
-        public IMarcaDataService MarcaDataService { get; set; }
+        [Inject] public IMarcaDataService MarcaDataService { get; set; }
 
-        [Inject]
-        public IProductoHelper ProductoHelper { get; set; }
+        [Inject] public IProductoHelper ProductoHelper { get; set; }
 
         public bool HasMoreData;
 

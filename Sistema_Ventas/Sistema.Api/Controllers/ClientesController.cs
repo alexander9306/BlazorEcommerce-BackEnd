@@ -1,5 +1,3 @@
-/*reynaldo yunior*/
-
 namespace Sistema.Api.Controllers
 {
     using System;
@@ -9,6 +7,7 @@ namespace Sistema.Api.Controllers
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -25,12 +24,15 @@ namespace Sistema.Api.Controllers
         private readonly DbContextSistema _context;
         private readonly PasswordHelper _passwordHelper;
         private readonly TokenHelper _tokenHelper;
+        private readonly CookieHelper _cookieHelper;
 
-        public ClientesController(DbContextSistema context, IConfiguration config)
+        public ClientesController(DbContextSistema context, IConfiguration config, IHttpContextAccessor httpContextAccessor)
         {
             this._context = context;
             this._passwordHelper = new PasswordHelper(config);
             this._tokenHelper = new TokenHelper(config);
+
+            this._cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, httpContextAccessor.HttpContext.User);
         }
 
         // POST: api/clientes/login
@@ -38,7 +40,7 @@ namespace Sistema.Api.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var email = model.Email.ToLower(CultureInfo.CurrentCulture);
+            var email = model.Email.Trim().ToUpperInvariant();
 
             var cliente = await this._context.Clientes
                 .FirstOrDefaultAsync(a => a.Email == email)
@@ -64,17 +66,28 @@ namespace Sistema.Api.Controllers
                 new Claim("Username", cliente.Email),
             };
 
+            var carrito = await this._context.Carritos
+                .Where(c => c.Estado && c.ClienteGuid == this._cookieHelper.GetRequestIP())
+                .FirstOrDefaultAsync().ConfigureAwait(false);
+
+            if (carrito != null)
+            {
+                carrito.ClienteGuid = null;
+                carrito.ClienteId = cliente.Id;
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
+            }
+
             return this.Ok(
-                new { token = this._tokenHelper.GenerarToken(claims) }
+                new { token = this._tokenHelper.GenerarToken(claims, 60 * 24 * 5) }
             );
         }
 
         // GET: api/Clientes/Listar
-        [Authorize(Roles = "Administrador, Organizador")]
+        //[Authorize(Roles = "Administrador, Organizador")]
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<ClienteViewModel>>> Listar()
         {
-            var clientes =  await this._context.Clientes
+            var clientes = await this._context.Clientes
                 .AsNoTracking()
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -112,8 +125,9 @@ namespace Sistema.Api.Controllers
         }
 
         // PUT: api/Clientes/Actualizar/id
+        [Authorize(Roles = "Cliente")]
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -128,7 +142,6 @@ namespace Sistema.Api.Controllers
             var cliente = new Cliente
             {
                 Id = model.Id,
-                Email = model.Email,
                 UpdatedAt = DateTime.Now,
             };
 
@@ -160,7 +173,7 @@ namespace Sistema.Api.Controllers
         // POST: api/Clientes/Crear
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<ActionResult<ClienteViewModel>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<ClienteViewModel>> Crear([FromBody] CrearViewModel model)
         {
             if (model == null)
             {
@@ -177,8 +190,7 @@ namespace Sistema.Api.Controllers
 
             var cliente = new Cliente
             {
-                Id = model.Id,
-                Email = model.Email,
+                Email = model.Email.ToUpperInvariant().Trim(),
                 PasswordHash = passwordHash,
                 FechaNac = fecha,
                 CreatedAt = fecha,

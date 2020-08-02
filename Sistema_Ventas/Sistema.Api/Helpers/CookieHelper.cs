@@ -42,6 +42,7 @@
             this.Response.Cookies.Append(key, value, option);
         }
 
+
         /// <summary>
         /// Delete the key.
         /// </summary>
@@ -64,6 +65,16 @@
         /// Get the key.
         /// </summary>
         /// <param name="key">Key.</param>
+        public string? GetRequestIP()
+        {
+            var header = this.Request.Host;
+            return header.Value.ToString();
+        }
+
+        /// <summary>
+        /// Get the key.
+        /// </summary>
+        /// <param name="key">Key.</param>
         public string? GetFromResponse(string key)
         {
             return this.Response.Cookies.ToString();
@@ -74,7 +85,7 @@
         /// </summary>
         public int? GetUserId()
         {
-            if (this.User == null)
+            if (this.User == null || !this.User.Identity.IsAuthenticated)
             {
                 return null;
             }
@@ -85,7 +96,7 @@
         /// <summary>
         /// Get the Header of the key.
         /// </summary>
-        /// <param name="key">Key.</param>
+        /// <param name="key">Key.</param>  
         public string? GetHeader(string key)
         {
             return this.Request.Headers.FirstOrDefault(x => x.Key == key).Value.FirstOrDefault();

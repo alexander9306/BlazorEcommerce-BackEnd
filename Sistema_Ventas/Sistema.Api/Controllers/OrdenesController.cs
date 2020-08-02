@@ -5,35 +5,47 @@
     using System.Globalization;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Ordenes;
+    using Sistema.Api.Helpers;
     using Sistema.Api.Models.Ordenes.Orden;
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdenesController : ControllerBase
     {
         private readonly DbContextSistema _context;
-        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly CookieHelper _cookieHelper;
 
-        public OrdenesController(DbContextSistema context, IWebHostEnvironment hostingEnvironment)
+        public OrdenesController(DbContextSistema context, IHttpContextAccessor httpContextAccessor)
         {
             this._context = context;
-            this._hostingEnvironment = hostingEnvironment;
+            this._cookieHelper = new CookieHelper(httpContextAccessor.HttpContext.Response, httpContextAccessor.HttpContext.Request, httpContextAccessor.HttpContext.User);
         }
 
         // GET: api/Ordenes/Listar/limit/before
         [HttpGet("[action]/{limit}/{before}")]
+        [Authorize(Roles = "Cliente")]
         public async Task<ActionResult<IEnumerable<OrdenViewModel>>> Listar(int limit, string before)
         {
+            var userId = this._cookieHelper.GetUserId();
+
+            if (!userId.HasValue)
+            {
+                return this.Unauthorized();
+            }
+
             var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
 
             var ordenes = await this._context.Ordenes
                 .Include(o => o.Pedido)
                 .Include(o => o.Pago)
+                .Where(o => o.ClienteId == userId)
                 .Where(o => hasCursor ? o.UpdatedAt < cursor : o.Id > 0)
                 .Take(limit)
                 .AsNoTracking()
@@ -46,7 +58,6 @@
                      CarritoId = orden.CarritoId,
                      Latitud = orden.Latitud,
                      Longitud = orden.Longitud,
-                     Email = orden.Email,
                      Direccion = orden.Direccion,
                      Telefono = orden.Telefono,
                      CreatedAt = orden.CreatedAt,
@@ -54,7 +65,7 @@
             }));
         }
 
-        // GET: api/Ordenes/Listar/limit/before
+        // GET: api/Ordenes/ListarPorCliente/limit/before
         [HttpGet("[action]/{ClienteId}/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<Orden>>> ListarPorCliente(int clienteId, int limit, string before)
         {
@@ -83,7 +94,6 @@
                 CarritoId = o.CarritoId,
                 Latitud = o.Latitud,
                 Longitud = o.Longitud,
-                Email = o.Email,
                 Direccion = o.Direccion,
                 Telefono = o.Telefono,
                 CreatedAt = o.CreatedAt,
@@ -113,7 +123,6 @@
                 CarritoId = orden.CarritoId,
                 Latitud = orden.Latitud,
                 Longitud = orden.Longitud,
-                Email = orden.Email,
                 Direccion = orden.Direccion,
                 Telefono = orden.Telefono,
                 CreatedAt = orden.CreatedAt,
@@ -123,7 +132,7 @@
 
         // PUT: api/Ordenes/Actualizar/id
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -135,20 +144,23 @@
                 return this.BadRequest();
             }
 
-            var orden = new Orden
-            {
-                Id = model.Id,
-                ClienteId = model.ClienteId,
-                CarritoId = model.CarritoId,
-                Latitud = model.Latitud,
-                Longitud = model.Longitud,
-                Email = model.Email,
-                Direccion = model.Direccion,
-                Telefono = model.Telefono,
-                UpdatedAt = DateTime.Now,
-            };
+            var userId = this._cookieHelper.GetUserId();
 
-            this._context.Entry(orden).State = EntityState.Modified;
+            if (!userId.HasValue)
+            {
+                return this.Unauthorized();
+            }
+
+            var orden = await this._context.Ordenes
+                .FirstOrDefaultAsync(o => o.Id == id)
+                .ConfigureAwait(false);
+
+            orden.Direccion = model.Direccion;
+            orden.Latitud = model.Latitud;
+            orden.Direccion = model.Direccion;
+            orden.Longitud = model.Longitud;
+            orden.Telefono = model.Telefono;
+            orden.UpdatedAt = DateTime.Now;
 
             try
             {
@@ -169,7 +181,8 @@
 
         // POST: api/Ordenes/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<OrdenViewModel>> Crear([FromForm] CrearViewModel model)
+        [Authorize(Roles = "Cliente")]
+        public async Task<ActionResult<OrdenViewModel>> Crear([FromBody] CrearViewModel model)
         {
             if (model == null)
             {
@@ -181,25 +194,39 @@
                 return this.BadRequest(this.ModelState);
             }
 
+            var userId = this._cookieHelper.GetUserId();
+
+            if (!userId.HasValue)
+            {
+                return this.Unauthorized();
+            }
+
             var fecha = DateTime.Now;
+
+            var carrito = await this._context.Carritos
+                .FirstOrDefaultAsync(c => c.Estado && c.ClienteId == userId)
+                .ConfigureAwait(false);
 
             var orden = new Orden
             {
-                ClienteId = model.ClienteId,
-                CarritoId = model.CarritoId,
+                ClienteId = userId.Value,
+                CarritoId = carrito.Id,
                 Latitud = model.Latitud,
                 Longitud = model.Longitud,
-                Email = model.Email,
                 Direccion = model.Direccion,
                 Telefono = model.Telefono,
                 CreatedAt = fecha,
                 UpdatedAt = fecha,
             };
 
+
             await this._context.Ordenes.AddAsync(orden).ConfigureAwait(false);
 
             try
             {
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
+
+                carrito.Estado = false;
                 await this._context.SaveChangesAsync().ConfigureAwait(false);
             }
             catch (DbUpdateConcurrencyException)
@@ -214,7 +241,6 @@
                 CarritoId = orden.CarritoId,
                 Latitud = orden.Latitud,
                 Longitud = orden.Longitud,
-                Email = orden.Email,
                 Direccion = orden.Direccion,
                 Telefono = orden.Telefono,
                 CreatedAt = orden.CreatedAt,

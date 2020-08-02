@@ -21,8 +21,8 @@
 
         public bool VerificarPasswordHash(string password, byte[] passwordHashAlmacenado)
         {
-            using var hmac = new System.Security.Cryptography.HMACSHA512(this._encoding.GetBytes(this._key));
-            var passwordHashNuevo = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            using var hmac = new System.Security.Cryptography.HMACSHA256(this._encoding.GetBytes(this._key));
+            var passwordHashNuevo = hmac.ComputeHash(this._encoding.GetBytes(password));
             return new ReadOnlySpan<byte>(passwordHashAlmacenado).SequenceEqual(new ReadOnlySpan<byte>(passwordHashNuevo));
         }
     }

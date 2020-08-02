@@ -1,0 +1,43 @@
+﻿@page "/crearorden"
+@using Sistema.Ecommerce.Components
+
+<main class="page contact-us-page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Información de envió</h2>
+                <p>Déjanos saber donde te haremos el envió.</p>
+            </div>
+            <EditForm Model="Orden" OnValidSubmit="HandleSubmit">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <InputText Class="form-control" type="text" @bind-Value="Orden.Telefono" />
+                    <ValidationMessage For="@(() => Orden.Telefono)" />
+                </div>
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <InputTextArea class="form-control" @bind-Value="Orden.Direccion" />
+                    <ValidationMessage For="@(() => Orden.Direccion)" />
+                </div>
+                <div class="form-group">
+                    <label>Latitud</label>
+                    <InputNumber class="form-control" @bind-Value="Orden.Latitud" />
+                    <ValidationMessage For="@(() => Orden.Latitud)" />
+                </div>
+                <div class="form-group">
+                    <label>Logitud</label>
+                    <InputNumber class="form-control" @bind-Value="Orden.Longitud" />
+                    <ValidationMessage For="@(() => Orden.Longitud)" />
+                </div>
+                @if (Alert != null)
+                {
+                    <ShowAlert Message="@Alert.Message" Type="@Alert.Type" />
+                }
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block" type="submit">Guardar</button>
+                </div>
+            </EditForm>
+        </div>
+    </section>
+</main>
