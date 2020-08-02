@@ -11,6 +11,6 @@
 
         Task<Orden> Mostrar(int id);
 
-        Task<IEnumerable<Orden>> ListarPorCliente(int clienteId, int limit, DateTime? before = null);
+        Task<bool> Crear(OrdenCrear model);
     }
 }

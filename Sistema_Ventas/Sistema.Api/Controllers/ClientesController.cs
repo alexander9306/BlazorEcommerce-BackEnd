@@ -40,7 +40,7 @@ namespace Sistema.Api.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var email = model.Email.ToLower(CultureInfo.CurrentCulture);
+            var email = model.Email.Trim().ToUpperInvariant();
 
             var cliente = await this._context.Clientes
                 .FirstOrDefaultAsync(a => a.Email == email)
@@ -83,7 +83,7 @@ namespace Sistema.Api.Controllers
         }
 
         // GET: api/Clientes/Listar
-        [Authorize(Roles = "Administrador, Organizador")]
+        //[Authorize(Roles = "Administrador, Organizador")]
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<ClienteViewModel>>> Listar()
         {
@@ -190,7 +190,7 @@ namespace Sistema.Api.Controllers
 
             var cliente = new Cliente
             {
-                Email = model.Email,
+                Email = model.Email.ToUpperInvariant().Trim(),
                 PasswordHash = passwordHash,
                 FechaNac = fecha,
                 CreatedAt = fecha,

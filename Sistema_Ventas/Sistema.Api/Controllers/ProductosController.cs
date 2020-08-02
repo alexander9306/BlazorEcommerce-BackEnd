@@ -126,7 +126,6 @@
             [FromQuery(Name = "categoriaId")] List<int> categoriaIds, [FromQuery(Name = "marcaId")] List<int> marcaIds,
             int limit, string before)
         {
-
             var hasCursor = DateTime.TryParse(before, out var cursor);
 
             var productos = await this._context.Productos

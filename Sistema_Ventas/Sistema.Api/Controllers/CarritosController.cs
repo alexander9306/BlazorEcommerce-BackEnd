@@ -91,11 +91,15 @@
                 carrito = new Carrito
                 {
                     ClienteId = userId,
-                    ClienteGuid = guId,
                     Estado = true,
                     CreatedAt = fecha,
                     UpdatedAt = fecha,
                 };
+
+                if (!this._userId.HasValue)
+                {
+                    carrito.ClienteGuid = this._guid;
+                }
 
                 await this._context.Carritos.AddAsync(carrito).ConfigureAwait(false);
 
@@ -187,7 +191,7 @@
                     .ThenInclude(d => d.Producto)
                 .Include(c => c.Cliente)
                 .FirstOrDefaultAsync(c =>
-                    (this._userId != null) ? c.Estado && c.ClienteId == this._userId : c.Estado && c.ClienteGuid == this._guid)
+                    this._userId.HasValue ? c.Estado && c.ClienteId == this._userId : c.Estado && c.ClienteGuid == this._guid)
                 .ConfigureAwait(false);
         }
 

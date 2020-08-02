@@ -8,7 +8,6 @@
     using Microsoft.AspNetCore.Components;
     using Microsoft.JSInterop;
     using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services;
     using Sistema.Ecommerce.Services.Almacen;
     using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Almacen;
