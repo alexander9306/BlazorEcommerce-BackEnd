@@ -1,6 +1,5 @@
-﻿namespace Sistema.Ecommerce.Services
+﻿namespace Sistema.Ecommerce.Services.Ordenes
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Ordenes;
 

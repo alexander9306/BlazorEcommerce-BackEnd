@@ -2,10 +2,15 @@ namespace Sistema.Ecommerce
 {
     using System;
     using System.Threading.Tasks;
+    using Blazored.LocalStorage;
+    using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
     using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services;
+    using Sistema.Ecommerce.Providers;
+    using Sistema.Ecommerce.Services.Almacen;
+    using Sistema.Ecommerce.Services.Ordenes;
+    using Sistema.Ecommerce.Services.Usuario;
 
     public class Program
     {
@@ -15,6 +20,18 @@ namespace Sistema.Ecommerce
             builder.RootComponents.Add<App>("app");
 
             var baseAddress = "https://localhost:44303/api";
+
+            // Authorization Services //
+            builder.Services.AddAuthorizationCore();
+
+            // Http Client Providers //
+            builder.Services.AddHttpClient<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
+
+            builder.Services.AddHttpClient<ILoginDataService, LoginDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/clientes/"));
+
+            builder.Services.AddBlazoredLocalStorage();
+
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/productos/"));
@@ -37,6 +54,7 @@ namespace Sistema.Ecommerce
             builder.Services.AddHttpClient<IPagoDataService, PagoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/pagos/"));
 
+            // Helper Classes //
             builder.Services.AddSingleton<IProductoHelper, ProductoHelper>();
 
             await builder.Build().RunAsync().ConfigureAwait(false);

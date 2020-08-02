@@ -1,4 +1,4 @@
-﻿namespace Sistema.Ecommerce.Services
+﻿namespace Sistema.Ecommerce.Services.Almacen
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

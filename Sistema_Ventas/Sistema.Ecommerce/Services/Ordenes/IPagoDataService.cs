@@ -1,11 +1,10 @@
-﻿using Sistema.Shared.Entidades.Ordenes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Sistema.Ecommerce.Services
+﻿namespace Sistema.Ecommerce.Services.Ordenes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Sistema.Shared.Entidades.Ordenes;
+
     interface IPagoDataService
     {
         Task<IEnumerable<Pago>> Listar(int limit, DateTime? before = null);

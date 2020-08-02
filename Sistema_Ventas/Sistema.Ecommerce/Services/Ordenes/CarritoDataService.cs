@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-
-namespace Sistema.Ecommerce.Services
+﻿namespace Sistema.Ecommerce.Services.Ordenes
 {
     using System.Net;
     using System.Net.Http;

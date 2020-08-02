@@ -1,4 +1,4 @@
-﻿namespace Sistema.Ecommerce.Services
+﻿namespace Sistema.Ecommerce.Services.Almacen
 {
     using System.Collections.Generic;
     using System.Net.Http;
@@ -6,22 +6,21 @@
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Almacen;
 
-    public class CategoriaDataService: ICategoriaDataService
+    public class MarcaDataService : IMarcaDataService
     {
         private readonly HttpClient _httpClient;
 
-        public CategoriaDataService(HttpClient httpClient)
+        public MarcaDataService(HttpClient httpClient)
         {
             this._httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Categoria>> Listar()
+        public async Task<IEnumerable<Marca>> Listar()
         {
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Categoria>>(
+            return await JsonSerializer.DeserializeAsync<IEnumerable<Marca>>(
                     await _httpClient.GetStreamAsync($"listar").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);
         }
-
     }
 }

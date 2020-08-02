@@ -1,4 +1,4 @@
-﻿namespace Sistema.Ecommerce.Services
+﻿namespace Sistema.Ecommerce.Services.Ordenes
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@
     using System.Net.Http;
     using System.Text.Json;
     using System.Threading.Tasks;
-    using Sistema.Shared.Entidades.Almacen;
     using Sistema.Shared.Entidades.Ordenes;
 
     public class OrdenDataService : IOrdenDataService

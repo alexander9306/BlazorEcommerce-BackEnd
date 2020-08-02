@@ -9,12 +9,13 @@
     using Microsoft.JSInterop;
     using Sistema.Ecommerce.Helpers;
     using Sistema.Ecommerce.Services;
+    using Sistema.Ecommerce.Services.Almacen;
+    using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Almacen;
 
     public partial class Productos
     {
-        [Parameter]
-        public string ProductoId { get; set; }
+        [Parameter] public string ProductoId { get; set; }
 
         protected string errorMessage { get; set; }
 
@@ -22,17 +23,13 @@
 
         protected string CarritoToastTitle { get; set; }
 
-        [Inject] 
-        protected IJSRuntime JSRuntime { get; set; }
+        [Inject] protected IJSRuntime JSRuntime { get; set; }
 
-        [Inject]
-        public IProductoDataService ProductoDataService { get; set; }
+        [Inject] public IProductoDataService ProductoDataService { get; set; }
 
-        [Inject]
-        public ICarritoDataService CarritoDataService { get; set; }
+        [Inject] public ICarritoDataService CarritoDataService { get; set; }
 
-        [Inject]
-        public IProductoHelper ProductoHelper { get; set; }
+        [Inject] public IProductoHelper ProductoHelper { get; set; }
 
         public Producto Producto { get; set; }
 

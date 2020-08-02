@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Helpers;
     using Sistema.Ecommerce.Services;
+    using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Ordenes;
 
     public partial class ShoppingCart

@@ -1,4 +1,4 @@
-﻿namespace Sistema.Ecommerce.Services
+﻿namespace Sistema.Ecommerce.Services.Ordenes
 {
     using System;
     using System.Collections.Generic;
