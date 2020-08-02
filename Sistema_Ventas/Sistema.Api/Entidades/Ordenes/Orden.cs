@@ -22,7 +22,11 @@
 
         public string Telefono { get; set; }
 
+        public string Estado { get; set; }
+
         public Pedido Pedido { get; set; }
+
+        public Carrito Carrito { get; set; }
 
         public Pago Pago { get; set; }
     }

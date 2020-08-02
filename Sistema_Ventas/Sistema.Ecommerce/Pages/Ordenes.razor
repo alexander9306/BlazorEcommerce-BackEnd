@@ -11,23 +11,26 @@
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Total $</th>
-                            <th>Fecha</th>
-                        </tr>
+                            <tr>
+                                <th>No.</th>
+                                <th>Total $</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 3</td>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                        </tr>
+                            @if (ListaOrdenes != null)
+                            {
+                                foreach (var orden in ListaOrdenes)
+                                {
+                                    <tr>
+                                        <td>@orden.Id</td>
+                                        <td>@orden.Total</td>
+                                        <td>@orden.Estado</td>
+                                        <td>@orden.CreatedAt</td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>

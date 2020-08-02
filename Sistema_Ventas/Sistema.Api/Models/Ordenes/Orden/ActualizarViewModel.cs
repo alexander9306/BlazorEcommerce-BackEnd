@@ -7,11 +7,7 @@
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public int Id { get; set; }
 
-        //[Required(ErrorMessage = "El campo {0} es requerido.")]
-        //public int ClienteId { get; set; }
-
-        //[Required(ErrorMessage = "El campo {0} es requerido.")]
-        //public int CarritoId { get; set; }
+        public string Estado { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public double Latitud { get; set; }
