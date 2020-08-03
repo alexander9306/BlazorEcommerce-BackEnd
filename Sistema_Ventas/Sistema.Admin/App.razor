@@ -1,0 +1,14 @@
+<Router AppAssembly="@typeof(Program).Assembly">
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+    </Found>
+    <NotFound>
+                <CascadingAuthenticationState>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <ShowAlert Message="No se encontro contenido." />
+                <h1>404 Not Found</h1>
+                <p>No Hay contenido en esta dirección.</p>
+            </LayoutView>
+        </CascadingAuthenticationState>
+    </NotFound>
+</Router>

@@ -1,0 +1,65 @@
+﻿@page "/"
+@using Sistema.Ecommerce.Components
+
+<main class="page landing-page">
+    <SliderCarousel />
+    <MasComprados />
+
+    <section class="clean-block clean-hero" style="background-image: url(&quot;assets/img/tech/image4.jpg&quot;); color: rgba(9, 162, 255, 0.85);">
+        <div class="text">
+            <h2>Todos los productos tecnologicos</h2>
+            <p>Tenemos productos usados y nuevos al mejor precio del mercado.</p><a href="catalogo" class="btn btn-outline-light btn-lg" type="button">Ver Catalogo</a>
+        </div>
+    </section>
+    <section class="clean-block features">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Cualidades</h2>
+                <p>Observa algunos de las cualidades que tenemos</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-5 feature-box">
+                    <i class="icon-star icon"></i>
+                    <h4>Vanguardia</h4>
+                    <p>Tenemos los últimos productos del mercado, ya existe! pues lo tenemos.</p>
+                </div>
+                <div class="col-md-5 feature-box">
+                    <i class="icon-pencil icon"></i>
+                    <h4>Exclusividad</h4>
+                    <p>Tenemos exclusividad con marcas reconocidas en el país.&nbsp;</p>
+                </div>
+                <div class="col-md-5 feature-box">
+                    <i class="icon-screen-smartphone icon"></i>
+                    <h4>Gran Variedad de celulares</h4>
+                    <p>Ofrecemos una gran variedad de productos celulares.</p>
+                </div>
+                <div class="col-md-5 feature-box">
+                    <i class="fas fa-laptop icon"></i>
+                    <h4>Ultimas portátiles&nbsp;disponibles</h4>
+                    <p>Tenemos Todas las portátiles que necesites.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@code
+{
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            Console.WriteLine($"User {user.Identity.Name} is authenticated.");
+        }
+        else
+        {
+            Console.WriteLine("User is NOT authenticated.");
+        }
+    }
+}

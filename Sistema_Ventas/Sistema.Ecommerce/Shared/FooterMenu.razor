@@ -1,0 +1,30 @@
+﻿<footer class="page-footer dark">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-sm-3">
+                <h5>Empezar<br></h5>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <AuthorizeView>
+                        <Authorized>
+                            <li><a href="ordenes">Ordenes</a></li>
+                        </Authorized>
+                        <NotAuthorized>
+                            <li><a href="signup">Sign up</a></li>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </ul>
+            </div>
+            <div class="col-sm-3">
+                <h5>Categorias</h5>
+                <ul>
+                    <li><a href="catalogo">Celulares</a></li>
+                    <li><a href="catalogo">Computadoras</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>© 2020 Copyright P3_Experience</p>
+    </div>
+</footer>

@@ -1,0 +1,7 @@
+https://getbootstrap.com/docs/4.5/examples/dashboard/#
+https://getbootstrap.com/docs/4.5/examples/checkout/
+https://demo.w3layouts.com/demos_new/template_demo/07-08-2018/goggles-web_Free/1521872807/web/checkout.html --solo ejemplo para carrito
+https://startbootstrap.com/previews/shop-homepage/
+https://getbootstrap.com/docs/4.5/examples/sign-in/
+https://startbootstrap.com/snippets/portfolio-item/
+https://startbootstrap.com/previews/sb-admin/
