@@ -1,7 +1,6 @@
 namespace Sistema.Api.Entidades.Usuario
 {
     using System;
-    using System.Globalization;
     using Sistema.Api.Entidades.Ordenes;
 
     public class Cliente

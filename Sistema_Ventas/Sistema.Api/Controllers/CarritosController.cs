@@ -10,8 +10,8 @@
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Ordenes;
     using Sistema.Api.Helpers;
-    using Sistema.Api.Models.Ordenes.Carrito;
-    using Sistema.Api.Models.Ordenes.Carrito.Detalle;
+    using Sistema.Shared.Entidades.Ordenes.Carrito;
+    using Sistema.Shared.Entidades.Ordenes.Carrito.Detalle;
 
     [Authorize]
     [Route("api/[controller]")]

@@ -8,7 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
-    using Sistema.Api.Models.Almacen.Categoria;
+    using Sistema.Shared.Entidades.Almacen.Categoria;
 
     [Route("api/[controller]")]
     [ApiController]

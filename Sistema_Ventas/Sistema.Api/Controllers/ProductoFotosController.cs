@@ -14,7 +14,7 @@
     using Microsoft.Extensions.Configuration;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
-    using Sistema.Api.Models.Almacen.ProductoFoto;
+    using Sistema.Shared.Entidades.Almacen.ProductoFoto;
 
     [Route("api/[controller]")]
     [ApiController]

@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Services.Usuario;
     using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Cliente;
 
     public partial class SignUp
     {

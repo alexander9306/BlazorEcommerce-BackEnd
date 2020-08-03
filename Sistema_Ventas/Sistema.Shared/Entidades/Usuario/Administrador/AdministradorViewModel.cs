@@ -20,4 +20,3 @@ namespace Sistema.Shared.Entidades.Usuario.Administrador
 
     }
 }
-/*reynaldo yunior*/

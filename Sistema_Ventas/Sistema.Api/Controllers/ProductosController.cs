@@ -6,12 +6,11 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
-    using Sistema.Api.Models.Almacen.Producto;
-    using Sistema.Api.Models.Almacen.ProductoFoto;
+    using Sistema.Shared.Entidades.Almacen.Producto;
+    using Sistema.Shared.Entidades.Almacen.ProductoFoto;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -68,7 +67,7 @@
                  }));
         }
 
-        // GET: api/Productos/Listar/limit/before
+        // GET: api/Productos/ListarRelacionados/limit/before
         [HttpGet("[action]/{productoId}/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarRelacionados(int productoId, int limit, string before)
         {
