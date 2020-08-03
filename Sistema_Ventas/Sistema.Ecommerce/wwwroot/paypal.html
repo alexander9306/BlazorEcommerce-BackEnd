@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+
+<!--Alerta para los pasos de pago-->
+<script language="JavaScript" type="text/javascript">
+    alert("Pasos: Debe presionar los botones desde el 1 al 3 para luego hacer pago con PayPal.");
+</script>
+
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<button onclick="window.location.href='/ShoppingCart'" class="btn btn-danger">Volver</button>
+<br />
+<br />
+
+<body>
+    <script src="https://www.paypal.com/sdk/js?client-id=AUUv6SDxJwkxmv3tuj-KewurE5PizGomBdf77mzqmscHWoGWwwnQoPcGhRKTVRuNrj-G2ftrEDnem1DT">
+    </script>
+
+    <div id="paypal-button-container"></div>
+</body>
+
+<label>Total: </label>
+
+<!--PayPal Codigo-->
+<script>
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: document.getElementById('cba').value
+                    }
+                }]
+            });
+        },
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+                alert('Se completo la transacción por: ' + details.payer.name.given_name);
+                window.location.href = "/ShoppingCart"
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+<!--El span que nos muestra el precio-->
+<span id="receive"></span>
+<br />
+
+<script>
+    function processForm() {
+        var parameters = location.search.substring(1).split("&");
+        var temp = parameters[0].split("=");
+        x = unescape(temp[1]);
+        document.getElementById('receive').innerHTML = x;
+    }
+    processForm();
+</script>
+
+
+
+<!--Para copiar el precio del span-->
+<script>
+    function CopyToClipboard(containerid) {
+        if (document.selection) {
+            var range = document.body.createTextRange();
+            range.moveToElementText(document.getElementById(containerid));
+            range.select().createTextRange();
+            document.execCommand("copy");
+        } else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(document.getElementById(containerid));
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            alert("Paso 1 completado.")
+        }
+    }
+</script>
+
+<button id="button1" onclick="CopyToClipboard('receive')" class="btn btn-primary">1</button>
+<button id="paste" onclick="guardarCompra()" class="btn btn-secondary">2</button>
+<button onclick="comaporcero()" class="btn btn-success">3</button>
+<br />
+<br />
+<!--Para pegar el precio en el input correspondiente-->
+<script>
+    document.getElementById('paste').addEventListener('click', () => {
+        let pasteArea = document.getElementById('pasteArea');
+        pasteArea.value = '';
+
+        navigator.clipboard.readText()
+            .then((text) => {
+                pasteArea.value = text;
+            });
+    });
+</script>
+
+<script>
+    function guardarCompra() {
+        alert("Paso 2 completado");
+    }
+</script>
+
+
+<!--Para los input del total y convertir de coma a punto-->
+<input type="text" id="pasteArea" name="pasteArea" readonly="readonly" class="form-control" hidden="hidden">
+<br />
+<br />
+<input type="text" id="cba" name="cba" readonly="readonly" class="form-control" hidden="hidden">
+
+<script>
+    function comaporcero() {
+        var tt = document.getElementById('pasteArea').value;
+        tt = tt.replace(",", ".");
+        document.getElementById('cba').value = tt;
+        alert("Paso 3 completado, puede pagar con PayPal.");
+    }
+</script>

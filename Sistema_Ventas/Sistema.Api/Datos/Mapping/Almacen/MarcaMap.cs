@@ -11,7 +11,6 @@
         {
             builder.HasIndex(c => c.Nombre)
                 .IsUnique();
-
             builder.HasData(
                 new Marca
                 {
@@ -24,7 +23,8 @@
                     Id = 2,
                     Nombre = "Acer",
                     CreatedAt = DateTime.Now,
-                },
+                }
+                ,
                 new Marca
                 {
                     Id = 3,
@@ -72,7 +72,8 @@
                     Id = 10,
                     Nombre = "HP",
                     CreatedAt = DateTime.Now,
-                });
+                }
+                );
         }
     }
 }
