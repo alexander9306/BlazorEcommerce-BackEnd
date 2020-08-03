@@ -1,9 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-
-namespace Sistema.Ecommerce.Pages
+﻿namespace Sistema.Ecommerce.Pages
 {
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Ordenes;

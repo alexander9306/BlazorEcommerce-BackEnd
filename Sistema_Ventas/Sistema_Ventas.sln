@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Ecommerce", "Sistem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Shared", "Sistema.Shared\Sistema.Shared.csproj", "{5B921E9D-C43D-41F7-9A27-51A5713DA340}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sistema.Admin", "Sistema.Admin\Sistema.Admin.csproj", "{6F16512E-0158-4FBF-86E9-F51B861E57B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5B921E9D-C43D-41F7-9A27-51A5713DA340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B921E9D-C43D-41F7-9A27-51A5713DA340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B921E9D-C43D-41F7-9A27-51A5713DA340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F16512E-0158-4FBF-86E9-F51B861E57B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F16512E-0158-4FBF-86E9-F51B861E57B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F16512E-0158-4FBF-86E9-F51B861E57B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F16512E-0158-4FBF-86E9-F51B861E57B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
