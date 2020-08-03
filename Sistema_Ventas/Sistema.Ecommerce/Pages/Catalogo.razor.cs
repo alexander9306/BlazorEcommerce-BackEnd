@@ -5,28 +5,26 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services;
+    using Sistema.Ecommerce.Services.Almacen;
     using Sistema.Shared.Entidades.Almacen;
 
     public partial class Catalogo
     {
-        [Inject]
-        public IProductoDataService ProductoDataService { get; set; }
+        [Inject] public IProductoDataService ProductoDataService { get; set; }
 
-        [Inject]
-        public ICategoriaDataService CategoriaDataService { get; set; }
+        [Inject] public ICategoriaDataService CategoriaDataService { get; set; }
 
+<<<<<<< HEAD
         [Inject]
         public IMarcaDataService MarcaDataService { get; set; }
 
         [Inject]
         public IProductoHelper PoductoHelper { get; set; }
+=======
+        [Inject] public IMarcaDataService MarcaDataService { get; set; }
+>>>>>>> master
 
-        [Parameter]
-        public string CategoriaId { get; set; }
-
-        [Parameter]
-        public string Marca { get; set; }
+        [Inject] public IProductoHelper ProductoHelper { get; set; }
 
         public bool HasMoreData;
 
@@ -36,9 +34,15 @@
 
         public List<Marca> Marcas { get; set; }
 
+<<<<<<< HEAD
         private List<int> _categoriaIds { get; set; }
 
         private List<int> _marcaIds { get; set; }
+=======
+        private List<int> _categoriaIds { get; set; } = new List<int>();
+
+        private List<int> _marcaIds { get; set; } = new List<int>();
+>>>>>>> master
 
         protected override async Task OnInitializedAsync()
         {
@@ -109,7 +113,11 @@
                     .ConfigureAwait(false)).ToList());
         }
 
+<<<<<<< HEAD
         protected void GetPaginationInfo(List<Producto> productos, bool add = false)
+=======
+        private void GetPaginationInfo(List<Producto> productos, bool add = false)
+>>>>>>> master
         {
             if (productos != null && productos.Count == 10)
             {

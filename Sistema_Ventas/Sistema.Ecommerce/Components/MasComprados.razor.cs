@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Helpers;
     using Sistema.Ecommerce.Services;
+    using Sistema.Ecommerce.Services.Almacen;
     using Sistema.Shared.Entidades.Almacen;
 
     public partial class MasComprados

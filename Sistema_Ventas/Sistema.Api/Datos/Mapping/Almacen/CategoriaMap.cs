@@ -14,12 +14,21 @@
             builder.HasData(
                 new Categoria
                 {
+<<<<<<< HEAD
                 Id = 1,
                 Nombre = "Celulares",
                 Descripcion = "Celulares nuevos y usados.",
                 Estado = true,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
+=======
+                    Id = 1,
+                    Nombre = "Celulares",
+                    Descripcion = "Celulares nuevos y usados.",
+                    Estado = true,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+>>>>>>> master
                 },
                 new Categoria
                 {
