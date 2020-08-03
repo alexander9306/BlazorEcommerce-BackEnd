@@ -11,6 +11,7 @@
         {
             builder.HasIndex(p => p.Nombre)
                   .IsUnique();
+
             builder.HasData(
                 new Producto
                 {
@@ -139,6 +140,149 @@
                     MarcaId = 1,
                     Descripcion = "Laptop DELL INSPIRON 15-3558 – Intel Core i3 Quinta Generación – 4GB RAM – 1TB HDD",
                     Stock = 16,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 11,
+                    CategoriaId = 1,
+                    Nombre = "Huawei Y7p",
+                    Precio = 9500.00M,
+                    Estado = true,
+                    MarcaId = 6,
+                    Descripcion = null,
+                    Stock = 10,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 12,
+                    CategoriaId = 1,
+                    Nombre = "iPhone 11 (128GB)",
+                    Precio = 43500.00M,
+                    Estado = true,
+                    MarcaId = 7,
+                    Descripcion = null,
+                    Stock = 8,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 13,
+                    CategoriaId = 1,
+                    Nombre = "iPhone 8 Plus 64GB",
+                    Precio = 23500.00M,
+                    Estado = true,
+                    MarcaId = 7,
+                    Descripcion = null,
+                    Stock = 10,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 14,
+                    CategoriaId = 2,
+                    Nombre = "Laptop Dell Latitude 3350",
+                    Precio = 28000.00M,
+                    Estado = true,
+                    MarcaId = 1,
+                    Descripcion = "Laptop Dell Latitude 3350 - Intel Core I5 Quinta Generación",
+                    Stock = 15,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 15,
+                    CategoriaId = 2,
+                    Nombre = "Laptop Dell Latitude E5450",
+                    Precio = 30000.00M,
+                    Estado = true,
+                    MarcaId = 1,
+                    Descripcion = "Laptop Dell Latitude E5450 – i5 Quinta Generación – 8GB RAM – 500GB HDD",
+                    Stock = 12,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 16,
+                    CategoriaId = 1,
+                    Nombre = "LG Aristo 5",
+                    Precio = 7000.00M,
+                    Estado = true,
+                    MarcaId = 8,
+                    Descripcion = null,
+                    Stock = 8,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 17,
+                    CategoriaId = 1,
+                    Nombre = "Samsung Galaxy A11",
+                    Precio = 10500.00M,
+                    Estado = true,
+                    MarcaId = 9,
+                    Descripcion = null,
+                    Stock = 20,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 18,
+                    CategoriaId = 2,
+                    Nombre = "Laptop Dell Ultrabook E7240",
+                    Precio = 35000.00M,
+                    Estado = true,
+                    MarcaId = 1,
+                    Descripcion = "Laptop Dell Ultrabook E7240 – 12GB Ram – Intel Core i5 – 128GB SSD – Teclado Iluminado",
+                    Stock = 16,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 19,
+                    CategoriaId = 2,
+                    Nombre = "Laptop HP 15 - Quad-Core A10-9600P",
+                    Precio = 25000.00M,
+                    Estado = true,
+                    MarcaId = 10,
+                    Descripcion = "Laptop HP 15-ba051wm – Pantalla Touch – Quad-Core A10-9600P – 8GB RAM – 1TB HDD – Teclado Numérico",
+                    Stock = 15,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 20,
+                    CategoriaId = 2,
+                    Nombre = "Laptop HP 15 - AMD A8-7410",
+                    Precio = 25000.00M,
+                    Estado = true,
+                    MarcaId = 10,
+                    Descripcion = "Laptop HP 15-f387wm – AMD A8-7410 – 500GB HDD – 4GB RAM – Radeon R5 – Pantalla Táctil – Teclado Numérico",
+                    Stock = 15,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 21,
+                    CategoriaId = 1,
+                    Nombre = "Samsung Galaxy A21s",
+                    Precio = 12500.00M,
+                    Estado = true,
+                    MarcaId = 9,
+                    Descripcion = null,
+                    Stock = 10,
                     UpdatedAt = DateTime.Now,
                     CreatedAt = DateTime.Now,
                 });

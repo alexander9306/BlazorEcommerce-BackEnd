@@ -11,6 +11,7 @@
         {
             builder.HasIndex(c => c.Nombre)
                 .IsUnique();
+
             builder.HasData(
                 new Categoria
                 {
