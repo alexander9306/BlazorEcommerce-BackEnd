@@ -36,7 +36,7 @@ namespace Sistema.Api.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var username = model.Usuario.ToLower(CultureInfo.CurrentCulture);
+            var username = model.Usuario.ToUpperInvariant().Trim();
 
             var usuario = await this._context.Administradores.Where(a => a.Estado)
                 .Include(a => a.Rol)
@@ -133,8 +133,8 @@ namespace Sistema.Api.Controllers
             {
                 Id = model.Id,
                 RolId = model.RolId,
-                Email = model.Email,
-                Username = model.Username,
+                Email = model.Email.Trim().ToUpperInvariant(),
+                Username = model.Username.Trim().ToUpperInvariant(),
                 Estado = true,
                 UpdatedAt = DateTime.Now,
             };
@@ -184,8 +184,8 @@ namespace Sistema.Api.Controllers
             var administrador = new Administrador
             {
                 RolId = model.RolId,
-                Email = model.Email,
-                Username = model.Username,
+                Email = model.Email.Trim().ToUpperInvariant(),
+                Username = model.Username.Trim().ToUpperInvariant(),
                 PasswordHash = passwordHash,
                 CreatedAt = fecha,
                 UpdatedAt = fecha,

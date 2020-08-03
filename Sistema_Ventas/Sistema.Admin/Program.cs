@@ -33,7 +33,7 @@ namespace Sistema.Admin
 
             // Http Client Providers //
             builder.Services.AddHttpClient<ILoginDataService, LoginDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress + "/clientes/"));
+                client.BaseAddress = new Uri(baseAddress + "/administradores/"));
 
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>

@@ -4,6 +4,11 @@
 
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="index.html">Admin</a>
+        <AuthorizeView>
+            <Authorized>
+                <SideBarMenu/>
+            </Authorized>
+        </AuthorizeView>
         <button class="btn btn-link btn-sm order-1 order-lg-0" @onclick="ToggleNavMenu" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
@@ -11,10 +16,15 @@
     </nav>
 
     <div id="layoutSidenav">
-        <SideBarMenu />
+        <AuthorizeView>
+            <Authorized>
+                <SideBarMenu/>
+            </Authorized>
+        </AuthorizeView>
+
         <div id="layoutSidenav_content">
             @Body
-            <FooterMenu />
+            <FooterMenu/>
         </div>
     </div>
 </div>

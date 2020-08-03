@@ -26,7 +26,7 @@
             this._localStorage = localStorage;
         }
 
-        public async Task<bool> Login(ClienteLogin model)
+        public async Task<bool> Login(AdminLogin model)
         {
             if (model == null)
             {
@@ -48,7 +48,7 @@
             }
 
             await this._localStorage.SetItemAsync("authToken", loginResult.Token).ConfigureAwait(false);
-            ((ApiAuthenticationStateProvider)this._authenticationStateProvider).MarkUserAsAuthenticated(model.Email);
+            ((ApiAuthenticationStateProvider)this._authenticationStateProvider).MarkUserAsAuthenticated(model.Usuario);
             this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginResult.Token);
 
             return true;
@@ -61,7 +61,7 @@
             this._httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<bool> Registrar(ClienteRegister model)
+        public async Task<bool> Registrar(AdminRegister model)
         {
             var usuarioJson =
                 new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");

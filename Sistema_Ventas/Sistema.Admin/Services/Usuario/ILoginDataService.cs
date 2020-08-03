@@ -5,10 +5,10 @@
 
     public interface ILoginDataService
     {
-        Task<bool> Login(ClienteLogin model);
+        Task<bool> Login(AdminLogin model);
 
         Task Logout();
 
-        Task<bool> Registrar(ClienteRegister model);
+        Task<bool> Registrar(AdminRegister model);
     }
 }

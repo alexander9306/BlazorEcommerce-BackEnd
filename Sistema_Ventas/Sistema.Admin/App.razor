@@ -3,7 +3,7 @@
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
-                <CascadingAuthenticationState>
+        <CascadingAuthenticationState>
             <LayoutView Layout="@typeof(MainLayout)">
                 <ShowAlert Message="No se encontro contenido." />
                 <h1>404 Not Found</h1>
