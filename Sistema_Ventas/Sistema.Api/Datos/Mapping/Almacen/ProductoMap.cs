@@ -141,6 +141,32 @@
                     Stock = 16,
                     UpdatedAt = DateTime.Now,
                     CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 11,
+                    CategoriaId = 2,
+                    Nombre = "Laptop Dell Latitude 3350",
+                    Precio = 30000.00M,
+                    Estado = true,
+                    MarcaId = 1,
+                    Descripcion = "Laptop Dell Latitude 3350 – Intel Core I5 Quinta Generacion 500GB - 6GB RAM",
+                    Stock = 10,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
+                },
+                new Producto
+                {
+                    Id = 12,
+                    CategoriaId = 2,
+                    Nombre = "Laptop Dell Latitude E5450",
+                    Precio = 25000.00M,
+                    Estado = true,
+                    MarcaId = 1,
+                    Descripcion = "Laptop Dell Latitude E5450 – i5 Quinta Generación – 8GB RAM – 500GB HDD",
+                    Stock = 10,
+                    UpdatedAt = DateTime.Now,
+                    CreatedAt = DateTime.Now,
                 });
         }
     }

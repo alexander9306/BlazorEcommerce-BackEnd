@@ -233,6 +233,46 @@
                                 FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_13558dell36689_qgimk8.jpg",
                                 FotoUrl = new Uri("https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop%20DELL%20INSPIRON%2015-3558%20%E2%80%93%20Intel%20Core%20i3%20Quinta%20Generaci%C3%B3n%20%E2%80%93%204GB%20RAM%20%E2%80%93%201TB%20HDD/Laptop_DELL_INSPIRON_15-3558_Intel_Core_i3_Quinta_Generaci%C3%B3n_4GB_RAM_1TB_HDD_13558dell36689_qgimk8.jpg"),
                                 CreatedAt = DateTime.Now,
+                            },
+                            new ProductoFoto // Laptop Dell Latitude 3350
+                {
+                                Id = 29,
+                                ProductoId = 11,
+                                FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%203350%20%E2%80%93%20Intel%20Core%20I5%20Quinta%20Generaci%C3%B3n/Laptop_Dell_Latitude_3350_Intel_Core_I5_Quinta_Generaci%C3%B3n_dell-latitude-3350-monsterlaptops_zcypyv.jpg",
+                                FotoUrl = new Uri("https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816984/Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%203350%20%E2%80%93%20Intel%20Core%20I5%20Quinta%20Generaci%C3%B3n/Laptop_Dell_Latitude_3350_Intel_Core_I5_Quinta_Generaci%C3%B3n_dell-latitude-3350-monsterlaptops_zcypyv.jpg"),
+                                CreatedAt = DateTime.Now,
+                },
+                            new ProductoFoto
+                            {
+                                Id = 30,
+                                ProductoId = 11,
+                                FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%203350%20%E2%80%93%20Intel%20Core%20I5%20Quinta%20Generaci%C3%B3n/Laptop_Dell_Latitude_3350_Intel_Core_I5_Quinta_Generaci%C3%B3n_3dell-latitude-3350-monsterlaptops_yid0mm.jpg",
+                                FotoUrl = new Uri("https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816984/Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%203350%20%E2%80%93%20Intel%20Core%20I5%20Quinta%20Generaci%C3%B3n/Laptop_Dell_Latitude_3350_Intel_Core_I5_Quinta_Generaci%C3%B3n_3dell-latitude-3350-monsterlaptops_yid0mm.jpg"),
+                                CreatedAt = DateTime.Now,
+                            },
+                            new ProductoFoto
+                            {
+                                Id = 31,
+                                ProductoId = 11,
+                                FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%203350%20%E2%80%93%20Intel%20Core%20I5%20Quinta%20Generaci%C3%B3n/Laptop_Dell_Latitude_3350_Intel_Core_I5_Quinta_Generaci%C3%B3n_1dell-latitude-3350-monsterlaptops_j1aoqx.jpg",
+                                FotoUrl = new Uri("https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816983/Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%203350%20%E2%80%93%20Intel%20Core%20I5%20Quinta%20Generaci%C3%B3n/Laptop_Dell_Latitude_3350_Intel_Core_I5_Quinta_Generaci%C3%B3n_1dell-latitude-3350-monsterlaptops_j1aoqx.jpg"),
+                                CreatedAt = DateTime.Now,
+                            },
+                            new ProductoFoto // Laptop Dell Latitude E5450
+                {
+                                Id = 30,
+                                ProductoId = 11,
+                                FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%20E5450%20%E2%80%93%20i5%20Quinta%20Generaci%C3%B3n%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD/Laptop_Dell_Latitude_E5450_i5_Quinta_Generaci%C3%B3n_8GB_RAM_500GB_HDD_delle51267_wodunh.jpg",
+                                FotoUrl = new Uri("https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816984/Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%20E5450%20%E2%80%93%20i5%20Quinta%20Generaci%C3%B3n%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD/Laptop_Dell_Latitude_E5450_i5_Quinta_Generaci%C3%B3n_8GB_RAM_500GB_HDD_delle51267_wodunh.jpg"),
+                                CreatedAt = DateTime.Now,
+                },
+                            new ProductoFoto
+                            {
+                                Id = 30,
+                                ProductoId = 11,
+                                FotoPublicId = "Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%20E5450%20%E2%80%93%20i5%20Quinta%20Generaci%C3%B3n%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD/Laptop_Dell_Latitude_E5450_i5_Quinta_Generaci%C3%B3n_8GB_RAM_500GB_HDD_0vnb125_hdadig.jpg",
+                                FotoUrl = new Uri("https://res.cloudinary.com/alexander-damaso-26857/image/upload/v1595816984/Sistema-Ventas/Laptops/Laptop%20Dell%20Latitude%20E5450%20%E2%80%93%20i5%20Quinta%20Generaci%C3%B3n%20%E2%80%93%208GB%20RAM%20%E2%80%93%20500GB%20HDD/Laptop_Dell_Latitude_E5450_i5_Quinta_Generaci%C3%B3n_8GB_RAM_500GB_HDD_0vnb125_hdadig.jpg"),
+                                CreatedAt = DateTime.Now,
                             });
         }
     }
