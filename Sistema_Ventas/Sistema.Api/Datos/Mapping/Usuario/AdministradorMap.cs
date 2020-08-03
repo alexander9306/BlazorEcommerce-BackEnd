@@ -24,8 +24,8 @@
                 UpdatedAt = DateTime.Now,
                 CreatedAt = DateTime.Now,
                 Estado = true,
-                Email = "admin@gmail.com",
-                Username = "admin01",
+                Email = "admin@gmail.com".ToUpperInvariant(),
+                Username = "admin01".ToUpperInvariant(),
                 PasswordHash = adminPass,
             });
         }

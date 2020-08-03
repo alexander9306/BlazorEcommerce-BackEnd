@@ -8,6 +8,7 @@ namespace Sistema.Api.Controllers
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -18,6 +19,7 @@ namespace Sistema.Api.Controllers
     using Sistema.Api.Models.Usuario.Administrador;
 
     [Route("api/[controller]")]
+    [Authorize(Roles= "Administrador,Organizador")]
     [ApiController]
     public class AdministradoresController : ControllerBase
     {
@@ -34,6 +36,7 @@ namespace Sistema.Api.Controllers
 
         // POST: api/Administradores/login
         [HttpPost("[action]")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             var username = model.Usuario.ToUpperInvariant().Trim();
