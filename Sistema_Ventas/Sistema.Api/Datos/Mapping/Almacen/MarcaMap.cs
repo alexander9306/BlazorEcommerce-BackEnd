@@ -52,7 +52,7 @@
                 new Marca
                 {
                     Id = 7,
-                    Nombre = "iPhone",
+                    Nombre = "Apple",
                     CreatedAt = DateTime.Now,
                 },
                 new Marca
