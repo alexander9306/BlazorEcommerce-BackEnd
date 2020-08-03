@@ -11,7 +11,7 @@
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        private ClienteRegister Cliente = new ClienteRegister();
+        private CrearViewModel Cliente = new CrearViewModel();
 
         public Alert Alert { get; set; }
 

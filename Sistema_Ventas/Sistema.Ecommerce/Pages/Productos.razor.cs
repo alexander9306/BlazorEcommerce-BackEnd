@@ -11,6 +11,7 @@
     using Sistema.Ecommerce.Services.Almacen;
     using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.Producto;
 
     public partial class Productos
     {
@@ -30,9 +31,9 @@
 
         [Inject] public IProductoHelper ProductoHelper { get; set; }
 
-        public Producto Producto { get; set; }
+        public ProductoViewModel Producto { get; set; }
 
-        public List<Producto> RelProductos { get; set; }
+        public List<ProductoViewModel> RelProductos { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

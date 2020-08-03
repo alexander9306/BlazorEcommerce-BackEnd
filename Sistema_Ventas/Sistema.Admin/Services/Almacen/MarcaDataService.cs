@@ -5,6 +5,7 @@
     using System.Text.Json;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.Marca;
 
     public class MarcaDataService : IMarcaDataService
     {
@@ -15,9 +16,9 @@
             this._httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Marca>> Listar()
+        public async Task<IEnumerable<MarcaViewModel>> Listar()
         {
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Marca>>(
+            return await JsonSerializer.DeserializeAsync<IEnumerable<MarcaViewModel>>(
                     await _httpClient.GetStreamAsync($"listar").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);

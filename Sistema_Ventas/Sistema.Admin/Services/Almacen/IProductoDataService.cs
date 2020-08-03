@@ -4,15 +4,16 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.Producto;
 
     public interface IProductoDataService
     {
-        Task<IEnumerable<Producto>> Listar(int limit, DateTime? before = null);
+        Task<IEnumerable<ProductoViewModel>> Listar(int limit, DateTime? before = null);
 
-        Task<Producto> Mostrar(int id);
+        Task<ProductoViewModel> Mostrar(int id);
 
-        Task<IEnumerable<Producto>> ListarPorFiltro(List<int> categoriaIds, List<int> marcaIds, int limit, DateTime? before = null);
+        Task<IEnumerable<ProductoViewModel>> ListarPorFiltro(List<int> categoriaIds, List<int> marcaIds, int limit, DateTime? before = null);
 
-        Task<IEnumerable<Producto>> ListarRelacionados(int productoId, int limit, DateTime? before = null);
+        Task<IEnumerable<ProductoViewModel>> ListarRelacionados(int productoId, int limit, DateTime? before = null);
     }
 }

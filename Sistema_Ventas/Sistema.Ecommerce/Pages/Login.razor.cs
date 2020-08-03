@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Services.Usuario;
-    using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Cliente;
 
     public partial class Login
     {

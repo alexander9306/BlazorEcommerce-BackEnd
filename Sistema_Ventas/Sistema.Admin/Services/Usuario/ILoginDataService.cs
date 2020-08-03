@@ -1,7 +1,7 @@
 ﻿namespace Sistema.Admin.Services.Usuario
 {
     using System.Threading.Tasks;
-    using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Administrador;
 
     public interface ILoginDataService
     {
@@ -9,6 +9,6 @@
 
         Task Logout();
 
-        Task<bool> Registrar(AdminRegister model);
+        Task<bool> Registrar(CrearViewModel model);
     }
 }

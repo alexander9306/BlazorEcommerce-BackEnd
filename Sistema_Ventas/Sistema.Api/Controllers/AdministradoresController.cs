@@ -16,7 +16,7 @@ namespace Sistema.Api.Controllers
     using Sistema.Api.Entidades.Usuario;
     using Sistema.Api.Helpers;
     using Sistema.Api.Helpers.Validators;
-    using Sistema.Api.Models.Usuario.Administrador;
+    using Sistema.Shared.Entidades.Usuario.Administrador;
 
     [Route("api/[controller]")]
     [Authorize(Roles= "Administrador,Organizador")]
@@ -37,7 +37,7 @@ namespace Sistema.Api.Controllers
         // POST: api/Administradores/login
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(AdminLogin model)
         {
             var username = model.Usuario.ToUpperInvariant().Trim();
 

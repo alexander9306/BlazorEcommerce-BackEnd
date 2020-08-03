@@ -6,10 +6,11 @@
     using Sistema.Ecommerce.Services;
     using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Entidades.Ordenes.Carrito;
 
     public partial class ShoppingCart
     {
-        public Carrito Carrito { get; set; }
+        public CarritoViewModel Carrito { get; set; }
 
         [Inject]
         public ICarritoDataService CarritoDataService { get; set; }

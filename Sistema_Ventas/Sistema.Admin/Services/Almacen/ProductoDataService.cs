@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.WebUtilities;
     using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.Producto;
 
     public class ProductoDataService : IProductoDataService
     {
@@ -18,34 +19,34 @@
             this._httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Producto>> Listar(int limit, DateTime? before = null)
+        public async Task<IEnumerable<ProductoViewModel>> Listar(int limit, DateTime? before = null)
         {
             var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
 
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Producto>>(
+            return await JsonSerializer.DeserializeAsync<IEnumerable<ProductoViewModel>>(
                     await _httpClient.GetStreamAsync($"listar/{limit}/{cursor}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Producto>> ListarRelacionados(int productoId, int limit, DateTime? before = null)
+        public async Task<IEnumerable<ProductoViewModel>> ListarRelacionados(int productoId, int limit, DateTime? before = null)
         {
             var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
 
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Producto>>(
+            return await JsonSerializer.DeserializeAsync<IEnumerable<ProductoViewModel>>(
                     await _httpClient.GetStreamAsync($"listarRelacionados/{productoId}/{limit}/{cursor}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);
         }
 
-        public async Task<Producto> Mostrar(int id)
+        public async Task<ProductoViewModel> Mostrar(int id)
         {
-            return await JsonSerializer.DeserializeAsync<Producto>(
+            return await JsonSerializer.DeserializeAsync<ProductoViewModel>(
                     await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Producto>> ListarPorFiltro(List<int> categoriaIds, List<int> marcaIds, int limit, DateTime? before = null)
+        public async Task<IEnumerable<ProductoViewModel>> ListarPorFiltro(List<int> categoriaIds, List<int> marcaIds, int limit, DateTime? before = null)
         {
             var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
             var filtro = "filtro";
@@ -60,7 +61,7 @@
                 filtro = QueryHelpers.AddQueryString(filtro, "marcaId", value.ToString());
             }
 
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Producto>>(
+            return await JsonSerializer.DeserializeAsync<IEnumerable<ProductoViewModel>>(
                     await _httpClient.GetStreamAsync($"ListarPorFiltro/{limit}/{cursor}/{filtro}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);

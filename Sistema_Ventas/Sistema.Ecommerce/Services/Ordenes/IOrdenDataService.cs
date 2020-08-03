@@ -4,12 +4,13 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Entidades.Ordenes.Orden;
 
     public interface IOrdenDataService
     {
-        Task<IEnumerable<Orden>> Listar(int limit, DateTime? before = null);
+        Task<IEnumerable<OrdenViewModel>> Listar(int limit, DateTime? before = null);
 
-        Task<Orden> Mostrar(int id);
+        Task<OrdenViewModel> Mostrar(int id);
 
         Task<bool> Crear(OrdenCrear model);
     }

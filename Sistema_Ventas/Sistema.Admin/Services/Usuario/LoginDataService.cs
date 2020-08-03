@@ -9,7 +9,7 @@
     using Blazored.LocalStorage;
     using Microsoft.AspNetCore.Components.Authorization;
     using Sistema.Admin.Providers;
-    using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Administrador;
 
     public class LoginDataService : ILoginDataService
     {
@@ -61,7 +61,7 @@
             this._httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<bool> Registrar(AdminRegister model)
+        public async Task<bool> Registrar(CrearViewModel model)
         {
             var usuarioJson =
                 new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");

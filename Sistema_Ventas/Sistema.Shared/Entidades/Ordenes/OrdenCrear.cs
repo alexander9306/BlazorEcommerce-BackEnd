@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Sistema.Shared.Entidades.Ordenes
+﻿namespace Sistema.Shared.Entidades.Ordenes
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class OrdenCrear
     {
         [Required(ErrorMessage = "El campo {0} es requerido.")]

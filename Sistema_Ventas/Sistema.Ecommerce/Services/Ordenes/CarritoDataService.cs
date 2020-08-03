@@ -9,6 +9,7 @@
     using System.Threading.Tasks;
     using Blazored.LocalStorage;
     using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Entidades.Ordenes.Carrito;
 
     public class CarritoDataService : ICarritoDataService
     {
@@ -22,12 +23,12 @@
             this._localStorage = localStorage;
         }
 
-        public async Task<Carrito> Mostrar()
+        public async Task<CarritoViewModel> Mostrar()
         {
             await this.AgregarToken().ConfigureAwait(false);
             try
             {
-                return await JsonSerializer.DeserializeAsync<Carrito>(
+                return await JsonSerializer.DeserializeAsync<CarritoViewModel>(
                         await this._httpClient.GetStreamAsync($"mostrar").ConfigureAwait(false),
                         new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                     .ConfigureAwait(false);

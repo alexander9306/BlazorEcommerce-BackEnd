@@ -8,6 +8,7 @@
     using Sistema.Ecommerce.Services;
     using Sistema.Ecommerce.Services.Almacen;
     using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.Producto;
 
     public partial class MasComprados
     {
@@ -17,7 +18,7 @@
         [Inject]
         public IProductoHelper PoductoHelper { get; set; }
 
-        public List<Producto> Productos { get; set; }
+        public List<ProductoViewModel> Productos { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

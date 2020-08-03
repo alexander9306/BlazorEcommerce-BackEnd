@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-
-namespace Sistema.Admin.Pages
+﻿namespace Sistema.Admin.Pages
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Sistema.Admin.Services.Usuario;
-    using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Administrador;
 
     public partial class Login
     {

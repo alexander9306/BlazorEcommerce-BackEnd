@@ -3,6 +3,7 @@
     using System;
     using CloudinaryDotNet;
     using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.ProductoFoto;
 
     public class ProductoHelper : IProductoHelper
     {
@@ -14,7 +15,7 @@
 
         private readonly Cloudinary _cloudinary;
 
-        public Uri GetFotoUrl(ProductoFoto? foto, int width = 338, int height = 250)
+        public Uri GetFotoUrl(ProductoFotoViewModel? foto, int width = 338, int height = 250)
         {
 
             if (foto == null)

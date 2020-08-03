@@ -3,9 +3,10 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.Marca;
 
     public interface IMarcaDataService
     {
-        Task<IEnumerable<Marca>> Listar();
+        Task<IEnumerable<MarcaViewModel>> Listar();
     }
 }

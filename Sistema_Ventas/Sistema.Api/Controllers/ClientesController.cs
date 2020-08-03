@@ -14,7 +14,7 @@ namespace Sistema.Api.Controllers
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Usuario;
     using Sistema.Api.Helpers;
-    using Sistema.Api.Models.Usuario.Cliente;
+    using Sistema.Shared.Entidades.Usuario.Cliente;
 
     [Authorize]
     [Route("api/[controller]")]
@@ -38,7 +38,7 @@ namespace Sistema.Api.Controllers
         // POST: api/clientes/login
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(ClienteLogin model)
         {
             var email = model.Email.Trim().ToUpperInvariant();
 

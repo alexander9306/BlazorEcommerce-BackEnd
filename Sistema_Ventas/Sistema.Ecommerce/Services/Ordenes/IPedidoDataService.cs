@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Entidades.Ordenes.Pedido;
 
     public interface IPedidoDataService
     {
-        Task<IEnumerable<Pedido>> Listar(int limit, DateTime? before = null);
+        Task<IEnumerable<PedidoViewModel>> Listar(int limit, DateTime? before = null);
 
-        Task<Pedido> Mostrar(int id);
+        Task<PedidoViewModel> Mostrar(int id);
 
-        Task<IEnumerable<Pedido>> ListarPorOrden(int ordenId, int limit, DateTime? before = null);
+        Task<IEnumerable<PedidoViewModel>> ListarPorOrden(int ordenId, int limit, DateTime? before = null);
     }
 }

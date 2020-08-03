@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Cliente;
 
     public interface ILoginDataService
     {
@@ -9,6 +10,6 @@
 
         Task Logout();
 
-        Task<bool> Registrar(ClienteRegister model);
+        Task<bool> Registrar(CrearViewModel model);
     }
 }

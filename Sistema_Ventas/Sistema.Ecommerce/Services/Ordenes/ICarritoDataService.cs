@@ -2,10 +2,11 @@
 {
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Entidades.Ordenes.Carrito;
 
     public interface ICarritoDataService
     {
-        Task<Carrito> Mostrar();
+        Task<CarritoViewModel> Mostrar();
 
         Task<bool> Agregar(int productoId, int cantidad);
 

@@ -1,7 +1,6 @@
 namespace Sistema.Admin
 {
     using System;
-    using System.Net.Http;
     using System.Threading.Tasks;
     using Blazored.LocalStorage;
     using Microsoft.AspNetCore.Components.Authorization;

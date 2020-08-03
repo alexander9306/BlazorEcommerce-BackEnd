@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Components.Authorization;
     using Sistema.Ecommerce.Providers;
     using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Cliente;
 
     public class LoginDataService : ILoginDataService
     {
@@ -61,7 +62,7 @@
             this._httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<bool> Registrar(ClienteRegister model)
+        public async Task<bool> Registrar(CrearViewModel model)
         {
             var usuarioJson =
                 new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");

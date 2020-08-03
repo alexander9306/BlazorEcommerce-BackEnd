@@ -11,6 +11,7 @@
     using System.Threading.Tasks;
     using Blazored.LocalStorage;
     using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Entidades.Ordenes.Orden;
 
     public class OrdenDataService : IOrdenDataService
     {
@@ -43,13 +44,13 @@
             return false;
         }
 
-        public async Task<IEnumerable<Orden>> Listar(int limit, DateTime? before = null)
+        public async Task<IEnumerable<OrdenViewModel>> Listar(int limit, DateTime? before = null)
         {
             await this.AgregarToken().ConfigureAwait(false);
 
             var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
 
-            return await JsonSerializer.DeserializeAsync<IEnumerable<Orden>>(
+            return await JsonSerializer.DeserializeAsync<IEnumerable<OrdenViewModel>>(
                     await _httpClient.GetStreamAsync($"listar/{limit}/{cursor}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
                 .ConfigureAwait(false);
@@ -65,11 +66,11 @@
             }
         }
 
-        public async Task<Orden> Mostrar(int id)
+        public async Task<OrdenViewModel> Mostrar(int id)
         {
             await this.AgregarToken().ConfigureAwait(false);
 
-            return await JsonSerializer.DeserializeAsync<Orden>(
+            return await JsonSerializer.DeserializeAsync<OrdenViewModel>(
                     await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);
         }
