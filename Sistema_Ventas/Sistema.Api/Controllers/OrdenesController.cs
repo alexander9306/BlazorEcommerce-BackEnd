@@ -62,6 +62,8 @@
                      Telefono = orden.Telefono,
                      CreatedAt = orden.CreatedAt,
                      UpdatedAt = orden.UpdatedAt,
+                     Estado = orden.Pedido != null ? orden.Pedido.Estado : "Iniciado",
+                     //Total = orden.Pago.
             }));
         }
 
@@ -69,19 +71,12 @@
         [HttpGet("[action]/{ClienteId}/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<Orden>>> ListarPorCliente(int clienteId, int limit, string before)
         {
-            var orden = await this._context.Ordenes.FindAsync(clienteId).ConfigureAwait(false);
-
-            if (orden == null)
-            {
-                return this.NotFound();
-            }
-
             var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
 
             var ordenes = await this._context.Ordenes
                 .Include(o => o.Pedido)
                 .Include(o => o.Pago)
-                .Where(o => o.CarritoId == orden.CarritoId)
+                .Where(o => o.ClienteId == clienteId)
                 .Where(o => hasCursor ? o.UpdatedAt < cursor : o.Id > 0)
                 .Take(limit)
                 .AsNoTracking()
@@ -98,6 +93,8 @@
                 Telefono = o.Telefono,
                 CreatedAt = o.CreatedAt,
                 UpdatedAt = o.UpdatedAt,
+                Estado = o.Pedido != null ? o.Pedido.Estado : "Iniciado",
+                //Total = orden.Pago.
             }));
         }
 
@@ -127,6 +124,7 @@
                 Telefono = orden.Telefono,
                 CreatedAt = orden.CreatedAt,
                 UpdatedAt = orden.UpdatedAt,
+                Estado = orden.Estado,
             };
         }
 
@@ -156,6 +154,7 @@
                 .ConfigureAwait(false);
 
             orden.Direccion = model.Direccion;
+            orden.Estado = model.Estado;
             orden.Latitud = model.Latitud;
             orden.Direccion = model.Direccion;
             orden.Longitud = model.Longitud;
@@ -215,10 +214,10 @@
                 Longitud = model.Longitud,
                 Direccion = model.Direccion,
                 Telefono = model.Telefono,
+                Estado = "Iniciado",
                 CreatedAt = fecha,
                 UpdatedAt = fecha,
             };
-
 
             await this._context.Ordenes.AddAsync(orden).ConfigureAwait(false);
 

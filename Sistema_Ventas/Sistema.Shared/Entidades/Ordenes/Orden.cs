@@ -20,7 +20,9 @@
 
         public string Telefono { get; set; }
 
-        public bool Estado { get; set; }
+        public string Estado { get; set; }
+
+        public decimal Total { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
