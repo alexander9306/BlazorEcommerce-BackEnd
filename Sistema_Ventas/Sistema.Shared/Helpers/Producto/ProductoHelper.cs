@@ -1,8 +1,7 @@
-﻿namespace Sistema.Admin.Helpers
+﻿namespace Sistema.Shared.Helpers.Producto
 {
     using System;
     using CloudinaryDotNet;
-    using Sistema.Shared.Entidades.Almacen;
     using Sistema.Shared.Entidades.Almacen.ProductoFoto;
 
     public class ProductoHelper : IProductoHelper

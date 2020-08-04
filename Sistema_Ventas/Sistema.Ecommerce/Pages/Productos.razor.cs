@@ -1,4 +1,6 @@
-﻿namespace Sistema.Ecommerce.Pages
+﻿using Sistema.Shared.Helpers.Producto;
+
+namespace Sistema.Ecommerce.Pages
 {
     using System;
     using System.Collections.Generic;
@@ -7,8 +9,6 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Microsoft.JSInterop;
-    using Sistema.Ecommerce.Helpers;
-    using Sistema.Shared.Entidades.Almacen;
     using Sistema.Shared.Entidades.Almacen.Producto;
     using Sistema.Shared.Services.Almacen.Producto;
     using Sistema.Shared.Services.Ordenes.Carrito;

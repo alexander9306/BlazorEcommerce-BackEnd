@@ -4,8 +4,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Sistema.Ecommerce.Helpers;
     using Sistema.Shared.Entidades.Almacen.Producto;
+    using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Services.Almacen.Producto;
 
     public partial class MasComprados

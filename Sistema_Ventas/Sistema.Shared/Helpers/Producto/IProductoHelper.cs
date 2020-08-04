@@ -1,7 +1,6 @@
-﻿namespace Sistema.Ecommerce.Helpers
+﻿namespace Sistema.Shared.Helpers.Producto
 {
     using System;
-    using Sistema.Shared.Entidades.Almacen;
     using Sistema.Shared.Entidades.Almacen.ProductoFoto;
 
     public interface IProductoHelper

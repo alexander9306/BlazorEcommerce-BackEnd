@@ -1,8 +1,9 @@
-﻿namespace Sistema.Ecommerce.Pages
+﻿using Sistema.Shared.Helpers.Producto;
+
+namespace Sistema.Ecommerce.Pages
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Sistema.Ecommerce.Helpers;
     using Sistema.Shared.Entidades.Ordenes.Carrito;
     using Sistema.Shared.Services.Ordenes.Carrito;
 

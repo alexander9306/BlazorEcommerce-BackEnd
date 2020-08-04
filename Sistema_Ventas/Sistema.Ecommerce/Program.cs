@@ -6,7 +6,7 @@ namespace Sistema.Ecommerce
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-    using Sistema.Ecommerce.Helpers;
+    using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Providers;
     using Sistema.Shared.Services.Almacen.Categoria;
     using Sistema.Shared.Services.Almacen.Marca;
