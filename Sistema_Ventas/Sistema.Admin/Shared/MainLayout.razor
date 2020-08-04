@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sb-nav-fixed @NavMenuCssClass">
+<div class="@MainDivClass @NavMenuCssClass">
 
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Admin</a>
@@ -26,8 +26,21 @@
 
 @code {
     private bool collapseNavMenu = true;
-
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+    
+    private string MainDivClass {get; set;} = "sb-nav-fixed";
     private string NavMenuCssClass => collapseNavMenu ? null : "sb-sidenav-toggled";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            this.MainDivClass = "bg-primary";
+        }
+    }
 
     private void ToggleNavMenu()
     {

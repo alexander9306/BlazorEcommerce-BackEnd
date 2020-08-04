@@ -27,7 +27,7 @@
         [HttpGet("[action]/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit, string before)
         {
-            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind,  out var cursor);
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
 
             var productos = await this._context.Productos
                  .Include(p => p.Categoria)
@@ -45,26 +45,26 @@
                 .ConfigureAwait(false);
 
             return this.Ok(productos.Select(p => new ProductoViewModel
-                 {
-                     Id = p.Id,
-                     Nombre = p.Nombre,
-                     Categoria = p.Categoria.Nombre,
-                     Precio = p.Precio,
-                     Estado = p.Estado,
-                     Marca = p.Marca.Nombre,
-                     Stock = p.Stock,
-                     Descripcion = p.Descripcion,
-                     CreatedAt = p.CreatedAt,
-                     UpdatedAt = p.UpdatedAt,
-                     Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
-                     {
-                         ProductoId = f.ProductoId,
-                         CreatedAt = f.CreatedAt,
-                         IsPrincipal = f.IsPrincipal,
-                         FotoUrl = f.FotoUrl,
-                         FotoPublicId = f.FotoPublicId,
-                     }),
-                 }));
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Categoria = p.Categoria.Nombre,
+                Precio = p.Precio,
+                Estado = p.Estado,
+                Marca = p.Marca.Nombre,
+                Stock = p.Stock,
+                Descripcion = p.Descripcion,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt,
+                Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
+                {
+                    ProductoId = f.ProductoId,
+                    CreatedAt = f.CreatedAt,
+                    IsPrincipal = f.IsPrincipal,
+                    FotoUrl = f.FotoUrl,
+                    FotoPublicId = f.FotoPublicId,
+                }),
+            }));
         }
 
         // GET: api/Productos/ListarRelacionados/limit/before
@@ -248,7 +248,7 @@
             }
 
             var producto = await this._context.Productos.FindAsync(id).ConfigureAwait(false);
-            
+
             producto.CategoriaId = model.CategoriaId;
             producto.Nombre = model.Nombre;
             producto.Descripcion = model.Descripcion;
