@@ -5,10 +5,12 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services.Almacen;
     using Sistema.Shared.Entidades.Almacen.Categoria;
     using Sistema.Shared.Entidades.Almacen.Marca;
     using Sistema.Shared.Entidades.Almacen.Producto;
+    using Sistema.Shared.Services.Almacen.Categoria;
+    using Sistema.Shared.Services.Almacen.Marca;
+    using Sistema.Shared.Services.Almacen.Producto;
 
     public partial class Catalogo
     {
@@ -20,7 +22,7 @@
 
         [Inject] public IProductoHelper ProductoHelper { get; set; }
 
-        public bool HasMoreData;
+        private bool HasMoreData;
 
         public List<ProductoViewModel> Productos { get; set; }
 

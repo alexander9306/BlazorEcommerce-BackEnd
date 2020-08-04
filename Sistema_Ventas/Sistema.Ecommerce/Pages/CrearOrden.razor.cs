@@ -3,8 +3,8 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Authorization;
-    using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Services.Ordenes.Orden;
 
     public partial class CrearOrden
     {
@@ -20,7 +20,7 @@
 
         protected override async Task OnInitializedAsync()
         {
-            var authState = await authenticationStateTask;
+            var authState = await authenticationStateTask.ConfigureAwait(false);
             var user = authState.User;
 
             if (!user.Identity.IsAuthenticated)
@@ -46,6 +46,5 @@
                 };
             }
         }
-
     }
 }

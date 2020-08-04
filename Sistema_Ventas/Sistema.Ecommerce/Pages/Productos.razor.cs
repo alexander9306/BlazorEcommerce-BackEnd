@@ -8,10 +8,10 @@
     using Microsoft.AspNetCore.Components;
     using Microsoft.JSInterop;
     using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services.Almacen;
-    using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Almacen;
     using Sistema.Shared.Entidades.Almacen.Producto;
+    using Sistema.Shared.Services.Almacen.Producto;
+    using Sistema.Shared.Services.Ordenes.Carrito;
 
     public partial class Productos
     {
@@ -25,11 +25,11 @@
 
         [Inject] protected IJSRuntime JSRuntime { get; set; }
 
-        [Inject] public IProductoDataService ProductoDataService { get; set; }
+        [Inject] protected IProductoDataService ProductoDataService { get; set; }
 
-        [Inject] public ICarritoDataService CarritoDataService { get; set; }
+        [Inject] protected ICarritoDataService CarritoDataService { get; set; }
 
-        [Inject] public IProductoHelper ProductoHelper { get; set; }
+        [Inject] protected IProductoHelper ProductoHelper { get; set; }
 
         public ProductoViewModel Producto { get; set; }
 
@@ -62,7 +62,6 @@
         {
             this.StateHasChanged();
             await this.JSRuntime.InvokeVoidAsync("CarritoToaster").ConfigureAwait(false);
-
         }
 
         private async Task GetProducto()
@@ -90,7 +89,7 @@
                     this.errorMessage = "Hubo un error con su solicitud.";
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 this.errorMessage = "Hubo un error con su solicitud.";
             }

@@ -4,14 +4,14 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Sistema.Ecommerce.Services.Ordenes;
     using Sistema.Shared.Entidades.Ordenes.Orden;
+    using Sistema.Shared.Services.Ordenes.Orden;
 
     public partial class Ordenes
     {
-        [Inject] private IOrdenDataService OrdenDataService { get; set; }
-
         protected List<OrdenViewModel> ListaOrdenes { get; set; }
+
+        [Inject] private IOrdenDataService OrdenDataService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

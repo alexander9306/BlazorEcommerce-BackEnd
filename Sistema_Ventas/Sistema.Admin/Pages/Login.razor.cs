@@ -2,12 +2,12 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Sistema.Admin.Services.Usuario;
     using Sistema.Shared.Entidades.Usuario.Administrador;
+    using Sistema.Shared.Services.Usuario.Administrador;
 
     public partial class Login
     {
-        [Inject] private ILoginDataService LoginDataService { get; set; }
+        [Inject] private IAdminDataService LoginDataService { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
