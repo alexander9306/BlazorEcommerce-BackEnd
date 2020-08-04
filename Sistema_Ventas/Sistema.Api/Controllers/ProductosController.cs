@@ -247,20 +247,15 @@
                 }
             }
 
-            var producto = new Producto
-            {
-                Id = model.Id,
-                CategoriaId = model.CategoriaId,
-                Nombre = model.Nombre,
-                Descripcion = model.Descripcion,
-                Precio = model.Precio,
-                MarcaId = marca.Id,
-                Stock = model.Stock,
-                Estado = true,
-                UpdatedAt = fecha,
-            };
-
-            this._context.Entry(producto).State = EntityState.Modified;
+            var producto = await this._context.Productos.FindAsync(id).ConfigureAwait(false);
+            
+            producto.CategoriaId = model.CategoriaId;
+            producto.Nombre = model.Nombre;
+            producto.Descripcion = model.Descripcion;
+            producto.Precio = model.Precio;
+            producto.MarcaId = marca.Id;
+            producto.Stock = model.Stock;
+            producto.UpdatedAt = fecha;
 
             try
             {

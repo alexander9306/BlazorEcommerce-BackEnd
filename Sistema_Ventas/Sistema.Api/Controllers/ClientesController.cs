@@ -138,20 +138,15 @@ namespace Sistema.Api.Controllers
             {
                 return this.BadRequest();
             }
-
-            var cliente = new Cliente
-            {
-                Id = model.Id,
-                UpdatedAt = DateTime.Now,
-            };
+            
+            var cliente = await this._context.Clientes.FindAsync(id).ConfigureAwait(false);
+            cliente.UpdatedAt = DateTime.Now;
 
             if (model.ActPassword)
             {
                 this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
                 cliente.PasswordHash = passwordHash;
             }
-
-            this._context.Entry(cliente).State = EntityState.Modified;
 
             try
             {
