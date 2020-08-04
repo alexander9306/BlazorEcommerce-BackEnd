@@ -9,6 +9,7 @@ namespace Sistema.Admin.Pages.Almacen.Productos
     using NProducto = Sistema.Shared.Entidades.Almacen.Producto;
     using Sistema.Shared.Entidades.Almacen.Categoria;
     using Sistema.Shared.Services.Almacen.Producto;
+    using Sistema.Shared.Services.Almacen.ProductoFoto;
     using Sistema.Shared.Services.Almacen.Categoria ;
 
     public partial class EditProductos
@@ -19,6 +20,8 @@ namespace Sistema.Admin.Pages.Almacen.Productos
         [Inject] private IProductoDataService ProductoDataService { get; set; }
 
         [Inject] private ICategoriaDataService CategoriaDataService { get; set; }
+      
+        [Inject] private IProductoFotoDataService ProductoFotoDataService { get; set; }
 
         [Parameter] public string ProductoId { get; set; }
 

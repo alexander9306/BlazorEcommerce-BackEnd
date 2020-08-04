@@ -50,7 +50,44 @@
                         <div class="form-group row">
                             <label for="descripción" class="col-sm-3">Descripción: </label>
                             <InputTextArea id="descripción" class="form-control col-sm-8" @bind-Value="@Producto.Descripcion" placeholder="descripción"></InputTextArea>
-                        </div>                                             
+                        </div>   
+
+
+                        <div class="container">
+                        <div class="row">
+                            <div class="col-md-4">
+                            <div class="thumbnail">
+                                <a href="/w3images/lights.jpg" target="_blank">
+                                <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+                                <div class="caption">
+                                    <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                                </div>
+                                </a>
+                            </div>
+                            </div>
+                            <div class="col-md-4">
+                            <div class="thumbnail">
+                                <a href="/w3images/nature.jpg" target="_blank">
+                                <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
+                                <div class="caption">
+                                    <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                                </div>
+                                </a>
+                            </div>
+                            </div>
+                            <div class="col-md-4">
+                            <div class="thumbnail">
+                                <a href="/w3images/fjords.jpg" target="_blank">
+                                <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
+                                <div class="caption">
+                                    <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                                </div>
+                                </a>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary edit-btn">Guardar</button>
                         <a class="btn btn-outline-primary edit-outline-btn" @onclick="@NavigateToInfo">Cancelar</a>
 
