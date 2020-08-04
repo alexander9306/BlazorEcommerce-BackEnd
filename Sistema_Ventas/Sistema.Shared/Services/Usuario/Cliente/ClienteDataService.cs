@@ -1,5 +1,6 @@
 ﻿namespace Sistema.Shared.Services.Usuario.Cliente
 {
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -54,6 +55,26 @@
             return true;
         }
 
+        public async Task<IEnumerable<ClienteViewModel>> Listar()
+        {
+            await this.AgregarToken().ConfigureAwait(false);
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<ClienteViewModel>>(
+                    await this._httpClient.GetStreamAsync($"listar").ConfigureAwait(false),
+                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
+                .ConfigureAwait(false);
+        }
+
+        public async Task<ClienteViewModel> Mostrar(int id)
+        {
+            await this.AgregarToken().ConfigureAwait(false);
+
+            return await JsonSerializer.DeserializeAsync<ClienteViewModel>(
+                await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);
+        }
+
+
         public async Task Logout()
         {
             await this._localStorage.RemoveItemAsync("authToken").ConfigureAwait(false);
@@ -75,6 +96,16 @@
             }
 
             return false;
+        }
+
+        private async Task AgregarToken()
+        {
+            var token = await this._localStorage.GetItemAsync<string>("authToken").ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
         }
     }
 

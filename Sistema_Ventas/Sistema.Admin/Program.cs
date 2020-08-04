@@ -17,6 +17,7 @@ namespace Sistema.Admin
     using Sistema.Shared.Services.Ordenes.Pago;
     using Sistema.Shared.Services.Ordenes.Pedido;
     using Sistema.Shared.Services.Usuario.Administrador;
+    using Sistema.Shared.Services.Usuario.Rol;
 
     public class Program
     {
@@ -37,6 +38,9 @@ namespace Sistema.Admin
             // Http Client Providers //
             builder.Services.AddHttpClient<IAdminDataService, AdminDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/administradores/"));
+
+            builder.Services.AddHttpClient<IRolDataService, RolDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/roles/"));
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/productos/"));

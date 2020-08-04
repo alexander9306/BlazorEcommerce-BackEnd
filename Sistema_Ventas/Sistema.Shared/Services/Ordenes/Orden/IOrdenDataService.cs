@@ -10,6 +10,8 @@
     {
         Task<IEnumerable<OrdenViewModel>> Listar(int limit, DateTime? before = null);
 
+        Task<IEnumerable<OrdenViewModel>> ListarPorCliente(int clienteId, int limit, DateTime? before = null);
+
         Task<OrdenViewModel> Mostrar(int id);
 
         Task<bool> Crear(OrdenCrear model);

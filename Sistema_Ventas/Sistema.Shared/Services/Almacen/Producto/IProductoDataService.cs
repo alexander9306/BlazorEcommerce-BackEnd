@@ -14,5 +14,13 @@
         Task<IEnumerable<ProductoViewModel>> ListarPorFiltro(List<int> categoriaIds, List<int> marcaIds, int limit, DateTime? before = null);
 
         Task<IEnumerable<ProductoViewModel>> ListarRelacionados(int productoId, int limit, DateTime? before = null);
+
+        Task<bool> Activar(int id);
+
+        Task<bool> Desactivar(int id);
+
+        Task<bool> Crear(CrearViewModel model);
+
+        Task<bool> Actualizar(ActualizarViewModel model);
     }
 }

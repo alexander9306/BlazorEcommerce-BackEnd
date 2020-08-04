@@ -56,6 +56,18 @@
                 .ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<OrdenViewModel>> ListarPorCliente(int clienteId, int limit, DateTime? before = null)
+        {
+            await this.AgregarToken().ConfigureAwait(false);
+
+            var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<OrdenViewModel>>(
+                    await _httpClient.GetStreamAsync($"listarporcliente/{clienteId}/{limit}/{cursor}").ConfigureAwait(false),
+                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
+                .ConfigureAwait(false);
+        }
+
         private async Task AgregarToken()
         {
             var token = await this._localStorage.GetItemAsync<string>("authToken").ConfigureAwait(false);

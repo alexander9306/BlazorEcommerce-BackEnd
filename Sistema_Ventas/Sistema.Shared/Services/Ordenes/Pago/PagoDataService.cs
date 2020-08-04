@@ -1,4 +1,7 @@
-﻿namespace Sistema.Shared.Services.Ordenes.Pago
+﻿using System.Net.Http.Headers;
+using Blazored.LocalStorage;
+
+namespace Sistema.Shared.Services.Ordenes.Pago
 {
     using System;
     using System.Collections.Generic;
@@ -11,14 +14,28 @@
     public class PagoDataService : IPagoDataService
     {
         private readonly HttpClient _httpClient;
+        private readonly ILocalStorageService _localStorage;
 
-        public PagoDataService(HttpClient httpClient)
+        public PagoDataService(HttpClient httpClient, ILocalStorageService localStorage)
         {
             this._httpClient = httpClient;
+            this._localStorage = localStorage;
+        }
+
+        private async Task AgregarToken()
+        {
+            var token = await this._localStorage.GetItemAsync<string>("authToken").ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
         }
 
         public async Task<IEnumerable<PagoViewModel>> Listar(int limit, DateTime? before = null)
         {
+            await this.AgregarToken().ConfigureAwait(false);
+
             var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<PagoViewModel>>(
@@ -29,6 +46,8 @@
 
         public async Task<IEnumerable<PagoViewModel>> ListarPorOrden(int ordenId, int limit, DateTime? before = null)
         {
+            await this.AgregarToken().ConfigureAwait(false);
+
             var cursor = before.HasValue ? before.Value.ToString("O", CultureInfo.InvariantCulture) : "null";
 
             return await JsonSerializer.DeserializeAsync<IEnumerable<PagoViewModel>>(
@@ -39,6 +58,8 @@
 
         public async Task<PagoViewModel> Mostrar(int id)
         {
+            await this.AgregarToken().ConfigureAwait(false);
+
             return await JsonSerializer.DeserializeAsync<PagoViewModel>(
                     await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);

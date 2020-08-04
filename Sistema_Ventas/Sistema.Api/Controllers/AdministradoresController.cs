@@ -17,7 +17,7 @@ namespace Sistema.Api.Controllers
     using Sistema.Shared.Entidades.Usuario.Administrador;
 
     [Route("api/[controller]")]
-    [Authorize(Roles= "Administrador,Organizador")]
+    //[Authorize(Roles= "Administrador,Organizador")]
     [ApiController]
     public class AdministradoresController : ControllerBase
     {
@@ -130,23 +130,23 @@ namespace Sistema.Api.Controllers
                 return this.BadRequest();
             }
 
-            var administrador = new Administrador
-            {
-                Id = model.Id,
-                RolId = model.RolId,
-                Email = model.Email.Trim().ToUpperInvariant(),
-                Username = model.Username.Trim().ToUpperInvariant(),
-                Estado = true,
-                UpdatedAt = DateTime.Now,
-            };
+            var administrador = await this._context.Administradores.FindAsync(id).ConfigureAwait(false);
 
+            if (administrador == null)
+            {
+                return this.NotFound();
+            }
+
+            administrador.RolId = model.RolId;
+            administrador.Email = model.Email.Trim().ToUpperInvariant();
+            administrador.Username = model.Username.Trim().ToUpperInvariant();
+            administrador.UpdatedAt = DateTime.Now;
+        
             if (model.ActPassword)
             {
                 this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
                 administrador.PasswordHash = passwordHash;
             }
-
-            this._context.Entry(administrador).State = EntityState.Modified;
 
             try
             {

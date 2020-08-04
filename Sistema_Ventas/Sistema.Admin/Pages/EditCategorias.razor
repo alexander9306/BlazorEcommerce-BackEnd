@@ -22,12 +22,10 @@
                         <div class="form-group row">
                             <label for="nombre" class="col-sm-3">Nombre: </label>
                             <InputText id="nombre" class="form-control col-sm-8" @bind-Value="@Categoria.Nombre" placeholder="nombre"></InputText>
-                            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Categoria.Nombre)" />
                         </div>
                         <div class="form-group row">
                             <label for="descripción" class="col-sm-3">Descripción: </label>
                             <InputText id="descripción" class="form-control col-sm-8" @bind-Value="@Categoria.Descripcion" placeholder="descripción"></InputText>
-                            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => Categoria.Descripcion)" />
                         </div>
 
                         <button type="submit" class="btn btn-primary edit-btn">Guardar</button>

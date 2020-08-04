@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Sistema.Shared.Services.Usuario.Administrador
 {
+    using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -28,12 +29,24 @@ namespace Sistema.Shared.Services.Usuario.Administrador
             this._localStorage = localStorage;
         }
 
+        private async Task AgregarToken()
+        {
+            var token = await this._localStorage.GetItemAsync<string>("authToken").ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                this._httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+        }
+
         public async Task<bool> Login(AdminLogin model)
         {
             if (model == null)
             {
                 return false;
             }
+
+            await this.AgregarToken().ConfigureAwait(false);
 
             var loginJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
             var response = await this._httpClient.PostAsync($"login", loginJson).ConfigureAwait(false);
@@ -63,33 +76,60 @@ namespace Sistema.Shared.Services.Usuario.Administrador
             this._httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public Task<IEnumerable<AdministradorViewModel>> Listar()
+        public async Task<IEnumerable<AdministradorViewModel>> Listar()
         {
-            throw new System.NotImplementedException();
+            await this.AgregarToken().ConfigureAwait(false);
+
+            return await JsonSerializer.DeserializeAsync<IEnumerable<AdministradorViewModel>>(
+                    await this._httpClient.GetStreamAsync($"listar").ConfigureAwait(false),
+                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true })
+                .ConfigureAwait(false);
         }
 
-        public Task<AdministradorViewModel> Mostrar(int id)
+        public async Task<AdministradorViewModel> Mostrar(int id)
         {
-            throw new System.NotImplementedException();
+            await this.AgregarToken().ConfigureAwait(false);
+
+            return await JsonSerializer.DeserializeAsync<AdministradorViewModel>(
+                await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);
         }
 
-        public Task<bool> Activar(int id)
+        public async Task<bool> Activar(int id)
         {
-            throw new System.NotImplementedException();
+            await this.AgregarToken().ConfigureAwait(false);
+
+            var response = await this._httpClient.PutAsync($"activar/{id}", null).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> Desactivar(int id)
+        public async Task<bool> Desactivar(int id)
         {
-            throw new System.NotImplementedException();
+            await this.AgregarToken().ConfigureAwait(false);
+
+            var response = await this._httpClient.PutAsync($"desactivar/{id}", null).ConfigureAwait(false);
+
+            return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> Actualizar(ActualizarViewModel model)
+        public async Task<bool> Actualizar(ActualizarViewModel model)
         {
-            throw new System.NotImplementedException();
+            await this.AgregarToken().ConfigureAwait(false);
+
+            var modelJson =
+                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await this._httpClient.PutAsync($"actualizar/{model.Id}", modelJson).ConfigureAwait(false);
+
+            modelJson.Dispose();
+
+            return response.StatusCode == HttpStatusCode.NoContent;
         }
 
         public async Task<bool> Crear(CrearViewModel model)
         {
+            await this.AgregarToken().ConfigureAwait(false);
+
             var modelJson =
                 new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
             var response = await this._httpClient.PostAsync($"crear", modelJson).ConfigureAwait(false);

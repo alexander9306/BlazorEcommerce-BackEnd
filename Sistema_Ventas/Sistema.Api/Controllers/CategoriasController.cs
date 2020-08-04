@@ -65,13 +65,9 @@
                 return this.NotFound();
             }
 
-            categoria = new Categoria
-            {
-                Id = model.Id,
-                Nombre = model.Nombre,
-                Descripcion = model.Descripcion,
-                UpdatedAt = DateTime.Now,
-            };
+            categoria.Nombre = model.Nombre;
+            categoria.Descripcion = model.Descripcion;
+            categoria.UpdatedAt = DateTime.Now;
 
             try
             {

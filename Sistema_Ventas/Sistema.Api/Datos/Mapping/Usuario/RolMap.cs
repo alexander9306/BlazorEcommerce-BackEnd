@@ -15,12 +15,14 @@
                     Id = 1,
                     Nombre = "Administrador",
                     Descripcion = "Acceso máximo del sistema.",
+                    Estado = true,
                 },
                 new Rol
                 {
                     Id = 2,
                     Nombre = "Organizador",
                     Descripcion = "Acceso a las ordenes del sistema.",
+                    Estado = true,
                 }
             );
         }

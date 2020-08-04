@@ -49,7 +49,6 @@ namespace Sistema.Admin.Pages
             bool resultado;
             if (int.TryParse(CategoriaId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var categoriaId))
             {
-                Console.WriteLine("Guardando");
                 var categoria = new ActualizarViewModel
                 {
                     Id = categoriaId,
