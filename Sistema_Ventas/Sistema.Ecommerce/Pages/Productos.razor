@@ -1,0 +1,110 @@
+﻿@page "/producto/{ProductoId}"
+@using Sistema.Ecommerce.Components
+
+<main class="page product-page">
+    <section class="clean-block clean-product dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Producto</h2>
+                <p>Especificaciones y detalles</p>
+            </div>
+            <CarritoToast Message="@CarritoToastMessage" Title="@CarritoToastTitle"/>
+
+            @if (errorMessage != null)
+            {
+                <ShowAlert Message=@errorMessage />
+            }
+            else if (Producto != null)
+            {
+                <div class="block-content">
+                    <div class="product-info">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="">
+
+                                    @foreach (var foto in Producto.Fotos)
+                                    {
+                                        <a data-fancybox="gallery" href="@ProductoHelper.GetFotoUrl(foto, 750, 750)"><img src="@ProductoHelper.GetFotoUrl(foto, 180, 180)"></a>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info">
+                                    <h3>@Producto.Nombre</h3>
+                                    <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
+                                    <div class="price">
+                                        <h3>$@Producto.Precio</h3>
+                                    </div><button class="btn btn-primary" @onclick="AgregarCarrito" type="button"><i class="icon-basket"></i>Agregar al Carrito</button>
+                                    <div class="summary">
+                                        <p>
+                                            @ProductoHelper.GetDescripcion(Producto.Descripcion)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="product-info">
+                        <div>
+                            <ul class="nav nav-tabs" id="myTab">
+                                <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" id="description-tab" href="#description">Descripción</a></li>
+                                <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" id="specifications-tabs" href="#specifications">Especificaciones</a></li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane active fade show description" role="tabpanel" id="description">
+                                    <p>
+                                        @Producto.Descripcion
+                                    </p>
+                                </div>
+
+                                <div class="tab-pane fade show specifications" role="tabpanel" id="specifications">
+                                    <div class="table-responsive table-bordered">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="stat">Marca</td>
+                                                    <td>@Producto.Marca</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clean-related-items">
+                        <h3>Productos Relacionados</h3>
+                        <div class="items">
+                            <div class="row justify-content-center">
+                                @if (RelProductos != null)
+                                {
+                                    foreach (var producto in RelProductos)
+                                    {
+                                        <div class="col-sm-6 col-lg-4">
+                                            <div class="clean-related-item">
+                                                <div class="image"><a href="producto/@producto.Id"><img class="img-fluid d-block mx-auto" src="@ProductoHelper.GetFotoUrl(producto.Fotos.FirstOrDefault(), 180, 180)"></a></div>
+                                                <div class="related-name">
+                                                    <a href="producto/@producto.Id">@producto.Nombre</a>
+                                                    <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
+                                                    <h4>$@producto.Precio</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            else
+            {
+                <Loading />
+            }
+        </div>
+    </section>
+</main>

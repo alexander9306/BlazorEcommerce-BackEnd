@@ -1,0 +1,73 @@
+@page "/productos"
+
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Productos</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Admin / Productos</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Productos
+                </div>
+                <div class="card-body">
+                    @if (LProductos == null)
+                    {
+                        <Loading />
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="MydataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Categoria</th>
+                                        <th>Estado</th>
+                                        <th>Marca</th>
+                                        <th>Stock</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Categoria</th>
+                                        <th>Estado</th>
+                                        <th>Marca</th>
+                                        <th>Stock</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @if (LProductos != null)
+                                    {
+                                        foreach (var producto in LProductos)
+                                        {
+                                            <tr>
+                                                <td>@producto.Id</td>
+                                                <td>@producto.Nombre</td>
+                                                <td>@producto.Categoria</td>
+                                                <td>@StringHelper.GetEstado(producto.Estado)</td>
+                                                <td>@producto.Marca</td>
+                                                <td>@producto.Stock</td>
+                                                <td>
+                                                    <a href="/productos/editar/@producto.Id">Editar</a>
+                                                    <a href="javascript:void(0)" @onclick="() => CambiarEstado(producto)">@(producto.Estado ? "Desactivar" : "Activar")</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+            <a type="button" href="/productos/editar" class="btn btn-outline-primary float-right ">Nuevo Registro</a>
+        </div>
+    </main>

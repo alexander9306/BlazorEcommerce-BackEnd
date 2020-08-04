@@ -1,0 +1,49 @@
+﻿@page "/ordenes"
+
+<main class="page faq-page">
+    <section class="clean-block clean-faq dark">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Ordenes</h2>
+                <p>Información sobre sus ordenes recientes.</p>
+            </div>
+            <div class="block-content">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Total $</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ListaOrdenes != null)
+                            {
+                                foreach (var orden in ListaOrdenes)
+                                {
+                                    <tr>
+                                        <td>@orden.Id</td>
+                                        <td>@orden.Total</td>
+                                        <td>@orden.Estado</td>
+                                        <td>@orden.CreatedAt</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="faq-item">
+                    <div class="answer"></div>
+                </div>
+                <div class="faq-item">
+                    <h4 class="question">Importante!</h4>
+                    <div class="answer">
+                        <p>Si tiene alguna duda o inquietud por favor comunicarse con servicio al cliente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

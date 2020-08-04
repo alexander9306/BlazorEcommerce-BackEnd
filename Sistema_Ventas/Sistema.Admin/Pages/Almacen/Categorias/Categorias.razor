@@ -1,0 +1,67 @@
+﻿@page "/categorias"
+
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Categorias</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Admin / Categorias</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Categorias
+                </div>
+                <div class="card-body">
+                    @if (LCategorias == null)
+                    {
+                        <Loading />
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="MydataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Estado</th>
+                                        <th>Descripcion</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Estado</th>
+                                        <th>Descripcion</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @if (LCategorias != null)
+                                    {
+                                        foreach (var categoria in LCategorias)
+                                        {
+                                            <tr>
+                                                <td>@categoria.Id</td>
+                                                <td>@categoria.Nombre</td>
+                                                <td>@StringHelper.GetEstado(categoria.Estado)</td>
+                                                <td>@StringHelper.GetDescripcion(categoria.Descripcion, 65)</td>
+                                                <td>
+                                                    <a href="/categorias/editar/@categoria.Id">Editar</a>
+                                                    <a href="javascript:void(0)" @onclick="() => CambiarEstado(categoria)">@(categoria.Estado ? "Desactivar" : "Activar")</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+            <a type="button" href="/categorias/editar" class="btn btn-outline-primary float-right ">Nuevo Registro</a>
+        </div>
+    </main>

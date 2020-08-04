@@ -1,0 +1,67 @@
+﻿@page "/shoppingcart"
+@using Sistema.Ecommerce.Components
+
+    <main class="page shopping-cart-page">
+        <section class="clean-block clean-cart dark">
+            <div class="container">
+                <div class="block-heading" style="padding-top: 44px;">
+                    <h2 class="text-info">Carrito<br></h2>
+                    <p>Ya casi finalizas con tu compra!<br></p>
+                </div>
+                @if (ShowMessage)
+                {
+                    <ShowAlert Message="No existen articulos en el carrito." />
+                }
+                else if (Carrito != null)
+                {
+                    <div class="content">
+                        <div class="row no-gutters">
+                            <div class="col-md-12 col-lg-8">
+                                <div class="items">
+                                    @foreach (var detalle in Carrito.Detalles)
+                                    {
+                                        <div class="product">
+                                            <div class="row justify-content-center align-items-center">
+                                                <div class="col-md-3">
+                                                    <div class="product-image"><img class="img-fluid d-block mx-auto image" src="@ProductoHelper.GetFotoUrl(detalle.FotoPublicId, 250, 250)"></div>
+                                                </div>
+                                                <div class="col-md-5 product-info">
+                                                    <a class="product-name" href="producto/@detalle.ProductoId">@detalle.Producto</a>
+                                                    <div class="product-specs">
+                                                        <div><span>Marca:&nbsp;</span><span class="value">@detalle.Marca</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-2 quantity"><label class="d-none d-md-block" for="quantity">Cantidad</label><input type="number" id="number" class="form-control quantity-input" value="@detalle.Cantidad"></div>
+                                                <div class="col-6 col-md-2 price"><span>@(detalle.Precio * detalle.Cantidad)</span></div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-4">
+                                <div class="summary">
+                                    <h3>Sumatoria</h3>
+                                    <h4><span class="text">Subtotal</span><span class="price">$@Carrito.Total</span></h4>
+                                    <h4><span class="text">Descuento</span><span class="price">$0</span></h4>
+                                    <h4><span class="text">Shipping</span><span class="price">$0</span></h4>
+                                    <h4><span class="text">Total</span><span class="price">@Carrito.Total</span></h4><a class="btn btn-primary btn-block btn-lg"  href="/crearorden">Checkout</a>
+                                    <form action="paypal.html" method="GET">
+                                        <h4><span class="text">Total</span></h4>
+                                        <input type="text" id="thistext" name="thistext" value="@Carrito.Total" readonly="readonly" class="form-control">
+                                        <br />
+                                        <input type="submit" value="Pagar" name="submit" id="submit" class="btn btn-primary">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <Loading />
+                }
+
+            </div>
+        </section>
+    </main>
