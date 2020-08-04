@@ -1,0 +1,39 @@
+﻿<section class="clean-block clean-info dark" style="padding-top: 10px;">
+    <div class="container">
+        <section class="clean-block about-us">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Tendencias</h2>
+                    <p></p>
+                </div>
+                @if (Productos != null)
+                {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        <div class="row justify-content-center pt-2 pb-2">
+                            @for (int j = ((i == 0) ? 0 : 3); j < ((i == 0) ? 3 : 6); j++)
+                            {
+                                if (j < Productos.Count)
+                                {
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="card clean-card text-center">
+                                            <img class="card-img-top w-100 d-block" src="@PoductoHelper.GetFotoUrl(Productos[j].Fotos.FirstOrDefault())" style="height: 250px;">
+                                            <div class="card-body info">
+                                                <h4 class="card-title">@Productos[j].Nombre</h4>
+                                                <p class="card-text">@PoductoHelper.GetDescripcion(Productos[j].Descripcion)</p><a href="producto/@Productos[j].Id" class="btn btn-primary" type="button">Ver</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <Loading />
+                }
+            </div>
+        </section>
+    </div>
+</section>

@@ -1,0 +1,70 @@
+﻿@page "/administradores"
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Administradores</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Admin / Administradores</li>
+        </ol>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                Administradores
+            </div>
+            <div class="card-body">
+                @if (LAdministradores == null)
+                {
+                    <Loading />
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="MydataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Rol</th>
+                                    <th>Estado</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @if (LAdministradores != null)
+                                {
+                                    foreach (var administrador in LAdministradores)
+                                    {
+                                <tr>
+                                    <td>@administrador.Id</td>
+                                    <td>@administrador.Rol</td>
+                                    <td>@StringHelper.GetEstado(administrador.Estado)</td>
+                                    <td>@administrador.Username</td>
+                                    <td>@StringHelper.GetDescripcion(administrador.Email, 65)</td>
+                                    <td>
+                                        <a href="/administradores/editar/@administrador.Id">Editar</a>
+                                        <a href="javascript:void(0)" @onclick="() => CambiarEstado(administrador)">@(administrador.Estado ? "Desactivar" : "Activar")</a>
+                                    </td>
+                                </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+        <a type="button" href="/administradores/editar" class="btn btn-outline-primary float-right ">Nuevo Registro</a>
+    </div>
+</main>

@@ -1,0 +1,103 @@
+﻿@page "/catalogo"
+@using Sistema.Ecommerce.Components
+
+
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog dark">
+        <div class="container">
+            <div class="block-heading" style="padding-top: 44px;">
+                <h2 class="text-info">Catalogo</h2>
+                <p>Todos nuestros productos</p>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="d-none d-md-block">
+                            <div class="filters">
+                                <div class="filter-item">
+                                    <h3>Categorias</h3>
+                                    @if (Categorias != null)
+                                    {
+                                        foreach (var categoria in Categorias)
+                                        {
+                                            <div class="form-check"><input @oninput="eventArgs => { FiltrarCategorias(categoria.Id, eventArgs.Value); }" class="form-check-input" type="checkbox" id="categoriaForm-@categoria.Id"><label class="form-check-label" for="categoriaForm-@categoria.Id">@categoria.Nombre</label></div>
+                                        }
+                                    }
+                                </div>
+                                <div class="filter-item">
+                                    <h3>Marcas</h3>
+                                    @if (Marcas != null)
+                                    {
+                                        foreach (var marca in Marcas)
+                                        {
+                                            <div class="form-check"><input @oninput="eventArgs => { FiltrarMarcas(marca.Id, eventArgs.Value); }" class="form-check-input" type="checkbox" id="marcaForm-@marca.Id"><label class="form-check-label" for="marcaForm-@marca.Id">@marca.Nombre</label></div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-md-none">
+                            <a class="btn btn-link d-md-none filter-collapse" data-toggle="collapse" aria-expanded="false" aria-controls="filters" href="#filters" role="button">Filters<i class="icon-arrow-down filter-caret"></i></a>
+                            <div class="collapse"
+                                 id="filters">
+                                <div class="filters">
+                                    <div class="filter-item">
+                                        <h3>Categorias</h3>
+                                        @if (Categorias != null)
+                                        {
+                                            foreach (var categoria in Categorias)
+                                            {
+                                                <div class="form-check"><input @oninput="eventArgs => { FiltrarCategorias(categoria.Id, eventArgs.Value); }" class="form-check-input" type="checkbox" id="categoriaForm-@categoria.Id"><label class="form-check-label" for="categoriaForm-@categoria.Id">@categoria.Nombre</label></div>
+                                            }
+                                        }
+                                    </div>
+                                    <div class="filter-item">
+                                        <h3>Marcas</h3>
+                                        @if (Marcas != null)
+                                        {
+                                            foreach (var marca in Marcas)
+                                            {
+                                                <div class="form-check"><input @oninput="eventArgs => { FiltrarMarcas(marca.Id, eventArgs.Value); }" class="form-check-input" type="checkbox" id="marcaForm-@marca.Id"><label class="form-check-label" for="marcaForm-@marca.Id">@marca.Nombre</label></div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="products">
+                            <div class="row no-gutters">
+                                @if (Productos != null)
+                                {
+                                    @foreach (var producto in Productos)
+                                    {
+                                        <div class="col-12 col-md-6 col-lg-4">
+                                            <div class="clean-product-item">
+                                                <div class="image"><a href="producto/@producto.Id"><img class="img-fluid d-block mx-auto" src="@ProductoHelper.GetFotoUrl(producto.Fotos.FirstOrDefault())"></a></div>
+                                                <div class="product-name"><a href="producto/@producto.Id">@producto.Nombre</a></div>
+                                                <div class="about">
+                                                    <div class="rating"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star.svg"><img src="assets/img/star-half-empty.svg"><img src="assets/img/star-empty.svg"></div>
+                                                    <div class="price">
+                                                        <h3>$@producto.Precio</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }else{
+                                    <Loading />
+                                }
+                            </div>
+                            @if (HasMoreData)
+                            {
+                                <button class="btn btn-primary btn-lg btn-block" @onclick="GetMoreData" type="button">Ver Mas</button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+

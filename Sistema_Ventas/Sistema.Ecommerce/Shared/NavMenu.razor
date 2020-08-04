@@ -1,0 +1,45 @@
+﻿
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar">
+    <div class="container">
+        <a class="navbar-brand logo" href="#">Rebaton</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
+            <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse"
+             id="navcol-1">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item" role="presentation">
+                    <NavLink class="nav-link" href="#"><i class="fa fa-home"></i>&nbsp;Home</NavLink>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <NavLink class="nav-link" href="catalogo">
+                        <i class="fa fa-laptop"></i>&nbsp;Catalogo
+                    </NavLink>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <NavLink class="nav-link" href="shoppingcart"><i class="fa fa-cart-plus"></i>&nbsp;Carrito</NavLink>
+                </li>
+                <AuthorizeView>
+                    <Authorized>
+                        <li class="nav-item" role="presentation">
+                            <NavLink class="nav-link" href="ordenes">
+                                <i class="fa fa-car"></i>&nbsp;Ordenes
+                            </NavLink>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <NavLink class="nav-link" href="logout" style="background-color: #afaedc; border-style: none; border-radius: 10px;">
+                                <i class="fa fa-user"></i>&nbsp;Logout
+                            </NavLink>
+                        </li>
+                    </Authorized>
+                    <NotAuthorized>
+                        <li class="nav-item" role="presentation">
+                            <NavLink class="nav-link" href="login" style="background-color: #afaedc; border-style: none; border-radius: 10px;">
+                                <i class="fa fa-user"></i>&nbsp;Log In
+                            </NavLink>
+                        </li>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </ul>
+        </div>
+    </div>
+</nav>
