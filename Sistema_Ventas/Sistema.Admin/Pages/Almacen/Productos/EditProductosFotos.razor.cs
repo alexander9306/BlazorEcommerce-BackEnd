@@ -18,13 +18,11 @@ namespace Sistema.Admin.Pages.Almacen.ProductoFotos
 
         [Inject] private IProductoFotoDataService ProductoFotoDataService { get; set; }
 
-        [Inject] private ICategoriaDataService CategoriaDataService { get; set; }
-      
-        [Parameter] public string ProductoFotoId { get; set; }
+        [Parameter] public string ProductoId { get; set; }
 
         protected ShowAlert.Alert Alert { get; set; }
 
-        public List<CategoriaViewModel> Categorias { get; set; } = new List<CategoriaViewModel>();
+        public List<ProductoFotoViewModel> Fotos { get; set; } = new List<ProductoFotoViewModel>();
         
         private string CategoriaId { get; set; } = string.Empty;
 
