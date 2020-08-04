@@ -43,7 +43,7 @@
         }
 
         // Post: api/ProductoFotos/Eliminar/id
-        [HttpPost("[action]/{id}")]
+        [HttpDelete("[action]/{id}")]
         public async Task<ActionResult> Eliminar(int id)
         {
              var foto = await this._context.ProductoFotos

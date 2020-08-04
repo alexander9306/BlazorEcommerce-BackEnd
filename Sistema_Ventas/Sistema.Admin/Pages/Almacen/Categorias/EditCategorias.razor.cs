@@ -3,12 +3,14 @@
     using System.Globalization;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
+    using Microsoft.AspNetCore.Components.Authorization;
     using Sistema.Admin.Components;
     using Sistema.Shared.Entidades.Almacen.Categoria;
     using Sistema.Shared.Services.Almacen.Categoria;
 
     public partial class EditCategorias
     {
+        [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
@@ -24,6 +26,14 @@
 
         protected override async Task OnInitializedAsync()
         {
+            var authState = await authenticationStateTask;
+            var user = authState.User;
+
+            if (!user.Identity.IsAuthenticated)
+            {
+                this.NavigationManager.NavigateTo("/login");
+            }
+
             this.Saved = false;
 
             if (int.TryParse(CategoriaId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var categoriaId))

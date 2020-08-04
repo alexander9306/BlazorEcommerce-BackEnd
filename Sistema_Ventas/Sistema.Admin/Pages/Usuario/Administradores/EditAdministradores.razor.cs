@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Globalization;
+    using Microsoft.AspNetCore.Components.Authorization;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
@@ -13,6 +14,7 @@
 
     public partial class EditAdministradores
     {
+        [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
@@ -34,6 +36,14 @@
 
         protected override async Task OnInitializedAsync()
         {
+            var authState = await authenticationStateTask;
+            var user = authState.User;
+
+            if (!user.Identity.IsAuthenticated)
+            {
+                this.NavigationManager.NavigateTo("/login");
+            }
+
             this.Saved = false;
             this.Roles = (await this.RolDataService.Listar().ConfigureAwait(false)).ToList();
 

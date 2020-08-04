@@ -58,6 +58,7 @@
                                                 <td>
                                                     <a href="/productos/editar/@producto.Id">Editar</a>
                                                     <a href="javascript:void(0)" @onclick="() => CambiarEstado(producto)">@(producto.Estado ? "Desactivar" : "Activar")</a>
+                                                    <a href="/productos/editarfotos/@producto.Id">Fotos</a>
                                                 </td>
                                             </tr>
                                         }

@@ -1,11 +1,10 @@
-@page "/productos/editar/{ProductoId}"
-@page "/productos/editar"
+@page "/productos/editarfotos/{ProductoId}"
 
 <main>
     <div class="container-fluid">
         <h1 class="mt-4">Productos</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Admin / Productos / Editar </li>
+            <li class="breadcrumb-item active">Admin / Productos / EditarFotos </li>
         </ol>
 
         <div class="card mb-4">
@@ -72,3 +71,41 @@
 
     </div>
 </main>
+
+
+                        @if (Fotos != null) > 0){
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        <a href="/w3images/lights.jpg" target="_blank">
+                                        <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
+                                        <div class="caption">
+                                            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                                        </div>
+                                        </a>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        <a href="/w3images/nature.jpg" target="_blank">
+                                        <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
+                                        <div class="caption">
+                                            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                                        </div>
+                                        </a>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="thumbnail">
+                                        <a href="/w3images/fjords.jpg" target="_blank">
+                                        <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
+                                        <div class="caption">
+                                            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                                        </div>
+                                        </a>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                        }

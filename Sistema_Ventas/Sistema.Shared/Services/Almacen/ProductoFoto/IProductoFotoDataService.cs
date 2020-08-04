@@ -1,6 +1,5 @@
 namespace Sistema.Shared.Services.Almacen.ProductoFoto
 {
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Almacen.ProductoFoto;

@@ -57,15 +57,11 @@ namespace Sistema.Shared.Services.Almacen.ProductoFoto
             return response.StatusCode == HttpStatusCode.Created;
         }
 
-        public async Task<bool> Actualizar(ActualizarProductoFotoViewModel model)
+        public async Task<bool> Eliminar(int fotoId)
         {
             await this.AgregarToken().ConfigureAwait(false);
-
-            var modelJson =
-                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            var response = await this._httpClient.PutAsync($"actualizar/{model.Id}", modelJson).ConfigureAwait(false);
-
-            modelJson.Dispose();
+           
+            var response = await this._httpClient.DeleteAsync($"eliminar/{fotoId}").ConfigureAwait(false);
 
             return response.StatusCode == HttpStatusCode.NoContent;
         }

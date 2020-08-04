@@ -10,6 +10,7 @@ namespace Sistema.Admin
     using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Providers;
     using Sistema.Shared.Services.Almacen.Categoria;
+    using Sistema.Shared.Services.Almacen.ProductoFoto;
     using Sistema.Shared.Services.Almacen.Marca;
     using Sistema.Shared.Services.Almacen.Producto;
     using Sistema.Shared.Services.Ordenes.Carrito;
@@ -62,6 +63,9 @@ namespace Sistema.Admin
 
             builder.Services.AddHttpClient<IPagoDataService, PagoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/pagos/"));
+
+            builder.Services.AddHttpClient<IProductoFotoDataService, ProductoFotoDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/productoFotos/"));
 
             // Helper Classes //
             builder.Services.AddSingleton<IStringHelper, StringHelper>();

@@ -1,4 +1,4 @@
-namespace Sistema.Admin.Pages.Almacen.Productos
+namespace Sistema.Admin.Pages.Almacen.ProductoFotos
 {
     using System.Collections.Generic;
     using System.Globalization;
@@ -7,23 +7,20 @@ namespace Sistema.Admin.Pages.Almacen.Productos
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Authorization;
     using Sistema.Admin.Components;
-    using NProducto = Sistema.Shared.Entidades.Almacen.Producto;
-    using Sistema.Shared.Entidades.Almacen.Categoria;
-    using Sistema.Shared.Services.Almacen.Producto;
+    using Sistema.Shared.Entidades.Almacen.ProductoFoto;
     using Sistema.Shared.Services.Almacen.ProductoFoto;
-    using Sistema.Shared.Services.Almacen.Categoria ;
 
-    public partial class EditProductos
+    public partial class EditProductosFotos
     {
         [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        [Inject] private IProductoDataService ProductoDataService { get; set; }
+        [Inject] private IProductoFotoDataService ProductoFotoDataService { get; set; }
 
         [Inject] private ICategoriaDataService CategoriaDataService { get; set; }
       
-        [Parameter] public string ProductoId { get; set; }
+        [Parameter] public string ProductoFotoId { get; set; }
 
         protected ShowAlert.Alert Alert { get; set; }
 
@@ -33,7 +30,7 @@ namespace Sistema.Admin.Pages.Almacen.Productos
 
         private bool Saved { get; set; }
 
-        private NProducto.CrearViewModel Producto { get; set; } = new NProducto.CrearViewModel();
+        private NProductoFoto.CrearViewModel ProductoFoto { get; set; } = new NProductoFoto.CrearViewModel();
 
         protected override async Task OnInitializedAsync()
         {
@@ -47,9 +44,9 @@ namespace Sistema.Admin.Pages.Almacen.Productos
             this.Saved = false;
             this.Categorias = (await this.CategoriaDataService.Listar().ConfigureAwait(false)).ToList();
 
-            if (int.TryParse(ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
+            if (int.TryParse(ProductoFotoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
             {
-                var producto = await this.ProductoDataService.Mostrar(productoId).ConfigureAwait(false);
+                var producto = await this.ProductoFotoDataService.Mostrar(productoId).ConfigureAwait(false);
                 
                 if(producto == null){
                     this.Alert = new ShowAlert.Alert
@@ -59,7 +56,7 @@ namespace Sistema.Admin.Pages.Almacen.Productos
                     return;
                 }
 
-                this.Producto = new NProducto.CrearViewModel
+                this.ProductoFoto = new NProductoFoto.CrearViewModel
                 {
                     CategoriaId = this.Categorias.Find(c => c.Nombre == producto.Categoria).Id,
                     Nombre = producto.Nombre,
@@ -71,31 +68,31 @@ namespace Sistema.Admin.Pages.Almacen.Productos
             }
             else
             {
-                this.Producto = new NProducto.CrearViewModel();
+                this.ProductoFoto = new NProductoFoto.CrearViewModel();
             }
         }
 
         protected async Task HandleValidSubmit()
         {
             bool resultado;
-            this.Producto.CategoriaId = int.Parse(this.CategoriaId, NumberStyles.Integer, CultureInfo.InvariantCulture);
+            this.ProductoFoto.CategoriaId = int.Parse(this.CategoriaId, NumberStyles.Integer, CultureInfo.InvariantCulture);
 
-            if (int.TryParse(ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
+            if (int.TryParse(ProductoFotoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
             {
-                var producto = new NProducto.ActualizarViewModel
+                var producto = new NProductoFoto.ActualizarViewModel
                 {
                     Id = productoId,
-                    Nombre = this.Producto.Nombre,
-                    Precio = this.Producto.Precio,
-                    Marca = this.Producto.Marca,
-                    Stock = this.Producto.Stock,
-                    Descripcion = this.Producto.Descripcion,
+                    Nombre = this.ProductoFoto.Nombre,
+                    Precio = this.ProductoFoto.Precio,
+                    Marca = this.ProductoFoto.Marca,
+                    Stock = this.ProductoFoto.Stock,
+                    Descripcion = this.ProductoFoto.Descripcion,
                 };
-                resultado = await this.ProductoDataService.Actualizar(producto).ConfigureAwait(false);
+                resultado = await this.ProductoFotoDataService.Actualizar(producto).ConfigureAwait(false);
             }
             else
             {
-                resultado = await this.ProductoDataService.Crear(this.Producto).ConfigureAwait(false);
+                resultado = await this.ProductoFotoDataService.Crear(this.ProductoFoto).ConfigureAwait(false);
             }
 
             this.Alert = new ShowAlert.Alert
