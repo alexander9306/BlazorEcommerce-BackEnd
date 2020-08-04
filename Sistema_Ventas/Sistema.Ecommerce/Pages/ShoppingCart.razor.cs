@@ -1,10 +1,9 @@
-﻿using Sistema.Shared.Helpers.Producto;
-
-namespace Sistema.Ecommerce.Pages
+﻿namespace Sistema.Ecommerce.Pages
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Sistema.Shared.Entidades.Ordenes.Carrito;
+    using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Services.Ordenes.Carrito;
 
     public partial class ShoppingCart

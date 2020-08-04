@@ -6,6 +6,7 @@ namespace Sistema.Admin
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
+    using Sistema.Shared.Helpers.General;
     using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Providers;
     using Sistema.Shared.Services.Almacen.Categoria;
@@ -59,6 +60,7 @@ namespace Sistema.Admin
                 client.BaseAddress = new Uri(baseAddress + "/pagos/"));
 
             // Helper Classes //
+            builder.Services.AddSingleton<IStringHelper, StringHelper>();
             builder.Services.AddSingleton<IProductoHelper, ProductoHelper>();
 
             await builder.Build().RunAsync().ConfigureAwait(false);

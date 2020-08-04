@@ -1,4 +1,6 @@
-﻿namespace Sistema.Shared.Services.Usuario.Administrador
+﻿using System.Collections.Generic;
+
+namespace Sistema.Shared.Services.Usuario.Administrador
 {
     using System.Net;
     using System.Net.Http;
@@ -61,13 +63,38 @@
             this._httpClient.DefaultRequestHeaders.Authorization = null;
         }
 
-        public async Task<bool> Registrar(CrearViewModel model)
+        public Task<IEnumerable<AdministradorViewModel>> Listar()
         {
-            var usuarioJson =
-                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-            var response = await this._httpClient.PostAsync($"crear", usuarioJson).ConfigureAwait(false);
+            throw new System.NotImplementedException();
+        }
 
-            usuarioJson.Dispose();
+        public Task<AdministradorViewModel> Mostrar(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> Activar(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> Desactivar(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<bool> Actualizar(ActualizarViewModel model)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<bool> Crear(CrearViewModel model)
+        {
+            var modelJson =
+                new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await this._httpClient.PostAsync($"crear", modelJson).ConfigureAwait(false);
+
+            modelJson.Dispose();
 
             if (response.StatusCode == HttpStatusCode.Created)
             {

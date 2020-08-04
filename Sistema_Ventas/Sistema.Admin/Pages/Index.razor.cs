@@ -19,6 +19,10 @@
             {
                 this.NavigationManager.NavigateTo("/login");
             }
+            else
+            {
+                this.NavigationManager.NavigateTo("/categorias");
+            }
         }
     }
 }

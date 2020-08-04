@@ -7,4 +7,11 @@
     [Parameter] public string Message { get; set; }
 
     [Parameter] public string Type { get; set; }
+
+    public class Alert
+    {
+        public string Type { get; set; }
+
+        public string Message { get => (this.Type == "danger") ? "Hubo un problema con su solicitud." : "Solicitud creada correctamente."; }
+    }
 }

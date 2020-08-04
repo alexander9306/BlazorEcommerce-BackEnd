@@ -58,15 +58,20 @@
                 return this.BadRequest();
             }
 
-            var categoria = new Categoria
+            var categoria = await this._context.Categorias.FindAsync(id).ConfigureAwait(false);
+
+            if (categoria == null)
+            {
+                return this.NotFound();
+            }
+
+            categoria = new Categoria
             {
                 Id = model.Id,
                 Nombre = model.Nombre,
                 Descripcion = model.Descripcion,
                 UpdatedAt = DateTime.Now,
             };
-
-            this._context.Entry(categoria).State = EntityState.Modified;
 
             try
             {

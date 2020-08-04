@@ -1,6 +1,4 @@
-﻿using Sistema.Shared.Helpers.Producto;
-
-namespace Sistema.Ecommerce.Pages
+﻿namespace Sistema.Ecommerce.Pages
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -9,6 +7,7 @@ namespace Sistema.Ecommerce.Pages
     using Sistema.Shared.Entidades.Almacen.Categoria;
     using Sistema.Shared.Entidades.Almacen.Marca;
     using Sistema.Shared.Entidades.Almacen.Producto;
+    using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Services.Almacen.Categoria;
     using Sistema.Shared.Services.Almacen.Marca;
     using Sistema.Shared.Services.Almacen.Producto;

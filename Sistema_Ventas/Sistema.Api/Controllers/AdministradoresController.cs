@@ -1,5 +1,3 @@
-/*reynaldo yunior*/
-
 namespace Sistema.Api.Controllers
 {
     using System;
@@ -43,7 +41,7 @@ namespace Sistema.Api.Controllers
 
             var usuario = await this._context.Administradores.Where(a => a.Estado)
                 .Include(a => a.Rol)
-                .FirstOrDefaultAsync(a => EmailVerifier.IsValid(username) ? a.Email == username : a.Username == username)
+                .FirstOrDefaultAsync(a => a.Estado && EmailVerifier.IsValid(username) ? a.Email == username : a.Username == username)
                 .ConfigureAwait(false);
 
             if (usuario == null)
@@ -67,7 +65,7 @@ namespace Sistema.Api.Controllers
             };
 
             return this.Ok(
-                new { token = this._tokenHelper.GenerarToken(claims) }
+                new { token = this._tokenHelper.GenerarToken(claims, 60 * 24 * 4) }
             );
         }
 

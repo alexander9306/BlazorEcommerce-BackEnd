@@ -1,5 +1,6 @@
 ﻿namespace Sistema.Shared.Services.Usuario.Administrador
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Usuario.Administrador;
 
@@ -9,6 +10,16 @@
 
         Task Logout();
 
-        Task<bool> Registrar(CrearViewModel model);
+        Task<IEnumerable<AdministradorViewModel>> Listar();
+
+        Task<AdministradorViewModel> Mostrar(int id);
+
+        Task<bool> Activar(int id);
+
+        Task<bool> Desactivar(int id);
+
+        Task<bool> Crear(CrearViewModel model);
+
+        Task<bool> Actualizar(ActualizarViewModel model);
     }
 }
