@@ -8,9 +8,9 @@
         private readonly string _key;
         private readonly System.Text.Encoding _encoding = System.Text.Encoding.UTF8;
 
-        public PasswordHelper(IConfiguration config)
+        public PasswordHelper(IConfiguration? config = null)
         {
-            this._key = config.GetValue<string>("Salting:Key") ?? "ValorPorDefecto";
+            this._key = config?.GetValue<string>("Salting:Key") ?? "ValorPorDefecto";
         }
 
         public void CrearPasswordHash(string password, out byte[] passwordHash)

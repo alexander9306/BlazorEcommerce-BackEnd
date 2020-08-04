@@ -9,7 +9,7 @@
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Ordenes;
-    using Sistema.Api.Models.Ordenes.Pago;
+    using Sistema.Shared.Entidades.Ordenes.Pago;
 
     [Route("api/[controller]")]
     [ApiController]

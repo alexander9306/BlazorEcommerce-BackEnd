@@ -1,9 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sb-nav-fixed @NavMenuCssClass">
+<div class="@MainDivClass @NavMenuCssClass">
 
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">Admin</a>
+        <a class="navbar-brand" href="#">Admin</a>
+                <AuthorizeView>
+            <Authorized>
+               <button class="btn btn-link btn-sm order-1 order-lg-0" @onclick="ToggleNavMenu" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+            </Authorized>
+        </AuthorizeView>
+
         <button class="btn btn-link btn-sm order-1 order-lg-0" @onclick="ToggleNavMenu" id="sidebarToggle" href="#">
             <i class="fas fa-bars"></i>
         </button>
@@ -11,18 +19,36 @@
     </nav>
 
     <div id="layoutSidenav">
-        <SideBarMenu />
+        <AuthorizeView>
+            <Authorized>
+                <SideBarMenu/>
+            </Authorized>
+        </AuthorizeView>
+
         <div id="layoutSidenav_content">
             @Body
-            <FooterMenu />
+            <FooterMenu/>
         </div>
     </div>
 </div>
 
 @code {
     private bool collapseNavMenu = true;
-
+    [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+    
+    private string MainDivClass {get; set;} = "sb-nav-fixed";
     private string NavMenuCssClass => collapseNavMenu ? null : "sb-sidenav-toggled";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            this.MainDivClass = "bg-primary";
+        }
+    }
 
     private void ToggleNavMenu()
     {

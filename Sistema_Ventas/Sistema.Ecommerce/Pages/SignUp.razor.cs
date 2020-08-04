@@ -2,16 +2,16 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Sistema.Ecommerce.Services.Usuario;
-    using Sistema.Shared.Entidades.Usuario;
+    using Sistema.Shared.Entidades.Usuario.Cliente;
+    using Sistema.Shared.Services.Usuario.Cliente;
 
     public partial class SignUp
     {
-        [Inject] private ILoginDataService LoginDataService { get; set; }
+        [Inject] private IClienteDataService LoginDataService { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
-        private ClienteRegister Cliente = new ClienteRegister();
+        private CrearViewModel Cliente = new CrearViewModel();
 
         public Alert Alert { get; set; }
 

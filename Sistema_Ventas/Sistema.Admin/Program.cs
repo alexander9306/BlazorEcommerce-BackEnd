@@ -1,17 +1,24 @@
 namespace Sistema.Admin
 {
     using System;
-    using System.Net.Http;
     using System.Threading.Tasks;
     using Blazored.LocalStorage;
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-    using Sistema.Admin.Helpers;
-    using Sistema.Admin.Providers;
-    using Sistema.Admin.Services.Almacen;
-    using Sistema.Admin.Services.Ordenes;
-    using Sistema.Admin.Services.Usuario;
+    using Sistema.Shared.Helpers.General;
+    using Sistema.Shared.Helpers.Producto;
+    using Sistema.Shared.Providers;
+    using Sistema.Shared.Services.Almacen.Categoria;
+    using Sistema.Shared.Services.Almacen.Marca;
+    using Sistema.Shared.Services.Almacen.Producto;
+    using Sistema.Shared.Services.Ordenes.Carrito;
+    using Sistema.Shared.Services.Ordenes.Orden;
+    using Sistema.Shared.Services.Ordenes.Pago;
+    using Sistema.Shared.Services.Ordenes.Pedido;
+    using Sistema.Shared.Services.Usuario.Administrador;
+    using Sistema.Shared.Services.Usuario.Rol;
+    using Sistema.Shared.Services.Usuario.Cliente;
 
     public class Program
     {
@@ -22,7 +29,6 @@ namespace Sistema.Admin
 
             var baseAddress = "https://localhost:44303/api";
 
-
             // Authorization Services //
             builder.Services.AddAuthorizationCore();
             builder.Services.AddHttpClient<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
@@ -30,11 +36,15 @@ namespace Sistema.Admin
             // Local Storage Handler
             builder.Services.AddBlazoredLocalStorage();
 
-
             // Http Client Providers //
-            builder.Services.AddHttpClient<ILoginDataService, LoginDataService>(client =>
+            builder.Services.AddHttpClient<IClienteDataService, ClienteDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/clientes/"));
 
+            builder.Services.AddHttpClient<IAdminDataService, AdminDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/administradores/"));
+
+            builder.Services.AddHttpClient<IRolDataService, RolDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/roles/"));
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/productos/"));
@@ -58,10 +68,10 @@ namespace Sistema.Admin
                 client.BaseAddress = new Uri(baseAddress + "/pagos/"));
 
             // Helper Classes //
+            builder.Services.AddSingleton<IStringHelper, StringHelper>();
             builder.Services.AddSingleton<IProductoHelper, ProductoHelper>();
 
-
-            await builder.Build().RunAsync();
+            await builder.Build().RunAsync().ConfigureAwait(false);
         }
     }
 }

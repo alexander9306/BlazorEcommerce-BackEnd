@@ -6,11 +6,16 @@ namespace Sistema.Ecommerce
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-    using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Providers;
-    using Sistema.Ecommerce.Services.Almacen;
-    using Sistema.Ecommerce.Services.Ordenes;
-    using Sistema.Ecommerce.Services.Usuario;
+    using Sistema.Shared.Helpers.Producto;
+    using Sistema.Shared.Providers;
+    using Sistema.Shared.Services.Almacen.Categoria;
+    using Sistema.Shared.Services.Almacen.Marca;
+    using Sistema.Shared.Services.Almacen.Producto;
+    using Sistema.Shared.Services.Ordenes.Carrito;
+    using Sistema.Shared.Services.Ordenes.Orden;
+    using Sistema.Shared.Services.Ordenes.Pago;
+    using Sistema.Shared.Services.Ordenes.Pedido;
+    using Sistema.Shared.Services.Usuario.Cliente;
 
     public class Program
     {
@@ -29,9 +34,8 @@ namespace Sistema.Ecommerce
             builder.Services.AddBlazoredLocalStorage();
 
             // Http Client Providers //
-            builder.Services.AddHttpClient<ILoginDataService, LoginDataService>(client =>
+            builder.Services.AddHttpClient<IClienteDataService, ClienteDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/clientes/"));
-
 
             builder.Services.AddHttpClient<IProductoDataService, ProductoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/productos/"));

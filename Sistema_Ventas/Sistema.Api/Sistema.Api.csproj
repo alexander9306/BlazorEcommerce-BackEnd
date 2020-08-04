@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Datos\Mapping\Ordenes\" />
     <Folder Include="wwwroot\images\slider\" />
   </ItemGroup>
 
@@ -34,6 +33,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sistema.Shared\Sistema.Shared.csproj" />
   </ItemGroup>
 
 

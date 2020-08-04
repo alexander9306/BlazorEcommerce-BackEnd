@@ -12,7 +12,7 @@
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Ordenes;
     using Sistema.Api.Helpers;
-    using Sistema.Api.Models.Ordenes.Orden;
+    using Sistema.Shared.Entidades.Ordenes.Orden;
 
     [Authorize]
     [Route("api/[controller]")]

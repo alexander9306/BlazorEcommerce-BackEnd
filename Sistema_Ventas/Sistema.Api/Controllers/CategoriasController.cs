@@ -8,7 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
-    using Sistema.Api.Models.Almacen.Categoria;
+    using Sistema.Shared.Entidades.Almacen.Categoria;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -58,15 +58,16 @@
                 return this.BadRequest();
             }
 
-            var categoria = new Categoria
-            {
-                Id = model.Id,
-                Nombre = model.Nombre,
-                Descripcion = model.Descripcion,
-                UpdatedAt = DateTime.Now,
-            };
+            var categoria = await this._context.Categorias.FindAsync(id).ConfigureAwait(false);
 
-            this._context.Entry(categoria).State = EntityState.Modified;
+            if (categoria == null)
+            {
+                return this.NotFound();
+            }
+
+            categoria.Nombre = model.Nombre;
+            categoria.Descripcion = model.Descripcion;
+            categoria.UpdatedAt = DateTime.Now;
 
             try
             {

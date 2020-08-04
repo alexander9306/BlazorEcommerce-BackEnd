@@ -2,14 +2,13 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services;
-    using Sistema.Ecommerce.Services.Ordenes;
-    using Sistema.Shared.Entidades.Ordenes;
+    using Sistema.Shared.Entidades.Ordenes.Carrito;
+    using Sistema.Shared.Helpers.Producto;
+    using Sistema.Shared.Services.Ordenes.Carrito;
 
     public partial class ShoppingCart
     {
-        public Carrito Carrito { get; set; }
+        public CarritoViewModel Carrito { get; set; }
 
         [Inject]
         public ICarritoDataService CarritoDataService { get; set; }
@@ -17,7 +16,7 @@
         [Inject]
         public IProductoHelper ProductoHelper { get; set; }
 
-        protected bool ShowMessage;
+        private bool ShowMessage;
 
         protected override async Task OnInitializedAsync()
         {

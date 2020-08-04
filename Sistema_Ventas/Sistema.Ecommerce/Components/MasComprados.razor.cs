@@ -4,10 +4,9 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Sistema.Ecommerce.Helpers;
-    using Sistema.Ecommerce.Services;
-    using Sistema.Ecommerce.Services.Almacen;
-    using Sistema.Shared.Entidades.Almacen;
+    using Sistema.Shared.Entidades.Almacen.Producto;
+    using Sistema.Shared.Helpers.Producto;
+    using Sistema.Shared.Services.Almacen.Producto;
 
     public partial class MasComprados
     {
@@ -17,7 +16,7 @@
         [Inject]
         public IProductoHelper PoductoHelper { get; set; }
 
-        public List<Producto> Productos { get; set; }
+        public List<ProductoViewModel> Productos { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

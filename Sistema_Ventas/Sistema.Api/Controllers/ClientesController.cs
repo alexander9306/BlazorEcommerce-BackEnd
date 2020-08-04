@@ -14,7 +14,7 @@ namespace Sistema.Api.Controllers
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Usuario;
     using Sistema.Api.Helpers;
-    using Sistema.Api.Models.Usuario.Cliente;
+    using Sistema.Shared.Entidades.Usuario.Cliente;
 
     [Authorize]
     [Route("api/[controller]")]
@@ -38,7 +38,7 @@ namespace Sistema.Api.Controllers
         // POST: api/clientes/login
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(ClienteLogin model)
         {
             var email = model.Email.Trim().ToUpperInvariant();
 
@@ -138,20 +138,15 @@ namespace Sistema.Api.Controllers
             {
                 return this.BadRequest();
             }
-
-            var cliente = new Cliente
-            {
-                Id = model.Id,
-                UpdatedAt = DateTime.Now,
-            };
+            
+            var cliente = await this._context.Clientes.FindAsync(id).ConfigureAwait(false);
+            cliente.UpdatedAt = DateTime.Now;
 
             if (model.ActPassword)
             {
                 this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
                 cliente.PasswordHash = passwordHash;
             }
-
-            this._context.Entry(cliente).State = EntityState.Modified;
 
             try
             {

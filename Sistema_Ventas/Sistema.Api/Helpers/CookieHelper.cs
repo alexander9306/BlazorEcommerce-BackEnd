@@ -42,7 +42,6 @@
             this.Response.Cookies.Append(key, value, option);
         }
 
-
         /// <summary>
         /// Delete the key.
         /// </summary>

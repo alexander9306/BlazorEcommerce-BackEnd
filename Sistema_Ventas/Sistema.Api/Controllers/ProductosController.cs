@@ -6,12 +6,11 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.EntityFrameworkCore;
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
-    using Sistema.Api.Models.Almacen.Producto;
-    using Sistema.Api.Models.Almacen.ProductoFoto;
+    using Sistema.Shared.Entidades.Almacen.Producto;
+    using Sistema.Shared.Entidades.Almacen.ProductoFoto;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -28,7 +27,7 @@
         [HttpGet("[action]/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> Listar(int limit, string before)
         {
-            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind,  out var cursor);
+            var hasCursor = DateTime.TryParse(before, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind, out var cursor);
 
             var productos = await this._context.Productos
                  .Include(p => p.Categoria)
@@ -46,29 +45,29 @@
                 .ConfigureAwait(false);
 
             return this.Ok(productos.Select(p => new ProductoViewModel
-                 {
-                     Id = p.Id,
-                     Nombre = p.Nombre,
-                     Categoria = p.Categoria.Nombre,
-                     Precio = p.Precio,
-                     Estado = p.Estado,
-                     Marca = p.Marca.Nombre,
-                     Stock = p.Stock,
-                     Descripcion = p.Descripcion,
-                     CreatedAt = p.CreatedAt,
-                     UpdatedAt = p.UpdatedAt,
-                     Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
-                     {
-                         ProductoId = f.ProductoId,
-                         CreatedAt = f.CreatedAt,
-                         IsPrincipal = f.IsPrincipal,
-                         FotoUrl = f.FotoUrl,
-                         FotoPublicId = f.FotoPublicId,
-                     }),
-                 }));
+            {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Categoria = p.Categoria.Nombre,
+                Precio = p.Precio,
+                Estado = p.Estado,
+                Marca = p.Marca.Nombre,
+                Stock = p.Stock,
+                Descripcion = p.Descripcion,
+                CreatedAt = p.CreatedAt,
+                UpdatedAt = p.UpdatedAt,
+                Fotos = fotos.Where(f => f.ProductoId == p.Id).Select(f => new ProductoFotoViewModel
+                {
+                    ProductoId = f.ProductoId,
+                    CreatedAt = f.CreatedAt,
+                    IsPrincipal = f.IsPrincipal,
+                    FotoUrl = f.FotoUrl,
+                    FotoPublicId = f.FotoPublicId,
+                }),
+            }));
         }
 
-        // GET: api/Productos/Listar/limit/before
+        // GET: api/Productos/ListarRelacionados/limit/before
         [HttpGet("[action]/{productoId}/{limit}/{before}")]
         public async Task<ActionResult<IEnumerable<ProductoViewModel>>> ListarRelacionados(int productoId, int limit, string before)
         {
@@ -248,20 +247,15 @@
                 }
             }
 
-            var producto = new Producto
-            {
-                Id = model.Id,
-                CategoriaId = model.CategoriaId,
-                Nombre = model.Nombre,
-                Descripcion = model.Descripcion,
-                Precio = model.Precio,
-                MarcaId = marca.Id,
-                Stock = model.Stock,
-                Estado = true,
-                UpdatedAt = fecha,
-            };
+            var producto = await this._context.Productos.FindAsync(id).ConfigureAwait(false);
 
-            this._context.Entry(producto).State = EntityState.Modified;
+            producto.CategoriaId = model.CategoriaId;
+            producto.Nombre = model.Nombre;
+            producto.Descripcion = model.Descripcion;
+            producto.Precio = model.Precio;
+            producto.MarcaId = marca.Id;
+            producto.Stock = model.Stock;
+            producto.UpdatedAt = fecha;
 
             try
             {

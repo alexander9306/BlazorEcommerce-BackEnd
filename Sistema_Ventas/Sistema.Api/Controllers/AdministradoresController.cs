@@ -1,5 +1,3 @@
-/*reynaldo yunior*/
-
 namespace Sistema.Api.Controllers
 {
     using System;
@@ -8,6 +6,7 @@ namespace Sistema.Api.Controllers
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -15,9 +14,10 @@ namespace Sistema.Api.Controllers
     using Sistema.Api.Entidades.Usuario;
     using Sistema.Api.Helpers;
     using Sistema.Api.Helpers.Validators;
-    using Sistema.Api.Models.Usuario.Administrador;
+    using Sistema.Shared.Entidades.Usuario.Administrador;
 
     [Route("api/[controller]")]
+    //[Authorize(Roles= "Administrador,Organizador")]
     [ApiController]
     public class AdministradoresController : ControllerBase
     {
@@ -34,13 +34,14 @@ namespace Sistema.Api.Controllers
 
         // POST: api/Administradores/login
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(AdminLogin model)
         {
-            var username = model.Usuario.ToLower(CultureInfo.CurrentCulture);
+            var username = model.Usuario.ToUpperInvariant().Trim();
 
             var usuario = await this._context.Administradores.Where(a => a.Estado)
                 .Include(a => a.Rol)
-                .FirstOrDefaultAsync(a => EmailVerifier.IsValid(username) ? a.Email == username : a.Username == username)
+                .FirstOrDefaultAsync(a => a.Estado && EmailVerifier.IsValid(username) ? a.Email == username : a.Username == username)
                 .ConfigureAwait(false);
 
             if (usuario == null)
@@ -64,7 +65,7 @@ namespace Sistema.Api.Controllers
             };
 
             return this.Ok(
-                new { token = this._tokenHelper.GenerarToken(claims) }
+                new { token = this._tokenHelper.GenerarToken(claims, 60 * 24 * 4) }
             );
         }
 
@@ -129,23 +130,23 @@ namespace Sistema.Api.Controllers
                 return this.BadRequest();
             }
 
-            var administrador = new Administrador
-            {
-                Id = model.Id,
-                RolId = model.RolId,
-                Email = model.Email,
-                Username = model.Username,
-                Estado = true,
-                UpdatedAt = DateTime.Now,
-            };
+            var administrador = await this._context.Administradores.FindAsync(id).ConfigureAwait(false);
 
+            if (administrador == null)
+            {
+                return this.NotFound();
+            }
+
+            administrador.RolId = model.RolId;
+            administrador.Email = model.Email.Trim().ToUpperInvariant();
+            administrador.Username = model.Username.Trim().ToUpperInvariant();
+            administrador.UpdatedAt = DateTime.Now;
+        
             if (model.ActPassword)
             {
                 this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);
                 administrador.PasswordHash = passwordHash;
             }
-
-            this._context.Entry(administrador).State = EntityState.Modified;
 
             try
             {
@@ -184,8 +185,8 @@ namespace Sistema.Api.Controllers
             var administrador = new Administrador
             {
                 RolId = model.RolId,
-                Email = model.Email,
-                Username = model.Username,
+                Email = model.Email.Trim().ToUpperInvariant(),
+                Username = model.Username.Trim().ToUpperInvariant(),
                 PasswordHash = passwordHash,
                 CreatedAt = fecha,
                 UpdatedAt = fecha,
