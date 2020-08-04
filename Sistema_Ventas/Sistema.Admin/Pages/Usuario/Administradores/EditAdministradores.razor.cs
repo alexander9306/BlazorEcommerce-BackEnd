@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sistema.Admin.Pages
+﻿namespace Sistema.Admin.Pages.Usuario.Administradores
 {
     using System.Collections.Generic;
     using System.Globalization;

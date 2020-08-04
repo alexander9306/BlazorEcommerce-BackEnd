@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sistema.Admin.Pages
+﻿namespace Sistema.Admin.Pages.Almacen.Categorias
 {
     using System.Globalization;
     using System.Threading.Tasks;

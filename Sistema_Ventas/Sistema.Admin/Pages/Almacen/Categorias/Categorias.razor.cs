@@ -1,4 +1,4 @@
-﻿namespace Sistema.Admin.Pages
+﻿namespace Sistema.Admin.Pages.Almacen.Categorias
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -6,11 +6,11 @@
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.JSInterop;
-    using Sistema.Shared.Entidades.Usuario.Administrador;
+    using Sistema.Shared.Entidades.Almacen.Categoria;
     using Sistema.Shared.Helpers.General;
-    using Sistema.Shared.Services.Usuario.Administrador;
+    using Sistema.Shared.Services.Almacen.Categoria;
 
-    public partial class Administradores
+    public partial class Categorias
     {
         [Inject] private NavigationManager NavigationManager { get; set; }
 
@@ -18,11 +18,11 @@
 
         [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
-        [Inject] private IAdminDataService AdministradorDataService { get; set; }
+        [Inject] private ICategoriaDataService CategoriaDataService { get; set; }
 
         [Inject] private IStringHelper StringHelper { get; set; } = new StringHelper();
 
-        private List<AdministradorViewModel> LAdministradores { get; set; }
+        private List<CategoriaViewModel> LCategorias { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,26 +34,26 @@
                 this.NavigationManager.NavigateTo("/login");
             }
 
-            this.LAdministradores = (await this.AdministradorDataService.Listar().ConfigureAwait(false)).ToList();
+            this.LCategorias = (await this.CategoriaDataService.Listar().ConfigureAwait(false)).ToList();
         }
 
-        private async Task CambiarEstado(AdministradorViewModel administrador)
+        private async Task CambiarEstado(CategoriaViewModel categoria)
         {
-            if (administrador.Estado)
+            if (categoria.Estado)
             {
-                await this.AdministradorDataService.Desactivar(administrador.Id).ConfigureAwait(false);
+                await this.CategoriaDataService.Desactivar(categoria.Id).ConfigureAwait(false);
             }
             else
             {
-                await this.AdministradorDataService.Activar(administrador.Id).ConfigureAwait(false);
+                await this.CategoriaDataService.Activar(categoria.Id).ConfigureAwait(false);
             }
 
-            this.LAdministradores = (await this.AdministradorDataService.Listar().ConfigureAwait(false)).ToList();
+            this.LCategorias = (await this.CategoriaDataService.Listar().ConfigureAwait(false)).ToList();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (this.LAdministradores != null)
+            if (this.LCategorias != null)
             {
                 await this.JsRuntime.InvokeVoidAsync("BlazorMethods.getTable").ConfigureAwait(false);
             }
