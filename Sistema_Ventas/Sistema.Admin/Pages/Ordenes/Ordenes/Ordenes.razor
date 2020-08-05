@@ -1,0 +1,79 @@
+﻿@page "/ordenes"
+
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Ordenes</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Admin / Ordenes</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Ordenes
+                </div>
+                <div class="card-body">
+                    @if (LOrdenes == null)
+                    {
+                        <Loading />
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="MydataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Cliente</th>
+                                        <th>Latitud</th>
+                                        <th>Longitud</th>
+                                        <th>Direccion</th>
+                                        <th>Telefono</th>
+                                        <th>Estado</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Cliente</th>
+                                        <th>Latitud</th>
+                                        <th>Longitud</th>
+                                        <th>Direccion</th>
+                                        <th>Telefono</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @if (LOrdenes != null)
+                                    {
+                                        foreach (var ordenes in LOrdenes)
+                                        {
+                                            <tr>
+                                                <td>@ordenes.Id</td>
+                                                <td>@ordenes.Cliente</td>
+                                                <td>@ordenes.Latitud</td>
+                                                <td>@ordenes.Longitud</td>
+                                                <td>@ordenes.Direccion</td>
+                                                <td>@ordenes.Telefono</td>
+                                                <td>@ordenes.CreatedAt</td>
+                                                <td>@StringHelper.GetEstado(ordenes.Estado)</td>
+                                                <td>@ordenes.Total</td>
+                                                <td>
+                                                    <a href="/ordenes/editar/@ordenes.Id">Editar</a>
+                                                    <a href="javascript:void(0)" @onclick="() => CambiarEstado(ordenes)">@(ordenes.Estado ? "Desactivar" : "Activar")</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                     }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+            <a type="button" href="/ordenes/editar" class="btn btn-outline-primary float-right ">Nuevo Registro</a>
+        </div>
+    </main>
