@@ -2,10 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
-<<<<<<< HEAD
     using System.IO;
-=======
->>>>>>> origin/Reynaldo
     using Microsoft.AspNetCore.Http;
 
     public sealed class MaxFileSizeAttribute : ValidationAttribute
@@ -27,11 +24,7 @@
 
         public override bool IsValid(object value)
         {
-<<<<<<< HEAD
             var file = value as FileStream;
-=======
-            var file = value as IFormFile;
->>>>>>> origin/Reynaldo
 
             return file == null || file.Length < this._maxFileSize;
         }

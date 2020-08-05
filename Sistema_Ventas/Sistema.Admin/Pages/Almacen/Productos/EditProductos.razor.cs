@@ -2,7 +2,6 @@ namespace Sistema.Admin.Pages.Almacen.Productos
 {
     using System.Collections.Generic;
     using System.Globalization;
-<<<<<<< HEAD
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
@@ -17,19 +16,6 @@ namespace Sistema.Admin.Pages.Almacen.Productos
     public partial class EditProductos
     {
         [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
-=======
-    using System.Threading.Tasks;
-    using System.Linq;
-    using Microsoft.AspNetCore.Components;
-    using Sistema.Admin.Components;
-    using NProducto = Sistema.Shared.Entidades.Almacen.Producto;
-    using Sistema.Shared.Entidades.Almacen.Categoria;
-    using Sistema.Shared.Services.Almacen.Producto;
-    using Sistema.Shared.Services.Almacen.Categoria ;
-
-    public partial class EditProductos
-    {
->>>>>>> origin/Reynaldo
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
@@ -51,7 +37,6 @@ namespace Sistema.Admin.Pages.Almacen.Productos
 
         protected override async Task OnInitializedAsync()
         {
-<<<<<<< HEAD
             var authState = await authenticationStateTask;
             var user = authState.User;
 
@@ -60,8 +45,6 @@ namespace Sistema.Admin.Pages.Almacen.Productos
                 this.NavigationManager.NavigateTo("/login");
             }
 
-=======
->>>>>>> origin/Reynaldo
             this.Saved = false;
             this.Categorias = (await this.CategoriaDataService.Listar().ConfigureAwait(false)).ToList();
 
@@ -69,7 +52,6 @@ namespace Sistema.Admin.Pages.Almacen.Productos
             {
                 var producto = await this.ProductoDataService.Mostrar(productoId).ConfigureAwait(false);
 
-<<<<<<< HEAD
                 if (producto == null)
                 {
                     this.Alert = new ShowAlert.Alert
@@ -79,8 +61,6 @@ namespace Sistema.Admin.Pages.Almacen.Productos
                     return;
                 }
 
-=======
->>>>>>> origin/Reynaldo
                 this.Producto = new NProducto.CrearViewModel
                 {
                     CategoriaId = this.Categorias.Find(c => c.Nombre == producto.Categoria).Id,
@@ -95,11 +75,8 @@ namespace Sistema.Admin.Pages.Almacen.Productos
             {
                 this.Producto = new NProducto.CrearViewModel();
             }
-<<<<<<< HEAD
 
             this.CategoriaId = this.Producto.CategoriaId.ToString(CultureInfo.InvariantCulture);
-=======
->>>>>>> origin/Reynaldo
         }
 
         protected async Task HandleValidSubmit()
@@ -112,10 +89,7 @@ namespace Sistema.Admin.Pages.Almacen.Productos
                 var producto = new NProducto.ActualizarViewModel
                 {
                     Id = productoId,
-<<<<<<< HEAD
                     CategoriaId = this.Producto.CategoriaId,
-=======
->>>>>>> origin/Reynaldo
                     Nombre = this.Producto.Nombre,
                     Precio = this.Producto.Precio,
                     Marca = this.Producto.Marca,

@@ -34,7 +34,6 @@
                 return true;
             }
 
-<<<<<<< HEAD
             var valueAsFileStream = value as FileStream;
             if (valueAsFileStream != null)
             {
@@ -42,8 +41,6 @@
             }
 
 
-=======
->>>>>>> origin/Reynaldo
             var valueAsIFormFile = value as IFormFile;
             if (valueAsIFormFile != null)
             {

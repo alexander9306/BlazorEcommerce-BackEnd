@@ -1,24 +1,12 @@
-<<<<<<< HEAD
 ﻿namespace Sistema.Shared.Services.Ordenes.Pedido
-=======
-﻿using System.Net;
-using System.Text;
-
-namespace Sistema.Shared.Services.Ordenes.Pedido
->>>>>>> origin/Reynaldo
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-<<<<<<< HEAD
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
-=======
-    using System.Net.Http;
-    using System.Net.Http.Headers;
->>>>>>> origin/Reynaldo
     using System.Text.Json;
     using System.Threading.Tasks;
     using Blazored.LocalStorage;

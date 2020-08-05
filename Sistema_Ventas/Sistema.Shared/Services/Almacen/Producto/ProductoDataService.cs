@@ -105,11 +105,8 @@
 
             var modelJson =
                 new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
-<<<<<<< HEAD
 
             Console.WriteLine(modelJson.ToString());
-=======
->>>>>>> origin/Reynaldo
             var response = await this._httpClient.PutAsync($"actualizar/{model.Id}", modelJson).ConfigureAwait(false);
 
             modelJson.Dispose();
