@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Sistema.Shared\Sistema.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sistema\Shared\Entidades\Ordenes\Pago\" />
+  </ItemGroup>
+
 </Project>
