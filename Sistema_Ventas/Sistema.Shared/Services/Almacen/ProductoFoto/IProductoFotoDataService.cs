@@ -8,8 +8,8 @@ namespace Sistema.Shared.Services.Almacen.ProductoFoto
     {
         Task<IEnumerable<ProductoFotoViewModel>> Listar(int productoId);
 
-        Task<bool> Crear(CrearProductofotoViewModel model);
-        
+        Task<bool> Crear(CrearProductofotoViewModel model, long length, string filename);
+
         Task<bool> Eliminar(int fotoId);
     }
 }

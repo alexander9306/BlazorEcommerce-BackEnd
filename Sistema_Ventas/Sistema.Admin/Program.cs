@@ -10,9 +10,9 @@ namespace Sistema.Admin
     using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Providers;
     using Sistema.Shared.Services.Almacen.Categoria;
-    using Sistema.Shared.Services.Almacen.ProductoFoto;
     using Sistema.Shared.Services.Almacen.Marca;
     using Sistema.Shared.Services.Almacen.Producto;
+    using Sistema.Shared.Services.Almacen.ProductoFoto;
     using Sistema.Shared.Services.Ordenes.Carrito;
     using Sistema.Shared.Services.Ordenes.Orden;
     using Sistema.Shared.Services.Ordenes.Pago;

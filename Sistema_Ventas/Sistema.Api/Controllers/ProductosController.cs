@@ -213,7 +213,7 @@
 
         // PUT: api/Productos/Actualizar/id
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromForm] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, ActualizarViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -276,7 +276,7 @@
 
         // POST: api/Productos/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<ProductoViewModel>> Crear([FromForm] CrearViewModel model)
+        public async Task<ActionResult<ProductoViewModel>> Crear(CrearViewModel model)
         {
             if (model == null)
             {

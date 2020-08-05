@@ -35,7 +35,7 @@ namespace Sistema.Api.Controllers
         // POST: api/Administradores/login
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(AdminLogin model)
+        public async Task<IActionResult> Login([FromForm] AdminLogin model)
         {
             var username = model.Usuario.ToUpperInvariant().Trim();
 
@@ -73,22 +73,22 @@ namespace Sistema.Api.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Administrador>>> Listar()
         {
-             var administradores = await this._context.Administradores
-             .Include(a => a.Rol)
-             .AsNoTracking()
-             .ToListAsync()
-             .ConfigureAwait(false);
+            var administradores = await this._context.Administradores
+            .Include(a => a.Rol)
+            .AsNoTracking()
+            .ToListAsync()
+            .ConfigureAwait(false);
 
-             return this.Ok(administradores.Select(a => new AdministradorViewModel
-                 {
-                     Id = a.Id,
-                     Username = a.Username,
-                     Rol = a.Rol.Nombre,
-                     Email = a.Email,
-                     Estado = a.Estado,
-                     CreatedAt = a.CreatedAt,
-                     UpdatedAt = a.UpdatedAt,
-                 }));
+            return this.Ok(administradores.Select(a => new AdministradorViewModel
+            {
+                Id = a.Id,
+                Username = a.Username,
+                Rol = a.Rol.Nombre,
+                Email = a.Email,
+                Estado = a.Estado,
+                CreatedAt = a.CreatedAt,
+                UpdatedAt = a.UpdatedAt,
+            }));
         }
 
         // GET: api/Administradores/Mostrar/id
@@ -97,7 +97,7 @@ namespace Sistema.Api.Controllers
         {
             var administrador = await this._context.Administradores
             .Include(a => a.Rol)
-            .FirstOrDefaultAsync(a => a.Id == id) 
+            .FirstOrDefaultAsync(a => a.Id == id)
             .ConfigureAwait(false);
 
             if (administrador == null)
@@ -105,7 +105,8 @@ namespace Sistema.Api.Controllers
                 return this.NotFound();
             }
 
-            return new AdministradorViewModel {
+            return new AdministradorViewModel
+            {
                 Id = administrador.Id,
                 Rol = administrador.Rol.Nombre,
                 Email = administrador.Email,
@@ -141,7 +142,7 @@ namespace Sistema.Api.Controllers
             administrador.Email = model.Email.Trim().ToUpperInvariant();
             administrador.Username = model.Username.Trim().ToUpperInvariant();
             administrador.UpdatedAt = DateTime.Now;
-        
+
             if (model.ActPassword)
             {
                 this._passwordHelper.CrearPasswordHash(model.Password, out byte[] passwordHash);

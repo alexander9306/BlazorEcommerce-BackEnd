@@ -53,17 +53,17 @@
 
             return this.Ok(ordenes.Select(orden => new OrdenViewModel
             {
-                     Id = orden.Id,
-                     ClienteId = orden.ClienteId,
-                     CarritoId = orden.CarritoId,
-                     Latitud = orden.Latitud,
-                     Longitud = orden.Longitud,
-                     Direccion = orden.Direccion,
-                     Telefono = orden.Telefono,
-                     CreatedAt = orden.CreatedAt,
-                     UpdatedAt = orden.UpdatedAt,
-                     Estado = orden.Pedido != null ? orden.Pedido.Estado : "Iniciado",
-                     //Total = orden.Pago.
+                Id = orden.Id,
+                ClienteId = orden.ClienteId,
+                CarritoId = orden.CarritoId,
+                Latitud = orden.Latitud,
+                Longitud = orden.Longitud,
+                Direccion = orden.Direccion,
+                Telefono = orden.Telefono,
+                CreatedAt = orden.CreatedAt,
+                UpdatedAt = orden.UpdatedAt,
+                Estado = orden.Pedido != null ? orden.Pedido.Estado : "Iniciado",
+                //Total = orden.Pago.
             }));
         }
 

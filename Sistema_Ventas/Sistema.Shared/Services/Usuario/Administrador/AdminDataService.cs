@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Sistema.Shared.Services.Usuario.Administrador
+﻿namespace Sistema.Shared.Services.Usuario.Administrador
 {
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;

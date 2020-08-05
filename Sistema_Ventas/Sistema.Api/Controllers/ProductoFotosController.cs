@@ -46,38 +46,38 @@
         [HttpDelete("[action]/{id}")]
         public async Task<ActionResult> Eliminar(int id)
         {
-             var foto = await this._context.ProductoFotos
-                 .FindAsync(id)
-                .ConfigureAwait(false);
+            var foto = await this._context.ProductoFotos
+                .FindAsync(id)
+               .ConfigureAwait(false);
 
-             if (foto == null)
-             {
-                 return this.NotFound();
-             }
+            if (foto == null)
+            {
+                return this.NotFound();
+            }
 
-             var deletionResult = await BorrarFoto(foto.FotoPublicId).ConfigureAwait(false);
-             if (deletionResult.Result != "ok")
-             {
-                 return this.BadRequest("Hubo un error con su petición.");
-             }
+            //var deletionResult = await BorrarFoto(foto.FotoPublicId).ConfigureAwait(false);
+            //if (deletionResult.Result != "ok")
+            //{
+            //    return this.BadRequest("Hubo un error con su petición.");
+            //}
 
-             this._context.ProductoFotos.Remove(foto);
+            this._context.ProductoFotos.Remove(foto);
 
-             try
-             {
-                 await this._context.SaveChangesAsync().ConfigureAwait(false);
-             }
-             catch (DbUpdateConcurrencyException)
-             {
-                 if (!this.ProductoFotoExists(id))
-                 {
-                     return this.NotFound();
-                 }
+            try
+            {
+                await this._context.SaveChangesAsync().ConfigureAwait(false);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!this.ProductoFotoExists(id))
+                {
+                    return this.NotFound();
+                }
 
-                 return this.BadRequest("Hubo un error al guardar sus cambios.");
-             }
+                return this.BadRequest("Hubo un error al guardar sus cambios.");
+            }
 
-             return this.NoContent();
+            return this.NoContent();
         }
 
         // PUT: api/ProductoFotos/Actualizar/id
@@ -125,24 +125,25 @@
         }
 
         // POST: api/ProductoFotos/Crear
-        [HttpPost("[action]")]
-        public async Task<ActionResult<ProductoFoto>> Crear(CrearProductofotoViewModel model)
+        [HttpPost("[action]/{productoId}")]
+        [RequestFormLimits(ValueCountLimit = 5000)]
+        public async Task<ActionResult<ProductoFoto>> Crear(int productoId, [FromForm] IFormFile foto)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.BadRequest(this.ModelState);
-            }
+            //if (!this.ModelState.IsValid)
+            //{
+            //    return this.BadRequest(this.ModelState);
+            //}
 
-            var foto = new ProductoFoto
+            var fotoCtx = new ProductoFoto
             {
-                ProductoId = model.ProductoId,
-                IsPrincipal = model.IsPrincipal,
+                ProductoId = productoId,
+                IsPrincipal = false,
                 CreatedAt = DateTime.Now,
             };
 
-            await this.CrearFoto(foto, model.Foto).ConfigureAwait(false);
+            await this.CrearFoto(fotoCtx, foto).ConfigureAwait(false);
 
-            await this._context.ProductoFotos.AddAsync(foto).ConfigureAwait(false);
+            await this._context.ProductoFotos.AddAsync(fotoCtx).ConfigureAwait(false);
 
             try
             {
@@ -153,13 +154,25 @@
                 return this.BadRequest("Hubo un error al guardar sus datos.");
             }
 
-            return this.CreatedAtAction("Listar", new { foto.ProductoId });
+            return this.CreatedAtAction("Listar", new { fotoCtx.ProductoId });
         }
 
         private async Task<DeletionResult> BorrarFoto(string publicId)
         {
             var deletionParams = new DeletionParams(publicId);
             return await this._cloudinary.DestroyAsync(deletionParams).ConfigureAwait(false);
+        }
+
+        private async Task CrearFoto(ProductoFoto model, Stream foto, string nombre)
+        {
+            var uploadParams = new ImageUploadParams
+            {
+                File = new FileDescription(nombre, foto),
+            };
+            var uploadResult = await this._cloudinary.UploadAsync(uploadParams).ConfigureAwait(false);
+
+            model.FotoUrl = uploadResult.SecureUrl;
+            model.FotoPublicId = uploadResult.PublicId;
         }
 
         private async Task CrearFoto(ProductoFoto model, IFormFile foto)

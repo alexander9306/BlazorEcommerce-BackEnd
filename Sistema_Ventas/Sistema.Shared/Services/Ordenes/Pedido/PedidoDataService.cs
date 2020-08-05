@@ -1,13 +1,12 @@
-﻿using System.Net;
-using System.Text;
-
-namespace Sistema.Shared.Services.Ordenes.Pedido
+﻿namespace Sistema.Shared.Services.Ordenes.Pedido
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
+    using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
     using Blazored.LocalStorage;

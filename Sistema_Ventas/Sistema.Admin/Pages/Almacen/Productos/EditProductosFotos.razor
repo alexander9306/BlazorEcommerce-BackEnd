@@ -15,55 +15,62 @@
             <div class="card-body">
                 @if (!Saved)
                 {
-                    <EditForm Model="@Producto" OnValidSubmit="@HandleValidSubmit">
-                        <DataAnnotationsValidator />
-                        <ValidationSummary />
-                        <div class="form-group row">
-                            <label for="nombre" class="col-sm-3">Nombre: </label>
-                            <InputText id="nombre" class="form-control col-sm-8" @bind-Value="@Producto.Nombre" placeholder="nombre"></InputText>
-                        </div>
-                        <div class="form-group row">
-                            <label for="marca" class="col-sm-3">Marca: </label>
-                            <InputText id="marca" class="form-control col-sm-8" @bind-Value="@Producto.Marca" placeholder="marca"></InputText>
-                        </div>
-                        <div class="form-group row">
-                        <label for="Categoria" class="col-sm-3">Categoria: </label>
-                        <InputSelect id="Categoria" class="form-control col-sm-8" @bind-Value="@CategoriaId">
-                           @if (Categorias != null)
-                           {
-                               @foreach (var cat in Categorias)
-                               {
-                                   <option value="@cat.Id">@cat.Nombre</option>
-                               }
-                           }
-                        </InputSelect>
-                        </div>
-                        <div class="form-group row">
-                            <label for="precio" class="col-sm-3">Precio: </label>
-                            <InputNumber id="precio" class="form-control col-sm-8" @bind-Value="@Producto.Precio" placeholder="precio"></InputNumber>
-                        </div>
-                        <div class="form-group row">
-                            <label for="stock" class="col-sm-3">Stock: </label>
-                            <InputNumber id="stock" class="form-control col-sm-8" @bind-Value="@Producto.Stock" placeholder="stock"></InputNumber>
-                        </div>   
-                        <div class="form-group row">
-                            <label for="descripción" class="col-sm-3">Descripción: </label>
-                            <InputTextArea id="descripción" class="form-control col-sm-8" @bind-Value="@Producto.Descripcion" placeholder="descripción"></InputTextArea>
-                        </div>   
 
-                        <button type="submit" class="btn btn-primary edit-btn">Guardar</button>
-                        <a class="btn btn-outline-primary edit-outline-btn" @onclick="@NavigateToInfo">Cancelar</a>
+                    <InputFile OnChange="HandleSelection" ></InputFile>
+                    <button type="submit" class="btn btn-primary edit-btn">Subir</button>
+                    <a class="btn btn-outline-primary edit-outline-btn" @onclick="@NavigateToInfo">Regresar</a>
 
-                        @if (Alert != null)
-                        {
-                            <ShowAlert Message="@Alert.Message" Type="@Alert.Type" />
-                        }
-                    </EditForm>
+                    <div class="pt-2">
+                        <p><strong>Nombre:</strong> @(File?.Name ?? string.Empty)</p>
+                        <p><strong>Peso:</strong> @(File?.Size / 1024 / 1024 ?? 0)MB</p>
+                        <p><strong>Tipo:</strong> @(File?.Type ?? string.Empty)</p>
+                    </div>
+
+                    @if (Alert != null)
+                    {
+                        <ShowAlert Message="@Alert.Message" Type="@Alert.Type" />
+                    }
                 }
                 else
                 {
                     <ShowAlert Message="@Alert.Message" Type="@Alert.Type" />
                     <a class="btn btn-outline-primary" @onclick="@NavigateToInfo">Regresar</a>
+                }
+
+                @if (Fotos != null)
+                {
+                    <div class="container">
+                     
+                            <div class="row">
+                                @foreach (var fot in Fotos)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="thumbnail">
+                                            <img src="@PoductoHelper.GetFotoUrl(fot)" alt="Lights" style="width:100%">
+                                            <div class="caption">
+                                                <button type="button" id="@fot.Id" @onclick="() => BorrarFoto(fot.Id)" class="btn btn-outline-danger">Remover</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                               
+
+                                @*@for (int j = ((i == 0) ? 0 : 3); j < ((i == 0) ? 3 : 6); j++)
+                                {
+                                    if (j < Fotos.Count)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="thumbnail">
+                                                <img src="@PoductoHelper.GetFotoUrl(Fotos[j])" alt="Lights" style="width: 100%">
+                                                <div class="caption">
+                                                    <button type="button" id="@Fotos[j].Id" @onclick="() => BorrarFoto(Fotos[j].Id)" class="btn btn-outline-danger">Remover</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }*@
+                            </div>
+                    </div>
                 }
             </div>
         </div>
@@ -71,41 +78,3 @@
 
     </div>
 </main>
-
-
-                        @if (Fotos != null) > 0){
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <a href="/w3images/lights.jpg" target="_blank">
-                                        <img src="/w3images/lights.jpg" alt="Lights" style="width:100%">
-                                        <div class="caption">
-                                            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
-                                        </div>
-                                        </a>
-                                    </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <a href="/w3images/nature.jpg" target="_blank">
-                                        <img src="/w3images/nature.jpg" alt="Nature" style="width:100%">
-                                        <div class="caption">
-                                            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
-                                        </div>
-                                        </a>
-                                    </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                    <div class="thumbnail">
-                                        <a href="/w3images/fjords.jpg" target="_blank">
-                                        <img src="/w3images/fjords.jpg" alt="Fjords" style="width:100%">
-                                        <div class="caption">
-                                            <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
-                                        </div>
-                                        </a>
-                                    </div>
-                                    </div>
-                                </div>
-                                </div>
-                        }

@@ -1,9 +1,14 @@
-namespace Sistema.Admin.Pages.Almacen.ProductoFotos
+using Sistema.Shared.Helpers.Producto;
+
+namespace Sistema.Admin.Pages.Almacen.Productos
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Threading.Tasks;
+    using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
+    using BlazorInputFile;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Authorization;
     using Sistema.Admin.Components;
@@ -18,17 +23,19 @@ namespace Sistema.Admin.Pages.Almacen.ProductoFotos
 
         [Inject] private IProductoFotoDataService ProductoFotoDataService { get; set; }
 
+        [Inject] private IProductoHelper PoductoHelper { get; set; } = new ProductoHelper();
+
         [Parameter] public string ProductoId { get; set; }
 
         protected ShowAlert.Alert Alert { get; set; }
 
-        public List<ProductoFotoViewModel> Fotos { get; set; } = new List<ProductoFotoViewModel>();
-        
-        private string CategoriaId { get; set; } = string.Empty;
+        public List<ProductoFotoViewModel> Fotos { get; set; }
 
-        private bool Saved { get; set; }
+        public IFileListEntry File { get; set; }
 
-        private NProductoFoto.CrearViewModel ProductoFoto { get; set; } = new NProductoFoto.CrearViewModel();
+        private int maxFileSize { get; set; } = 5 * 1024 * 1024;
+
+        protected bool Saved { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -39,66 +46,57 @@ namespace Sistema.Admin.Pages.Almacen.ProductoFotos
             {
                 this.NavigationManager.NavigateTo("/login");
             }
+
             this.Saved = false;
-            this.Categorias = (await this.CategoriaDataService.Listar().ConfigureAwait(false)).ToList();
 
-            if (int.TryParse(ProductoFotoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
+            if (int.TryParse(ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
             {
-                var producto = await this.ProductoFotoDataService.Mostrar(productoId).ConfigureAwait(false);
-                
-                if(producto == null){
-                    this.Alert = new ShowAlert.Alert
-                    {
-                        Type = "danger",
-                    };
-                    return;
-                }
-
-                this.ProductoFoto = new NProductoFoto.CrearViewModel
-                {
-                    CategoriaId = this.Categorias.Find(c => c.Nombre == producto.Categoria).Id,
-                    Nombre = producto.Nombre,
-                    Precio = producto.Precio,
-                    Marca = producto.Marca,
-                    Stock = producto.Stock,
-                    Descripcion = producto.Descripcion,
-                };
+                this.Fotos = (await this.ProductoFotoDataService.Listar(productoId).ConfigureAwait(false)).ToList();
             }
             else
             {
-                this.ProductoFoto = new NProductoFoto.CrearViewModel();
+                this.Alert = new ShowAlert.Alert
+                {
+                    Type = "danger",
+                };
             }
         }
 
-        protected async Task HandleValidSubmit()
+        private async Task BorrarFoto(int fotoId)
         {
-            bool resultado;
-            this.ProductoFoto.CategoriaId = int.Parse(this.CategoriaId, NumberStyles.Integer, CultureInfo.InvariantCulture);
-
-            if (int.TryParse(ProductoFotoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
+            Console.WriteLine(fotoId);
+            var response = await this.ProductoFotoDataService.Eliminar(fotoId).ConfigureAwait(false);
+            if (response)
             {
-                var producto = new NProductoFoto.ActualizarViewModel
-                {
-                    Id = productoId,
-                    Nombre = this.ProductoFoto.Nombre,
-                    Precio = this.ProductoFoto.Precio,
-                    Marca = this.ProductoFoto.Marca,
-                    Stock = this.ProductoFoto.Stock,
-                    Descripcion = this.ProductoFoto.Descripcion,
-                };
-                resultado = await this.ProductoFotoDataService.Actualizar(producto).ConfigureAwait(false);
+                this.Fotos = (await this.ProductoFotoDataService.Listar(int.Parse(this.ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture)).ConfigureAwait(false)).ToList();
             }
             else
             {
-                resultado = await this.ProductoFotoDataService.Crear(this.ProductoFoto).ConfigureAwait(false);
+                this.Alert = new ShowAlert.Alert
+                {
+                    Type = "danger",
+                };
             }
 
-            this.Alert = new ShowAlert.Alert
-            {
-                Type = resultado ? "info" : "danger",
-            };
+            this.StateHasChanged();
+        }
 
-            this.Saved = resultado;
+        private async Task HandleSelection(IFileListEntry[] files)
+        {
+            var file = files.FirstOrDefault();
+            if (file != null && file.Size < this.maxFileSize)
+            {
+                this.File = file;
+
+                var foto = new CrearProductofotoViewModel
+                {
+                    Foto = file.Data,
+                    Nombre = file.Name,
+                    ProductoId = int.Parse(this.ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture),
+                };
+
+                await this.ProductoFotoDataService.Crear(foto, file.Size, file.Name).ConfigureAwait(false);
+            }
         }
 
         protected void NavigateToInfo()
