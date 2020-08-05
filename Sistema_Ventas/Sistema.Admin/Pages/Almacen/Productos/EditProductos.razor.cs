@@ -2,16 +2,16 @@ namespace Sistema.Admin.Pages.Almacen.Productos
 {
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Threading.Tasks;
     using System.Linq;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
     using Microsoft.AspNetCore.Components.Authorization;
     using Sistema.Admin.Components;
-    using NProducto = Sistema.Shared.Entidades.Almacen.Producto;
     using Sistema.Shared.Entidades.Almacen.Categoria;
+    using Sistema.Shared.Services.Almacen.Categoria;
     using Sistema.Shared.Services.Almacen.Producto;
     using Sistema.Shared.Services.Almacen.ProductoFoto;
-    using Sistema.Shared.Services.Almacen.Categoria ;
+    using NProducto = Sistema.Shared.Entidades.Almacen.Producto;
 
     public partial class EditProductos
     {
@@ -22,13 +22,13 @@ namespace Sistema.Admin.Pages.Almacen.Productos
         [Inject] private IProductoDataService ProductoDataService { get; set; }
 
         [Inject] private ICategoriaDataService CategoriaDataService { get; set; }
-      
+
         [Parameter] public string ProductoId { get; set; }
 
         protected ShowAlert.Alert Alert { get; set; }
 
         public List<CategoriaViewModel> Categorias { get; set; } = new List<CategoriaViewModel>();
-        
+
         private string CategoriaId { get; set; } = string.Empty;
 
         private bool Saved { get; set; }
@@ -44,14 +44,16 @@ namespace Sistema.Admin.Pages.Almacen.Productos
             {
                 this.NavigationManager.NavigateTo("/login");
             }
+
             this.Saved = false;
             this.Categorias = (await this.CategoriaDataService.Listar().ConfigureAwait(false)).ToList();
 
             if (int.TryParse(ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var productoId))
             {
                 var producto = await this.ProductoDataService.Mostrar(productoId).ConfigureAwait(false);
-                
-                if(producto == null){
+
+                if (producto == null)
+                {
                     this.Alert = new ShowAlert.Alert
                     {
                         Type = "danger",
@@ -73,6 +75,8 @@ namespace Sistema.Admin.Pages.Almacen.Productos
             {
                 this.Producto = new NProducto.CrearViewModel();
             }
+
+            this.CategoriaId = this.Producto.CategoriaId.ToString(CultureInfo.InvariantCulture);
         }
 
         protected async Task HandleValidSubmit()
@@ -85,6 +89,7 @@ namespace Sistema.Admin.Pages.Almacen.Productos
                 var producto = new NProducto.ActualizarViewModel
                 {
                     Id = productoId,
+                    CategoriaId = this.Producto.CategoriaId,
                     Nombre = this.Producto.Nombre,
                     Precio = this.Producto.Precio,
                     Marca = this.Producto.Marca,

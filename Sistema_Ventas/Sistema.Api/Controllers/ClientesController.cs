@@ -93,13 +93,13 @@ namespace Sistema.Api.Controllers
                 .ConfigureAwait(false);
 
             return this.Ok(clientes.Select(c => new ClienteViewModel
-                {
-                    Id = c.Id,
-                    Email = c.Email,
-                    FechaNac = c.FechaNac,
-                    CreatedAt = c.CreatedAt,
-                    UpdatedAt = c.CreatedAt,
-                })
+            {
+                Id = c.Id,
+                Email = c.Email,
+                FechaNac = c.FechaNac,
+                CreatedAt = c.CreatedAt,
+                UpdatedAt = c.CreatedAt,
+            })
             );
         }
 
@@ -138,7 +138,7 @@ namespace Sistema.Api.Controllers
             {
                 return this.BadRequest();
             }
-            
+
             var cliente = await this._context.Clientes.FindAsync(id).ConfigureAwait(false);
             cliente.UpdatedAt = DateTime.Now;
 

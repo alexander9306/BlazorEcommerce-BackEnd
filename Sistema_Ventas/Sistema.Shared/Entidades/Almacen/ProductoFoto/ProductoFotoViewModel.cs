@@ -4,6 +4,8 @@
 
     public class ProductoFotoViewModel
     {
+        public int Id { get; set; }
+
         public int ProductoId { get; set; }
 
         public DateTime CreatedAt { get; set; }

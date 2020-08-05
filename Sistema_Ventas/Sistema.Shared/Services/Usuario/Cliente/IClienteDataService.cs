@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Sistema.Shared.Services.Usuario.Cliente
+﻿namespace Sistema.Shared.Services.Usuario.Cliente
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Sistema.Shared.Entidades.Usuario.Cliente;
 

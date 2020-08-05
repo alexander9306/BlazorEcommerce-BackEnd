@@ -34,6 +34,13 @@
                 return true;
             }
 
+            var valueAsFileStream = value as FileStream;
+            if (valueAsFileStream != null)
+            {
+                return this.ValidateExtension(valueAsFileStream.Name);
+            }
+
+
             var valueAsIFormFile = value as IFormFile;
             if (valueAsIFormFile != null)
             {
