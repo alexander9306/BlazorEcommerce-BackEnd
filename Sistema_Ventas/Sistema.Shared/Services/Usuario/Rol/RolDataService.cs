@@ -8,7 +8,11 @@
     using Blazored.LocalStorage;
     using Sistema.Shared.Entidades.Usuario.Rol;
 
+<<<<<<< HEAD
     public class RolDataService : IRolDataService
+=======
+    public class RolDataService: IRolDataService
+>>>>>>> origin/Reynaldo
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;

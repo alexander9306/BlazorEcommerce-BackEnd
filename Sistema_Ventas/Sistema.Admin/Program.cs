@@ -12,13 +12,13 @@ namespace Sistema.Admin
     using Sistema.Shared.Services.Almacen.Categoria;
     using Sistema.Shared.Services.Almacen.Marca;
     using Sistema.Shared.Services.Almacen.Producto;
-    using Sistema.Shared.Services.Almacen.ProductoFoto;
     using Sistema.Shared.Services.Ordenes.Carrito;
     using Sistema.Shared.Services.Ordenes.Orden;
     using Sistema.Shared.Services.Ordenes.Pago;
     using Sistema.Shared.Services.Ordenes.Pedido;
     using Sistema.Shared.Services.Usuario.Administrador;
     using Sistema.Shared.Services.Usuario.Rol;
+    using Sistema.Shared.Services.Usuario.Cliente;
 
     public class Program
     {
@@ -37,6 +37,9 @@ namespace Sistema.Admin
             builder.Services.AddBlazoredLocalStorage();
 
             // Http Client Providers //
+            builder.Services.AddHttpClient<IClienteDataService, ClienteDataService>(client =>
+                client.BaseAddress = new Uri(baseAddress + "/clientes/"));
+                            
             builder.Services.AddHttpClient<IAdminDataService, AdminDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/administradores/"));
 
@@ -63,9 +66,6 @@ namespace Sistema.Admin
 
             builder.Services.AddHttpClient<IPagoDataService, PagoDataService>(client =>
                 client.BaseAddress = new Uri(baseAddress + "/pagos/"));
-
-            builder.Services.AddHttpClient<IProductoFotoDataService, ProductoFotoDataService>(client =>
-                client.BaseAddress = new Uri(baseAddress + "/productoFotos/"));
 
             // Helper Classes //
             builder.Services.AddSingleton<IStringHelper, StringHelper>();

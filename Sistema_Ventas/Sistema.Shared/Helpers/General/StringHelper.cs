@@ -1,6 +1,10 @@
 ﻿namespace Sistema.Shared.Helpers.General
 {
+<<<<<<< HEAD
     public class StringHelper : IStringHelper
+=======
+    public class StringHelper: IStringHelper
+>>>>>>> origin/Reynaldo
     {
         public string GetDescripcion(string descripcion, int maxLength = 60)
         {

@@ -10,7 +10,11 @@
     using Blazored.LocalStorage;
     using Sistema.Shared.Entidades.Almacen.Categoria;
 
+<<<<<<< HEAD
     public class CategoriaDataService : ICategoriaDataService
+=======
+    public class CategoriaDataService: ICategoriaDataService
+>>>>>>> origin/Reynaldo
     {
         private readonly HttpClient _httpClient;
         private readonly ILocalStorageService _localStorage;

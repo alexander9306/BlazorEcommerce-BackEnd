@@ -12,6 +12,7 @@
         Task<PagoViewModel> Mostrar(int id);
 
         Task<IEnumerable<PagoViewModel>> ListarPorOrden(int ordenId, int limit, DateTime? before = null);
+<<<<<<< HEAD
 
         Task<bool> Desactivar(int id);
 
@@ -20,5 +21,7 @@
         Task<bool> Actualizar(object pago);
 
         Task<bool> Crear(CrearViewModel pago);
+=======
+>>>>>>> origin/Reynaldo
     }
 }

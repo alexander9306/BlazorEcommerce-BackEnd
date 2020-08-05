@@ -5,7 +5,10 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
+<<<<<<< HEAD
     using Microsoft.AspNetCore.Components.Authorization;
+=======
+>>>>>>> origin/Reynaldo
     using Sistema.Admin.Components;
     using Sistema.Shared.Entidades.Usuario.Administrador;
     using Sistema.Shared.Entidades.Usuario.Rol;
@@ -14,7 +17,10 @@
 
     public partial class EditAdministradores
     {
+<<<<<<< HEAD
         [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
+=======
+>>>>>>> origin/Reynaldo
 
         [Inject] private NavigationManager NavigationManager { get; set; }
 
@@ -36,6 +42,7 @@
 
         protected override async Task OnInitializedAsync()
         {
+<<<<<<< HEAD
             var authState = await authenticationStateTask;
             var user = authState.User;
 
@@ -44,6 +51,8 @@
                 this.NavigationManager.NavigateTo("/login");
             }
 
+=======
+>>>>>>> origin/Reynaldo
             this.Saved = false;
             this.Roles = (await this.RolDataService.Listar().ConfigureAwait(false)).ToList();
 

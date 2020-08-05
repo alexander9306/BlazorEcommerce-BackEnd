@@ -1,0 +1,54 @@
+@page "/clientes"
+
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Clientes</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Admin / Clientes</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Clientes
+                </div>
+                <div class="card-body">
+                    @if (LClientes == null)
+                    {
+                        <Loading />
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover" id="MydataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @if (LClientes != null)
+                                    {
+                                        foreach (var cliente in LClientes)
+                                        {
+                                            <tr>
+                                                <td>@cliente.Id</td>
+                                                <td>@cliente.Email</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </main>

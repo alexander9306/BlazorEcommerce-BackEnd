@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 ﻿namespace Sistema.Api.Migrations
 {
     using System;
     using Microsoft.EntityFrameworkCore.Migrations;
 
+=======
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+namespace Sistema.Api.Migrations
+{
+>>>>>>> origin/Reynaldo
     public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

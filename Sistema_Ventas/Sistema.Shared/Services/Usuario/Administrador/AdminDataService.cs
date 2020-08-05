@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 ﻿namespace Sistema.Shared.Services.Usuario.Administrador
 {
     using System;
+=======
+﻿using System;
+
+namespace Sistema.Shared.Services.Usuario.Administrador
+{
+>>>>>>> origin/Reynaldo
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Http;
