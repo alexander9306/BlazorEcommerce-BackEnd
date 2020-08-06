@@ -1,3 +1,4 @@
 Video: https://www.youtube.com/watch?v=kaTGL1pH0z8
-Hosting:https://polite-grass-0f9328f0f.azurestaticapps.net/
+Hosting cliente: https://polite-grass-0f9328f0f.azurestaticapps.net/
+Hosting admin: https://agreeable-cliff-03e3bb90f.azurestaticapps.net/login
 Repositorio principal (master): https://github.com/alexander9306/P3_Experience
