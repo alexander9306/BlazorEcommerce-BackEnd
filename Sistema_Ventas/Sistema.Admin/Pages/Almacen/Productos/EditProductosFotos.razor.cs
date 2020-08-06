@@ -80,6 +80,31 @@ namespace Sistema.Admin.Pages.Almacen.Productos
 
             this.StateHasChanged();
         }
+        
+        private async void SubirImagen(){
+        
+        var foto = new CrearProductofotoViewModel
+                {
+                    Foto = this.File.Data,
+                    Nombre = this.File.Name,
+                    ProductoId = int.Parse(this.ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture),
+                };
+                
+        var resultado = await this.ProductoFotoDataService.Crear(foto, file.Size, file.Name).ConfigureAwait(false);
+        
+        if(resultado){
+         this.Alert = new ShowAlert.Alert
+                {
+                    Type = "info",
+                };
+        }
+        else{
+         this.Alert = new ShowAlert.Alert
+                {
+                    Type = "danger",
+                };
+        }	
+        }
 
         private async Task HandleSelection(IFileListEntry[] files)
         {
@@ -87,15 +112,6 @@ namespace Sistema.Admin.Pages.Almacen.Productos
             if (file != null && file.Size < this.maxFileSize)
             {
                 this.File = file;
-
-                var foto = new CrearProductofotoViewModel
-                {
-                    Foto = file.Data,
-                    Nombre = file.Name,
-                    ProductoId = int.Parse(this.ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture),
-                };
-
-                await this.ProductoFotoDataService.Crear(foto, file.Size, file.Name).ConfigureAwait(false);
             }
         }
 

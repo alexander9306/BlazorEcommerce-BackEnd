@@ -16,8 +16,9 @@
                 @if (!Saved)
                 {
 
-                    <InputFile OnChange="HandleSelection" ></InputFile>
-                    <button type="submit" class="btn btn-primary edit-btn">Subir</button>
+                    <InputFile OnChange="HandleSelection" accept="image/*" />
+                    
+                    <button type="submit" @onclick="" class="btn btn-primary edit-btn">Subir</button>
                     <a class="btn btn-outline-primary edit-outline-btn" @onclick="@NavigateToInfo">Regresar</a>
 
                     <div class="pt-2">
@@ -54,22 +55,7 @@
                                     </div>
                                 }
                                
-
-                                @*@for (int j = ((i == 0) ? 0 : 3); j < ((i == 0) ? 3 : 6); j++)
-                                {
-                                    if (j < Fotos.Count)
-                                    {
-                                        <div class="col-md-4">
-                                            <div class="thumbnail">
-                                                <img src="@PoductoHelper.GetFotoUrl(Fotos[j])" alt="Lights" style="width: 100%">
-                                                <div class="caption">
-                                                    <button type="button" id="@Fotos[j].Id" @onclick="() => BorrarFoto(Fotos[j].Id)" class="btn btn-outline-danger">Remover</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-                                }*@
-                            </div>
+                           </div>
                     </div>
                 }
             </div>

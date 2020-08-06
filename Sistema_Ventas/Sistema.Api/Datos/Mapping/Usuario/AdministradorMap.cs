@@ -12,6 +12,7 @@
         {
             var passwordHelper = new PasswordHelper();
             passwordHelper.CrearPasswordHash("admin01", out var adminPass);
+            passwordHelper.CrearPasswordHash("organizador", out var orgaPass);
 
             builder.HasIndex(a => a.Email)
                 .IsUnique();
@@ -27,7 +28,18 @@
                 Email = "admin@gmail.com".ToUpperInvariant(),
                 Username = "admin01".ToUpperInvariant(),
                 PasswordHash = adminPass,
-            });
+            },
+            new Administrador{
+                Id = 2,
+                RolId = 2,
+                UpdatedAt = DateTime.Now,
+                CreatedAt = DateTime.Now,
+                Estado = true,
+                Email = "organizador@gmail.com".ToUpperInvariant(),
+                Username = "organizador".ToUpperInvariant(),
+                PasswordHash = orgaPass,
+            }
+            );
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Sistema.Api.Controllers
         // POST: api/Administradores/login
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromForm] AdminLogin model)
+        public async Task<IActionResult> Login([FromBody] AdminLogin model)
         {
             var username = model.Usuario.ToUpperInvariant().Trim();
 
@@ -119,7 +119,7 @@ namespace Sistema.Api.Controllers
 
         // PUT: api/Administradores/Actualizar/id
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> Actualizar(int id, [FromBody] ActualizarViewModel model)
+        public async Task<IActionResult> Actualizar(int id, ActualizarViewModel model)
         {
             if (!this.ModelState.IsValid)
             {
@@ -168,7 +168,7 @@ namespace Sistema.Api.Controllers
 
         // POST: api/Administradores/Crear
         [HttpPost("[action]")]
-        public async Task<ActionResult<AdministradorViewModel>> Crear([FromBody] CrearViewModel model)
+        public async Task<ActionResult<AdministradorViewModel>> Crear(CrearViewModel model)
         {
             if (model == null)
             {
