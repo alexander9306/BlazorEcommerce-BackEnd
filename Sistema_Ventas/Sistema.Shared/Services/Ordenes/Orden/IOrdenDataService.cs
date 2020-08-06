@@ -15,5 +15,13 @@
         Task<OrdenViewModel> Mostrar(int id);
 
         Task<bool> Crear(OrdenCrear model);
+
+        Task<bool> Activar(int id);
+
+        Task<bool> Desactivar(int id);
+
+        Task<bool> Actualizar(ActualizarViewModel orden);
+
+        Task<bool> Crear(CrearViewModel orden);
     }
 }

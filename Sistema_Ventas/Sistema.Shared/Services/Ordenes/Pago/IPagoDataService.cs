@@ -12,5 +12,13 @@
         Task<PagoViewModel> Mostrar(int id);
 
         Task<IEnumerable<PagoViewModel>> ListarPorOrden(int ordenId, int limit, DateTime? before = null);
+
+        Task<bool> Desactivar(int id);
+
+        Task<bool> Activar(int id);
+
+        Task<bool> Actualizar(object pago);
+
+        Task<bool> Crear(CrearViewModel pago);
     }
 }

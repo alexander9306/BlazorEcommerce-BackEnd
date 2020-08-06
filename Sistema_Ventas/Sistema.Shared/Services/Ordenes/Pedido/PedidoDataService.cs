@@ -78,5 +78,15 @@
                     await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);
         }
+
+        public Task Activar(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Desactivar(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

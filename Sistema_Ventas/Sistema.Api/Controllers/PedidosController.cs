@@ -39,7 +39,6 @@
             {
                 Id = pedido.Id,
                 OrdenId = pedido.OrdenId,
-                Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
                 UpdatedAt = pedido.UpdatedAt,
             }));
@@ -72,7 +71,6 @@
             {
                 Id = pedido.Id,
                 OrdenId = pedido.OrdenId,
-                Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
                 UpdatedAt = pedido.UpdatedAt,
             }));
@@ -96,7 +94,6 @@
             {
                 Id = pedido.Id,
                 OrdenId = pedido.OrdenId,
-                Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
                 UpdatedAt = pedido.UpdatedAt,
             };
@@ -140,7 +137,6 @@
             {
                 Id = pedido.Id,
                 OrdenId = pedido.OrdenId,
-                Estado = pedido.Estado,
                 CreatedAt = pedido.CreatedAt,
                 UpdatedAt = pedido.UpdatedAt,
             };

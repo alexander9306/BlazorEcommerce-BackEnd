@@ -4,6 +4,8 @@
 
     public class CrearViewModel
     {
+        [Required(ErrorMessage = "El campo {0} es requerido.")]
+        public int ClienteId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido.")]
         public double Latitud { get; set; }

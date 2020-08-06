@@ -63,5 +63,25 @@
                     await this._httpClient.GetStreamAsync($"mostrar/{id}").ConfigureAwait(false),
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true }).ConfigureAwait(false);
         }
+
+        public Task<bool> Desactivar(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Activar(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Actualizar(object pago)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Crear(CrearViewModel pago)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

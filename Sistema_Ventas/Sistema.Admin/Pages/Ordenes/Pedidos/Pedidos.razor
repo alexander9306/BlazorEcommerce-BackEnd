@@ -1,0 +1,65 @@
+﻿@page "/pedidos"
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Pedidos</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Admin / Pedidos</li>
+        </ol>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table mr-1"></i>
+                Pedidos
+            </div>
+            <div class="card-body">
+                @if (LPedidos == null)
+                {
+                    <Loading />
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="MydataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Orden</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Orden</th>
+                                    <th>Fecha</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @if (LPedidos != null)
+                                {
+                                    foreach (var pedidos in LPedidos)
+                                    {
+                                        <tr>
+                                            <td>@pedidos.Id</td>
+                                            <td>@pedidos.OrdenId</td>
+                                            <td>@pedidos.CreatedAt</td>
+                                            <td>@StringHelper.GetEstado(pedidos.Estado)</td>
+                                            <td>
+                                                <a href="/pedidos/editar/@pedidos.Id">Editar</a>
+                                                <a href="javascript:void(0)" @onclick="() => CambiarEstado(pedidos)">@(pedidos.Estado ? "Desactivar" : "Activar")</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+        <a type="button" href="/pedidos/editar" class="btn btn-outline-primary float-right ">Nuevo Registro</a>
+    </div>
+</main>

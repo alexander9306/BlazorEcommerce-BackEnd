@@ -62,8 +62,6 @@
                 Telefono = orden.Telefono,
                 CreatedAt = orden.CreatedAt,
                 UpdatedAt = orden.UpdatedAt,
-                Estado = orden.Pedido != null ? orden.Pedido.Estado : "Iniciado",
-                //Total = orden.Pago.
             }));
         }
 
@@ -93,8 +91,6 @@
                 Telefono = o.Telefono,
                 CreatedAt = o.CreatedAt,
                 UpdatedAt = o.UpdatedAt,
-                Estado = o.Pedido != null ? o.Pedido.Estado : "Iniciado",
-                //Total = orden.Pago.
             }));
         }
 
@@ -124,7 +120,6 @@
                 Telefono = orden.Telefono,
                 CreatedAt = orden.CreatedAt,
                 UpdatedAt = orden.UpdatedAt,
-                Estado = orden.Estado,
             };
         }
 

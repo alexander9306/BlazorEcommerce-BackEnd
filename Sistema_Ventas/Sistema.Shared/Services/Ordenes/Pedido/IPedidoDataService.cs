@@ -12,5 +12,7 @@
         Task<PedidoViewModel> Mostrar(int id);
 
         Task<IEnumerable<PedidoViewModel>> ListarPorOrden(int ordenId, int limit, DateTime? before = null);
+        Task Activar(int id);
+        Task Desactivar(int id);
     }
 }
