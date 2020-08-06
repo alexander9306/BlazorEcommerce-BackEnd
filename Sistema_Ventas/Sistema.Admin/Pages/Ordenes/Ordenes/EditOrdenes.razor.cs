@@ -44,6 +44,7 @@
             {
                 this.NavigationManager.NavigateTo("/login");
             }
+
             this.Saved = false;
             this.Clientes = (await this.ClienteDataService.Listar().ConfigureAwait(false)).ToList();
 

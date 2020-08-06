@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Sistema\**" />
+    <Content Remove="Sistema\**" />
+    <EmbeddedResource Remove="Sistema\**" />
+    <None Remove="Sistema\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="3.0.0" />
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.11.0" />
@@ -28,10 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sistema.Shared\Sistema.Shared.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Sistema\Shared\Entidades\Ordenes\Pago\" />
   </ItemGroup>
 
 </Project>

@@ -24,8 +24,8 @@ namespace Sistema.Ecommerce
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            // var baseAddress = "https://localhost:44303/api";
-            var baseAddress = "https://p3ecommerce.azurewebsites.net/api";
+            var baseAddress = "https://localhost:44303/api";
+            //var baseAddress = "https://p3ecommerce.azurewebsites.net/api";
 
             // Authorization Services //
             builder.Services.AddAuthorizationCore();
