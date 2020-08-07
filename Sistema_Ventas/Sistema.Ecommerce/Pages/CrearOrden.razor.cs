@@ -25,7 +25,7 @@
 
             if (!user.Identity.IsAuthenticated)
             {
-                this.NavigationManager.NavigateTo("/login");
+                this.NavigationManager.NavigateTo("login");
             }
         }
 
@@ -36,7 +36,7 @@
 
             if (result)
             {
-                this.NavigationManager.NavigateTo("/ordenes");
+                this.NavigationManager.NavigateTo("ordenes");
             }
             else
             {
