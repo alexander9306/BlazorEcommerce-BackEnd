@@ -95,7 +95,7 @@
         /// <summary>
         /// Get the Header of the key.
         /// </summary>
-        /// <param name="key">Key.</param>  
+        /// <param name="key">Key.</param>
         public string? GetHeader(string key)
         {
             return this.Request.Headers.FirstOrDefault(x => x.Key == key).Value.FirstOrDefault();

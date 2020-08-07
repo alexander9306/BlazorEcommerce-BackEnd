@@ -35,11 +35,7 @@ namespace Sistema.Api.Controllers
         // POST: api/Administradores/login
         [HttpPost("[action]")]
         [AllowAnonymous]
-<<<<<<< HEAD
-        public async Task<IActionResult> Login([FromBody] AdminLogin model)
-=======
         public async Task<IActionResult> Login(AdminLogin model)
->>>>>>> b0ca543f7e4d1263ed170364b7ad431906ce0b72
         {
             var username = model.Usuario.ToUpperInvariant().Trim();
 

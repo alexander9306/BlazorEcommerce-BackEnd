@@ -16,14 +16,14 @@
                 @if (!Saved)
                 {
 
-                    <InputFile OnChange="HandleSelection" accept="image/*" />
+                    <InputFile OnChange="HandleSelection" accept="image/png, image/jpeg" />
                     
-                    <button type="submit" @onclick="" class="btn btn-primary edit-btn">Subir</button>
+                    <button type="submit" @onclick="SubirImagen" class="btn btn-primary edit-btn">Subir</button>
                     <a class="btn btn-outline-primary edit-outline-btn" @onclick="@NavigateToInfo">Regresar</a>
 
                     <div class="pt-2">
                         <p><strong>Nombre:</strong> @(File?.Name ?? string.Empty)</p>
-                        <p><strong>Peso:</strong> @(File?.Size / 1024 / 1024 ?? 0)MB</p>
+                        <p><strong>Peso:</strong> @FileSizeFormatter.FormatSize(File?.Size)</p>
                         <p><strong>Tipo:</strong> @(File?.Type ?? string.Empty)</p>
                     </div>
 

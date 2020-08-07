@@ -29,7 +29,8 @@
                 Username = "admin01".ToUpperInvariant(),
                 PasswordHash = adminPass,
             },
-            new Administrador{
+            new Administrador
+            {
                 Id = 2,
                 RolId = 2,
                 UpdatedAt = DateTime.Now,

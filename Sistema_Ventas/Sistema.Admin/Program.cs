@@ -71,6 +71,7 @@ namespace Sistema.Admin
             // Helper Classes //
             builder.Services.AddSingleton<IStringHelper, StringHelper>();
             builder.Services.AddSingleton<IProductoHelper, ProductoHelper>();
+            builder.Services.AddSingleton<IFileSizeFormatter, FileSizeFormatter>();
 
             await builder.Build().RunAsync().ConfigureAwait(false);
         }

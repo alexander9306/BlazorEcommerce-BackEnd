@@ -20,10 +20,10 @@
         protected override async Task SerializeToStreamAsync(Stream stream,
             TransportContext context)
         {
-            using (StreamWriter writer = new StreamWriter(stream))
-            using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+            using (var writer = new StreamWriter(stream))
+            using (var jsonWriter = new JsonTextWriter(writer))
             {
-                JsonSerializer ser = new JsonSerializer();
+                var ser = new JsonSerializer();
                 ser.Serialize(jsonWriter, SerializationTarget);
             }
 

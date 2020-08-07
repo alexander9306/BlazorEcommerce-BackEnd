@@ -15,6 +15,7 @@
     using Sistema.Api.Datos;
     using Sistema.Api.Entidades.Almacen;
     using Sistema.Shared.Entidades.Almacen.ProductoFoto;
+    using BlazorInputFile;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -127,7 +128,7 @@
         // POST: api/ProductoFotos/Crear
         [HttpPost("[action]/{productoId}")]
         [RequestFormLimits(ValueCountLimit = 5000)]
-        public async Task<ActionResult<ProductoFoto>> Crear(int productoId, [FromForm] IFormFile foto)
+        public async Task<ActionResult<ProductoFoto>> Crear(int productoId, [FromForm] IFileListEntry foto)
         {
             //if (!this.ModelState.IsValid)
             //{
@@ -175,11 +176,11 @@
             model.FotoPublicId = uploadResult.PublicId;
         }
 
-        private async Task CrearFoto(ProductoFoto model, IFormFile foto)
+        private async Task CrearFoto(ProductoFoto model, IFileListEntry foto)
         {
-            var uploadsFolder = Path.Combine(this._hostingEnvironment.WebRootPath, "images");
-            var uniqueFileName = Guid.NewGuid() + "." + foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
-            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            var uploadsFolder = Path.Combine(this._hostingEnvironment.WebRootPath, "images", foto.Name);
+            //var uniqueFileName = Guid.NewGuid() + "." + foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
+            var filePath = Path.Combine(uploadsFolder, foto.FileName);
 
             await using var stream = System.IO.File.Create(filePath);
             await foto.CopyToAsync(stream).ConfigureAwait(false);

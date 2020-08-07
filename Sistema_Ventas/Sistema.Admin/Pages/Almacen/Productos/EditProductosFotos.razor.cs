@@ -1,5 +1,3 @@
-using Sistema.Shared.Helpers.Producto;
-
 namespace Sistema.Admin.Pages.Almacen.Productos
 {
     using System;
@@ -13,6 +11,8 @@ namespace Sistema.Admin.Pages.Almacen.Productos
     using Microsoft.AspNetCore.Components.Authorization;
     using Sistema.Admin.Components;
     using Sistema.Shared.Entidades.Almacen.ProductoFoto;
+    using Sistema.Shared.Helpers.General;
+    using Sistema.Shared.Helpers.Producto;
     using Sistema.Shared.Services.Almacen.ProductoFoto;
 
     public partial class EditProductosFotos
@@ -20,6 +20,8 @@ namespace Sistema.Admin.Pages.Almacen.Productos
         [CascadingParameter] private Task<AuthenticationState> authenticationStateTask { get; set; }
 
         [Inject] private NavigationManager NavigationManager { get; set; }
+
+        [Inject] private IFileSizeFormatter FileSizeFormatter { get; set; }
 
         [Inject] private IProductoFotoDataService ProductoFotoDataService { get; set; }
 
@@ -80,36 +82,43 @@ namespace Sistema.Admin.Pages.Almacen.Productos
 
             this.StateHasChanged();
         }
-        
-        private async void SubirImagen(){
-        
-        var foto = new CrearProductofotoViewModel
+
+        private async void SubirImagen()
+        {
+            if (this.File != null)
+            {
+                var foto = new CrearProductofotoViewModel
                 {
                     Foto = this.File.Data,
                     Nombre = this.File.Name,
                     ProductoId = int.Parse(this.ProductoId, NumberStyles.Integer, CultureInfo.InvariantCulture),
                 };
-                
-        var resultado = await this.ProductoFotoDataService.Crear(foto, file.Size, file.Name).ConfigureAwait(false);
-        
-        if(resultado){
-         this.Alert = new ShowAlert.Alert
+
+                var resultado = await this.ProductoFotoDataService.Crear(foto, this.File.Size, this.File.Name).ConfigureAwait(false);
+
+                if (resultado)
                 {
-                    Type = "info",
-                };
-        }
-        else{
-         this.Alert = new ShowAlert.Alert
+                    this.File = null;
+
+                    this.Alert = new ShowAlert.Alert
+                    {
+                        Type = "info",
+                    };
+                }
+                else
                 {
-                    Type = "danger",
-                };
-        }	
+                    this.Alert = new ShowAlert.Alert
+                    {
+                        Type = "danger",
+                    };
+                }
+            }
         }
 
         private async Task HandleSelection(IFileListEntry[] files)
         {
             var file = files.FirstOrDefault();
-            if (file != null && file.Size < this.maxFileSize)
+            if (file != null && file.Size < this.maxFileSize && file.Type.Contains("image", StringComparison.InvariantCulture))
             {
                 this.File = file;
             }
