@@ -1,6 +1,4 @@
 ﻿(function() {
-    var table = null;
-
     window.BlazorMethods = {
         getTable: () => {
             table = $('#MydataTable').DataTable({
