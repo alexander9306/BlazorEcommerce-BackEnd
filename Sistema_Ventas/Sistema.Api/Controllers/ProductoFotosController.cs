@@ -180,10 +180,10 @@
         {
             var uploadsFolder = Path.Combine(this._hostingEnvironment.WebRootPath, "images", foto.Name);
             //var uniqueFileName = Guid.NewGuid() + "." + foto.ContentType.Replace("image/", string.Empty, StringComparison.InvariantCulture);
-            var filePath = Path.Combine(uploadsFolder, foto.FileName);
+            //var filePath = Path.Combine(uploadsFolder, foto.Name);
 
-            await using var stream = System.IO.File.Create(filePath);
-            await foto.CopyToAsync(stream).ConfigureAwait(false);
+            //await using var stream = System.IO.File.Create(filePath);
+            //await foto.CopyToAsync(stream).ConfigureAwait(false);
 
             var uploadParams = new ImageUploadParams
             {
